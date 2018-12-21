@@ -31,5 +31,6 @@
     <uap:Capability Name="chat" />
     <uap:Capability Name="removableStorage" />
     <DeviceCapability Name="lowLevel" />
+   
   </Capabilities>
 </Package>

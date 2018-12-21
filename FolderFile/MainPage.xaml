@@ -7,8 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
+    xmlns:telerikGrid="using:Telerik.UI.Xaml.Controls.Grid"
+    xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    xmlns:localprimitives="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives">
     <Page.Resources>
         <DataTemplate x:Key="TreeViewItemDataTemplate">
             <Grid Height="36">
@@ -138,7 +141,29 @@
                 </Setter.Value>
             </Setter>
         </Style>
-      
+        <SolidColorBrush x:Key="ScrollBarsSeparatorBackground" Color="{StaticResource SystemChromeMediumColor}" Opacity="0.9"/>
+        <x:String x:Key="SortIconAscending">&#xE74A;</x:String>
+        <x:String x:Key="SortIconDescending">&#xE74B;</x:String>
+        <x:String x:Key="ScrollBarsSeparatorExpandBeginTime">00:00:00.40</x:String>
+        <x:String x:Key="ScrollBarsSeparatorExpandDuration">00:00:00.1</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractBeginTime">00:00:02.00</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractDelay">00:00:02</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractDuration">00:00:00.1</x:String>
+        <x:String x:Key="ScrollBarsSeparatorNoTouchDuration">00:00:00.5</x:String>
+        <SolidColorBrush x:Key="ScrollBarsSeparatorBackground1" Color="{StaticResource SystemChromeMediumColor}" Opacity="0.9"/>
+        <x:String x:Key="SortIconAscending1">&#xE74A;</x:String>
+        <x:String x:Key="SortIconDescending1">&#xE74B;</x:String>
+        <x:String x:Key="ScrollBarsSeparatorExpandBeginTime1">00:00:00.40</x:String>
+        <x:String x:Key="ScrollBarsSeparatorExpandDuration1">00:00:00.1</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractBeginTime1">00:00:02.00</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractDelay1">00:00:02</x:String>
+        <x:String x:Key="ScrollBarsSeparatorContractDuration1">00:00:00.1</x:String>
+        <x:String x:Key="ScrollBarsSeparatorNoTouchDuration1">00:00:00.5</x:String>
+       
+        <StaticResource x:Key="DataGridColumnHeaderForegroundBrush" ResourceKey="SystemControlForegroundBaseMediumBrush"/>
+        <StaticResource x:Key="DataGridColumnHeaderDraggedBackgroundBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush"/>
+       
+        
         
       
     </Page.Resources>
@@ -150,81 +175,66 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="200"/>
+            <ColumnDefinition />
             <ColumnDefinition Width="16"/>
-            <ColumnDefinition MinWidth="200"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3">
             <controls:TabViewItem Header="Главное" Icon="home">
-                <ScrollViewer HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Horizontal">
-                        <ScrollViewer HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
-                            <GridView>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="View"/>
-                                        <TextBlock Text="Просмотр"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="ViewAll"/>
-                                        <TextBlock Text="Выделить всё"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="Edit"/>
-                                        <TextBlock Text="Изменить"/>
-                                    </StackPanel>
-                                </GridViewItem>
-
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="Copy"/>
-                                        <TextBlock Text="Копировать"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="Paste"/>
-                                        <TextBlock Text="Вставить"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="Share" />
-                                        <TextBlock Text="Переместить"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4">
-                                        <SymbolIcon Symbol="NewFolder"/>
-                                        <TextBlock Text="Добавить"/>
-                                    </StackPanel>
-                                </GridViewItem>
-                                <GridViewItem Margin="4">
-                                    <StackPanel Width="auto" HorizontalAlignment="Center" Margin="4" >
-                                        <SymbolIcon Symbol="Delete"/>
-                                        <TextBlock Text="Удалить"/>
-                                    </StackPanel>
-                                </GridViewItem>
-
-                            </GridView>
-                        </ScrollViewer>
-
-                    </StackPanel>
-                </ScrollViewer>
+                <CommandBar DefaultLabelPosition="Right">
+                    <AppBarButton Label="Просмотр" Icon="View" />
+                    <AppBarButton Label="Выделить всё" Icon="ViewAll"/>
+                    <AppBarButton Label="Изменить" Icon="Edit"/>
+                    <AppBarButton Label="Копировать" Icon="Copy"/>
+                    <AppBarButton Label="Вставить" Icon="Paste"/>
+                    <AppBarButton Label="Переместить" Icon="Share"/>
+                    <AppBarButton Label="Добавить" Icon="NewFolder"/>
+                    <AppBarButton Label="Удалить" Icon="Delete"/>
+                </CommandBar>
             </controls:TabViewItem>
             <controls:TabViewItem Header="Вид" >
-                <TextBlock Padding="16">A 2nd Tab.</TextBlock>
+                <CommandBar DefaultLabelPosition="Right" IsOpen="True">
+                    <AppBarButton Label="Добавть расположение" Content="Добавить" Icon="Add" Click="AppBarButton_Click_2"/>
+                    <AppBarButton FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True" Icon="Delete" Label="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="280"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CommandBar>
+                                        <AppBarButton Icon="Delete" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
+
+                                    </CommandBar>
+                                    <TextBlock Grid.Row="1"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
+                                    <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind listDostyp}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Grid>
+                                                    <TextBlock Text="{Binding }" FontSize="16"></TextBlock>
+
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </AppBarButton>
+                </CommandBar>
+            
             </controls:TabViewItem>
         </controls:TabView>
         <Grid Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="54"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" >
                 <Button Click="AppBarButton_Click"    VerticalAlignment="Stretch" VerticalContentAlignment="Top" Background="White">
@@ -232,71 +242,108 @@
                         <SymbolIcon Symbol="GlobalNavigationButton"/>
                     </Button.Content>
                 </Button>
+                
 
-               
             </StackPanel>
             <TextBox Grid.Column="1" x:Name="FilePathTextBlock"></TextBox>
+            <Button Click="Button_Click" Grid.Column="2"   VerticalAlignment="Stretch" VerticalContentAlignment="Top" Background="White">
+                <Button.Content>
+                    <SymbolIcon Symbol="GlobalNavigationButton"/>
+                </Button.Content>
+            </Button>
         </Grid>
       
         <SplitView Grid.Row="2" IsPaneOpen="True" 
-                   DisplayMode="CompactInline" 
-                   OpenPaneLength="296" CompactPaneLength="60" x:Name="Split">
+                   DisplayMode="Inline" 
+                   OpenPaneLength="200"  x:Name="Split">
             <SplitView.Pane >
-                <ScrollViewer HorizontalScrollMode="Auto">
-                    <Grid Background="White">
+           
+                    <Grid Background="White" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                    
-                    <Windows10version1803:TreeView x:Name="sampleTreeView" Grid.Row="1" SelectionMode="Single" Background="White" Padding="0" Margin="4,0,0,0"
+                    <Windows10version1803:TreeView x:Name="sampleTreeView" Grid.Row="1" SelectionMode="Single" Background="White" Padding="0" Margin="0,0,0,0"
                               Expanding="SampleTreeView_Expanding"
                               Collapsed="SampleTreeView_Collapsed"
-                              ItemInvoked="SampleTreeView_ItemInvoked" FontSize="12"/>
-                        <Line StrokeThickness="1" Stroke="Blue" HorizontalAlignment="Right" Grid.RowSpan="2" />
+                              ItemInvoked="SampleTreeView_ItemInvoked" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+                     
                     </Grid>
-                </ScrollViewer>
+           
             </SplitView.Pane>
-            <ListView   x:Name="list1" ItemsSource="{x:Bind fileAndFolderViewer.ListCol}" SelectionChanged="List1_SelectionChanged">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Padding="0" Background="{ThemeResource SystemBaseLowColor}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="52"/>
-                                <ColumnDefinition Width="240"/>
-                                <ColumnDefinition  Width="120"/>
-                                <ColumnDefinition   Width="160"/>
-                            </Grid.ColumnDefinitions>
-                            <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,-6,0,0" VerticalAlignment="Top" />
-                            <TextBlock Grid.Column="1" x:Name="gridcol1" Text="Имя" Style="{ThemeResource CaptionTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                            <TextBlock Grid.Column="2" x:Name="gridcol2" Text="Тип" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="3" x:Name="gridcol3" Text="Дата создания" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:Name="TableDataTemplate" x:DataType="local:ClassListStroce">
-                        <Grid Height="48" AutomationProperties.Name="{x:Bind FileAndFildeName}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="52"/>
-                                <ColumnDefinition Width="240"/>
-                                <ColumnDefinition  Width="120"/>
-                                <ColumnDefinition   Width="160"/>
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                                <Ellipse.Fill>
-                                    <ImageBrush />
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind FileAndFildeName}" />
-                            <TextBlock Grid.Column="2" VerticalAlignment="Center" FontSize="12" Text="{x:Bind FileAndFildeTip}"/>
-                            <TextBlock Grid.Column="3" VerticalAlignment="Center" FontSize="12" Text="{x:Bind FileAndFildeData}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+           
+            <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Horizontal">
+                    <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,-6,0,0" VerticalAlignment="Top" />
+                    <controls:DataGrid Tag="One"  x:Name="_DataGrid"  Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+        AlternatingRowBackground="Transparent" AreRowDetailsFrozen="False" AreRowGroupHeadersFrozen="True" AutoGenerateColumns="False"
+        CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" ColumnHeaderHeight="32"  MaxColumnWidth="400" FrozenColumnCount="0" GridLinesVisibility="None" HeadersVisibility="Column"
+        IsReadOnly="False" RowDetailsVisibilityMode="Collapsed"  SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
+                       
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn Header="Имя" Binding="{Binding FileAndFildeName}"  Tag="Имя" />
+                            <controls:DataGridTextColumn Header="Тип" Binding="{Binding FileAndFildeTip}" Tag="FileAndFildeTip" />
+                            <controls:DataGridTextColumn Header="Дата" Binding="{Binding FileAndFildeData}" Tag="FileAndFildeData" />
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+                </StackPanel>
+            </ScrollViewer>
         </SplitView>
-        <controls:GridSplitter Grid.Column="1" Grid.Row="2" Width="11" ResizeBehavior="BasedOnAlignment"
+        <SplitView Grid.Row="2" IsPaneOpen="True" 
+                   DisplayMode="Inline" Grid.Column="2"
+                   OpenPaneLength="200"  x:Name="Split1" PanePlacement="Right">
+            <SplitView.Pane >
+
+                <Grid Background="White" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Windows10version1803:TreeView x:Name="sampleTreeView1" Grid.Row="1" SelectionMode="Single" Background="White" Padding="0" Margin="0,0,0,0"
+                              Expanding="SampleTreeView_Expanding"
+                              Collapsed="SampleTreeView_Collapsed"
+                              ItemInvoked="SampleTreeView_ItemInvoked" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                   
+
+                    </Windows10version1803:TreeView>
+
+                </Grid>
+
+            </SplitView.Pane>
+
+
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Margin="0,-6,0,0" VerticalAlignment="Top" />
+                <ListView Tag="twy" ItemsSource="{x:Bind fileAndFolderViewer.ListCol}"  Grid.Column="1">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:ClassListStroce">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                <TextBlock Text="{x:Bind FileAndFildeName}" Grid.ColumnSpan="2" FontSize="16"></TextBlock>
+                                    <TextBlock Text="{x:Bind FileAndFildeTip}" Grid.Row="1"   FontSize="12"></TextBlock>
+                                    <TextBlock Text="{x:Bind FileAndFildeData}" Grid.Row="1" Margin="4,0,0,0" Grid.Column="1" HorizontalAlignment="Right" HorizontalTextAlignment="Right" FontSize="12"></TextBlock>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+          
+        </SplitView>
+        <controls:GridSplitter Grid.Column="1" Grid.Row="2" Width="11"  ResizeBehavior="PreviousAndNext"
             ResizeDirection="Auto" Background="Gray" Foreground="White" FontSize="13">
             <controls:GridSplitter.Element>
                 <Grid>
@@ -318,6 +365,6 @@
             <TextBlock Text="{x:Bind}"  Margin="4,0,4,0"/>
             <TextBlock Text="байт" />
         </StackPanel>
-     
+  
     </Grid>
 </Page>
