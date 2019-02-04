@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 
 namespace FolderFile
 {
@@ -12,6 +13,8 @@ namespace FolderFile
     {
         ObservableCollection<ClassListStroce> _ListCol = new ObservableCollection<ClassListStroce>();
         public StorageFolder storageFolderFirst { get; set; }
+        ObservableCollection<ClassListStroce> _ListCol1 = new ObservableCollection<ClassListStroce>();
+        public StorageFolder storageFolderFirst1 { get; set; }
         public ObservableCollection<ClassListStroce> ListCol
         { get
             {
@@ -23,5 +26,48 @@ namespace FolderFile
                 _ListCol = value;
             }
         }
+        public ObservableCollection<ClassListStroce> ListCol1
+        {
+            get
+            {
+                return this._ListCol1;
+            }
+
+            set
+            {
+                _ListCol1 = value;
+            }
+        }
+
+        ObservableCollection<string> _ListColName = new ObservableCollection<string>();
+        public ObservableCollection<string> ListColName
+        {
+            get
+            {
+                return this._ListColName;
+            }
+
+            set
+            {
+                _ListColName = value;
+            }
+        }
+
+        ObservableCollection<string> _ListColName2 = new ObservableCollection<string>();
+        public ObservableCollection<string> ListColName2
+        {
+            get
+            {
+                return this._ListColName2;
+            }
+
+            set
+            {
+                _ListColName2 = value;
+            }
+        }
+
+
+       
     }
 }

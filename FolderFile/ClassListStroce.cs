@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace FolderFile
 {
@@ -27,6 +28,23 @@ namespace FolderFile
         }
    
         public  StorageFile storageFile { get; set; }
+        StorageItemThumbnail thumbnailMode;
+
+        public StorageItemThumbnail ThumbnailMode
+        {
+            get
+            {
+               
+                    return thumbnailMode;
+                
+              
+            }
+            set
+            {
+                thumbnailMode = value;
+            }
+        }
+
         public bool FlagFolde { get; set; }
         public string FileAndFildeName
         {

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp rescap">
   <Identity Name="796b3c8c-73dc-453d-b14f-bf57d8f97888" Publisher="CN=yurin" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="796b3c8c-73dc-453d-b14f-bf57d8f97888" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -23,7 +23,7 @@
     </Application>
   </Applications>
   <Capabilities>
-    
+    <rescap:Capability Name="broadFileSystemAccess" />
     <Capability Name="internetClient" />
     <uap:Capability Name="picturesLibrary" />
     <uap:Capability Name="videosLibrary" />
@@ -31,6 +31,6 @@
     <uap:Capability Name="chat" />
     <uap:Capability Name="removableStorage" />
     <DeviceCapability Name="lowLevel" />
-   
+
   </Capabilities>
 </Package>
