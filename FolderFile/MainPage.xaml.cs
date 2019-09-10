@@ -2,18 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ServiceModel.Channels;
+using System.Text;
 using System.Threading.Tasks;
 using Telerik.UI.Xaml.Controls.Grid;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,67 +40,88 @@ namespace FolderFile
         public MainPage()
         {
             this.InitializeComponent();
+         
            this.fileAndFolderViewer = new FileAndFolderViewer();
             
 
 
         }
+      
+       
         bool focusOne=true;
         FileAndFolderViewer fileAndFolderViewer { get; set; }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-           
-           var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if(storageItemAccessList.Entries.Count==0)
+            bool tryOk = false;
+            try
             {
-                ContentDialog subscribeDialog = new ContentDialog
-                {
-                    Title = "Перед тем как начать давайте добавим расположения для работы",
-                    Content = "Приложение будет иметь доступ к указанным папкам и содержимому. Вы так же можете вдальнейшем добавлять или удалять расположения. Вы так же имеете изначально доступ к папкам  с музыкой и изображением",
-                    CloseButtonText = "Не сейчас",
-                    PrimaryButtonText = "Добавить",
-                    
-                    DefaultButton = ContentDialogButton.Primary
-                };
+                StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
+                tryOk = true;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                await messageDialog.ShowAsync();
+                App.Current.Exit();
+            }
+            
+            
+           
+            if (tryOk)
+            {
 
-                ContentDialogResult result = await subscribeDialog.ShowAsync();
-                if (result == ContentDialogResult.Primary)
+                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
+                if (storageItemAccessList.Entries.Count == 0)
                 {
-                    var folderPicker = new Windows.Storage.Pickers.FolderPicker();
-                    folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
-                    folderPicker.FileTypeFilter.Add("*");
-
-                    Windows.Storage.StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-                    if (folder != null)
+                    ContentDialog subscribeDialog = new ContentDialog
                     {
-                        // Application now has read/write access to all contents in the picked folder
-                        // (including other sub-folder contents)
-                        Windows.Storage.AccessCache.StorageApplicationPermissions.
-                        FutureAccessList.AddOrReplace("PickedFolderToken", folder);
-                      
+                        Title = "Перед тем как начать давайте добавим расположения для работы",
+                        Content = "Приложение будет иметь доступ к указанным папкам и содержимому. Вы так же можете вдальнейшем добавлять или удалять расположения. Вы так же имеете изначально доступ к папкам  с музыкой и изображением",
+                        CloseButtonText = "Не сейчас",
+                        PrimaryButtonText = "Добавить",
+
+                        DefaultButton = ContentDialogButton.Primary
+                    };
+
+                    ContentDialogResult result = await subscribeDialog.ShowAsync();
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        var folderPicker = new Windows.Storage.Pickers.FolderPicker();
+                        folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+                        folderPicker.FileTypeFilter.Add("*");
+
+                        Windows.Storage.StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+                        if (folder != null)
+                        {
+                            // Application now has read/write access to all contents in the picked folder
+                            // (including other sub-folder contents)
+                            Windows.Storage.AccessCache.StorageApplicationPermissions.
+                            FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+
+                        }
+                        else
+                        {
+
+                        }
                     }
                     else
                     {
-                        
+                        // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
+                        // Do nothing.
                     }
-                }
-                else
-                {
-                    // The user clicked the CLoseButton, pressed ESC, Gamepad B, or the system back button.
-                    // Do nothing.
-                }
-                //  foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
-                // {
-                //    string mruToken = entry.Token;
-                //    string mruMetadata = entry.Metadata;
-                // Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                // The type of item will tell you whether it's a file or a folder.
+                    //  foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                    // {
+                    //    string mruToken = entry.Token;
+                    //    string mruMetadata = entry.Metadata;
+                    // Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
+                    // The type of item will tell you whether it's a file or a folder.
 
-                //}
+                    //}
+                }
+                InitializeTreeView();
+                InitializeTreeView1();
+                InitializeDataGridView();
             }
-            InitializeTreeView();
-            InitializeTreeView1();
-            InitializeDataGridView();
         }
         public async Task addLocation()
         {
@@ -108,7 +134,7 @@ namespace FolderFile
             {
                 // Application now has read/write access to all contents in the picked folder
                 // (including other sub-folder contents)
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace(folder.DisplayName, folder);
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace(folder.DisplayName, folder);
 
             }
             else
@@ -129,140 +155,178 @@ namespace FolderFile
             // A TreeView can have more than 1 root node. The Pictures library
             // and the Music library will each be a root node in the tree.
             // Get Pictures library.
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-            TreeViewNode pictureNode = new TreeViewNode();
-            pictureNode.Content = picturesFolder;
-            pictureNode.IsExpanded = false;
-
-            pictureNode.HasUnrealizedChildren = true;
-           
-            sampleTreeView1.RootNodes.Add(pictureNode);
-            FillTreeNode1(pictureNode);
 
 
-
-
-
-
-            // Get Music library.
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-            TreeViewNode musicNode = new TreeViewNode();
-            musicNode.Content = musicFolder;
-            musicNode.IsExpanded = false;
-            musicNode.HasUnrealizedChildren = true;
-      
-            sampleTreeView1.RootNodes.Add(musicNode);
-            FillTreeNode1(musicNode);
-
-
-            var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if (storageItemAccessList.Entries.Count != 0)
+            try
             {
 
 
-                foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
+                TreeViewNode pictureNode1 = new TreeViewNode();
+                pictureNode1.Content = documentFolder;
+                pictureNode1.IsExpanded = false;
+
+                pictureNode1.HasUnrealizedChildren = true;
+
+                sampleTreeView1.RootNodes.Add(pictureNode1);
+                FillTreeNode1(pictureNode1);
+
+
+                StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+                TreeViewNode pictureNode = new TreeViewNode();
+                pictureNode.Content = picturesFolder;
+                pictureNode.IsExpanded = false;
+
+                pictureNode.HasUnrealizedChildren = true;
+
+                sampleTreeView1.RootNodes.Add(pictureNode);
+                FillTreeNode1(pictureNode);
+                // Get Music library.
+                StorageFolder musicFolder = KnownFolders.MusicLibrary;
+                TreeViewNode musicNode = new TreeViewNode();
+                musicNode.Content = musicFolder;
+                musicNode.IsExpanded = false;
+                musicNode.HasUnrealizedChildren = true;
+
+                sampleTreeView1.RootNodes.Add(musicNode);
+                FillTreeNode1(musicNode);
+
+
+                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
+                if (storageItemAccessList.Entries.Count != 0)
                 {
-                    string mruToken = entry.Token;
-                    string mruMetadata = entry.Metadata;
-                    Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                    StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                    TreeViewNode AssecNode = new TreeViewNode();
-                    AssecNode.Content = ss;
-                    AssecNode.IsExpanded = false;
-                    AssecNode.HasUnrealizedChildren = true;
-                
-                    sampleTreeView1.RootNodes.Add(AssecNode);
-                    FillTreeNode1(AssecNode);
+
+
+                    foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                    {
+                        string mruToken = entry.Token;
+                        string mruMetadata = entry.Metadata;
+                        Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
+                        StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
+                        TreeViewNode AssecNode = new TreeViewNode();
+                        AssecNode.Content = ss;
+                        AssecNode.IsExpanded = false;
+                        AssecNode.HasUnrealizedChildren = true;
+
+                        sampleTreeView1.RootNodes.Add(AssecNode);
+                        FillTreeNode1(AssecNode);
+                    }
+                }
+
+                StorageFolder Folder = KnownFolders.RemovableDevices;
+
+                IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
+                foreach (StorageFolder FlFolder1 in folderList)
+                {
+
+                    TreeViewNode FolderNode = new TreeViewNode();
+                    FolderNode.Content = FlFolder1;
+                    FolderNode.IsExpanded = false;
+                    FolderNode.HasUnrealizedChildren = true;
+
+                    sampleTreeView1.RootNodes.Add(FolderNode);
+                    FillTreeNode1(FolderNode);
                 }
             }
+            catch(Exception ex)
+            {
+                MessageDialog messageDialog = new MessageDialog(ex.ToString());
+                await messageDialog.ShowAsync();
+            }
+           
+         
         }
         private async void InitializeTreeView()
         {
             // A TreeView can have more than 1 root node. The Pictures library
             // and the Music library will each be a root node in the tree.
             // Get Pictures library.
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-            TreeViewNode pictureNode = new TreeViewNode();
-            pictureNode.Content = picturesFolder;
-            pictureNode.IsExpanded = false;
-           
-            pictureNode.HasUnrealizedChildren = true;
-            sampleTreeView.RootNodes.Add(pictureNode);
-        
-            FillTreeNode(pictureNode);
-
-
-           
-
-
-          
-            // Get Music library.
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-            TreeViewNode musicNode = new TreeViewNode();
-            musicNode.Content = musicFolder;
-            musicNode.IsExpanded = false;
-            musicNode.HasUnrealizedChildren = true;
-            sampleTreeView.RootNodes.Add(musicNode);
-         
-            FillTreeNode(musicNode);
-
-
-            var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if (storageItemAccessList.Entries.Count != 0)
+            try
             {
 
 
-                foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
+                TreeViewNode pictureNode1 = new TreeViewNode();
+                pictureNode1.Content = documentFolder;
+                pictureNode1.IsExpanded = false;
+
+                pictureNode1.HasUnrealizedChildren = true;
+
+                sampleTreeView.RootNodes.Add(pictureNode1);
+                FillTreeNode1(pictureNode1);
+
+
+                StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+                TreeViewNode pictureNode = new TreeViewNode();
+                pictureNode.Content = picturesFolder;
+                pictureNode.IsExpanded = false;
+
+                pictureNode.HasUnrealizedChildren = true;
+                sampleTreeView.RootNodes.Add(pictureNode);
+                FillTreeNode(pictureNode);
+                // Get Music library.
+                StorageFolder musicFolder = KnownFolders.MusicLibrary;
+                TreeViewNode musicNode = new TreeViewNode();
+                musicNode.Content = musicFolder;
+                musicNode.IsExpanded = false;
+                musicNode.HasUnrealizedChildren = true;
+                sampleTreeView.RootNodes.Add(musicNode);
+                FillTreeNode(musicNode);
+                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
+                if (storageItemAccessList.Entries.Count != 0)
                 {
-                    string mruToken = entry.Token;
-                    string mruMetadata = entry.Metadata;
-                    Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                    StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                    TreeViewNode AssecNode = new TreeViewNode();
-                    AssecNode.Content = ss;
-                    AssecNode.IsExpanded = false;
-                    AssecNode.HasUnrealizedChildren = true;
-                    sampleTreeView.RootNodes.Add(AssecNode);
-               
-                    FillTreeNode(AssecNode);
+
+
+                    foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                    {
+                        string mruToken = entry.Token;
+                        string mruMetadata = entry.Metadata;
+                        Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
+                        StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
+                        TreeViewNode AssecNode = new TreeViewNode();
+                        AssecNode.Content = ss;
+                        AssecNode.IsExpanded = false;
+                        AssecNode.HasUnrealizedChildren = true;
+                        sampleTreeView.RootNodes.Add(AssecNode);
+
+                        FillTreeNode(AssecNode);
+                    }
                 }
+
+
+                StorageFolder Folder = KnownFolders.RemovableDevices;
+                IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
+                foreach (StorageFolder FlFolder1 in folderList)
+                {
+
+                    TreeViewNode FolderNode = new TreeViewNode();
+                    FolderNode.Content = FlFolder1;
+                    FolderNode.IsExpanded = false;
+                    FolderNode.HasUnrealizedChildren = true;
+
+                    sampleTreeView.RootNodes.Add(FolderNode);
+                    FillTreeNode1(FolderNode);
+                }
+            }
+            catch(Exception ex )
+            {
+                MessageDialog messageDialog = new MessageDialog(ex.ToString());
+              await  messageDialog.ShowAsync();
             }
         }
         private async void InitializeDataGridView()
         {
-            // A TreeView can have more than 1 root node. The Pictures library
-            // and the Music library will each be a root node in the tree.
-            // Get Pictures library.
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-            var thumbnail = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail });
-            fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail });
-
-
-
-            // Get Music library.
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-            var thumbnail1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail1 });
-            fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail1 });
-
-            var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if (storageItemAccessList.Entries.Count != 0)
+            try
             {
 
 
-                foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
-                {
-                    string mruToken = entry.Token;
-                    string mruMetadata = entry.Metadata;
-                    Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                    listDostyp.Add(mruToken);
-
-                    StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                    var thumbnail11 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                    fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail11 });
-                    fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail11 });
-                }
+                InitializeDataGridView1();
+                InitializeDataGridView2();
+            }
+            catch(Exception ex)
+            {
+                MessageDialog messageDialog = new MessageDialog(ex.ToString());
+                await messageDialog.ShowAsync();
             }
 
         }
@@ -271,37 +335,55 @@ namespace FolderFile
             // A TreeView can have more than 1 root node. The Pictures library
             // and the Music library will each be a root node in the tree.
             // Get Pictures library.
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-            var thumbnail11 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail11 });
-          
-
-
-
-            // Get Music library.
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-            var thumbnail = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail });
-       
-
-            var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if (storageItemAccessList.Entries.Count != 0)
+            try
             {
 
 
-                foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
-                {
-                    string mruToken = entry.Token;
-                    string mruMetadata = entry.Metadata;
-                    Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                    listDostyp.Add(mruToken);
+                StorageFolder DocumentFolder = KnownFolders.DocumentsLibrary;
+                var thumbnaild = await DocumentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = DocumentFolder, FlagFolde = true, ThumbnailMode = thumbnaild });
 
-                    StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                    var thumbnail1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                    fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail1 });
-               
+                StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+                var thumbnail = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail });
+
+                // Get Music library.
+                StorageFolder musicFolder = KnownFolders.MusicLibrary;
+                var thumbnail1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail1 });
+
+                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
+                if (storageItemAccessList.Entries.Count != 0)
+                {
+                    foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                    {
+                        string mruToken = entry.Token;
+                        string mruMetadata = entry.Metadata;
+                        Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
+                        listDostyp.Add(mruToken);
+                        StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
+                        var thumbnail11 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail11 });
+
+                    }
+
+                }
+                StorageFolder Folder = KnownFolders.RemovableDevices;
+
+                IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
+                foreach (StorageFolder FlFolder1 in folderList)
+                {
+                    thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                    fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
                 }
             }
+            catch(UnauthorizedAccessException ex)
+            {
+                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                await messageDialog.ShowAsync();
+                App.Current.Exit();
+            }
+
 
         }
 
@@ -310,34 +392,59 @@ namespace FolderFile
             // A TreeView can have more than 1 root node. The Pictures library
             // and the Music library will each be a root node in the tree.
             // Get Pictures library.
-            StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-            var thumbnail11 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail11 });
-
-
-
-            // Get Music library.
-            StorageFolder musicFolder = KnownFolders.MusicLibrary;
-            var thumbnail = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-            fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail });
-
-            var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-            if (storageItemAccessList.Entries.Count != 0)
+            try
             {
 
 
-                foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
-                {
-                    string mruToken = entry.Token;
-                    string mruMetadata = entry.Metadata;
-                    Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                    listDostyp.Add(mruToken);
+                StorageFolder DocumentFolder = KnownFolders.DocumentsLibrary;
+                var thumbnaild = await DocumentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = DocumentFolder, FlagFolde = true, ThumbnailMode = thumbnaild });
 
-                    StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                    var thumbnail1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                    fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail1 });
+                StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+                var thumbnail11 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnail11 });
+
+
+
+                // Get Music library.
+                StorageFolder musicFolder = KnownFolders.MusicLibrary;
+                var thumbnail = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnail });
+
+                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
+                if (storageItemAccessList.Entries.Count != 0)
+                {
+
+
+                    foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
+                    {
+                        string mruToken = entry.Token;
+                        string mruMetadata = entry.Metadata;
+                        Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
+                        listDostyp.Add(mruToken);
+
+                        StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
+                        var thumbnail1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail1 });
+                    }
+                }
+                StorageFolder Folder = KnownFolders.RemovableDevices;
+                IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
+                foreach (StorageFolder FlFolder1 in folderList)
+                {
+
+                    var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                    fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
                 }
             }
+            catch(UnauthorizedAccessException ex)
+            {
+                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                await messageDialog.ShowAsync();
+                App.Current.Exit();
+            }
+
+           
 
         }
 
@@ -478,11 +585,9 @@ namespace FolderFile
                         fileAndFolderViewer.ListCol.Clear();
                         fileAndFolderViewer.ListColName.Clear();
                         fileAndFolderViewer.storageFolderFirst = folder;
-
-                        IReadOnlyList<StorageFolder> folderList =
-                        await folder.GetFoldersAsync();
-                        IReadOnlyList<StorageFile> fileList =
-                               await folder.GetFilesAsync();
+                    fileAndFolderViewer.Path = folder.Path;
+                        IReadOnlyList<StorageFolder> folderList = await folder.GetFoldersAsync();
+                        IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
                         if (fileList.Count != 0 || folderList.Count != 0)
                         {
 
@@ -526,11 +631,9 @@ namespace FolderFile
                         fileAndFolderViewer.ListCol1.Clear();
                         fileAndFolderViewer.ListColName2.Clear();
                         fileAndFolderViewer.storageFolderFirst1 = folder;
-
-                        IReadOnlyList<StorageFolder> folderList =
-                        await folder.GetFoldersAsync();
-                        IReadOnlyList<StorageFile> fileList =
-                               await folder.GetFilesAsync();
+                    fileAndFolderViewer.Path = folder.Path;
+                    IReadOnlyList<StorageFolder> folderList =  await folder.GetFoldersAsync();
+                        IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
                         if (fileList.Count != 0 || folderList.Count != 0)
                         {
 
@@ -562,26 +665,17 @@ namespace FolderFile
 
         private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            ListView listView;
-           
-                listView = _DataGrid;
           
-          
+
+            ListView listView = _DataGrid;
             if (listView != null)
             {
-
-
-
-                // StorageFolderQueryResult queryResult =
-                //  classListStroce.storageFolder.CreateFolderQuery(CommonFolderQuery.GroupByMonth);
-
-               
-
                     try
                     {
 
                         StorageFolder storageFolder = await fileAndFolderViewer.storageFolderFirst.GetParentAsync();
-                        IReadOnlyList<StorageFolder> folderList =
+                    fileAndFolderViewer.Path = storageFolder.Path;
+                    IReadOnlyList<StorageFolder> folderList =
                            await storageFolder.GetFoldersAsync();
                         IReadOnlyList<StorageFile> fileList =
                           await storageFolder.GetFilesAsync();
@@ -616,41 +710,27 @@ namespace FolderFile
 
         private async void AppBarButtonNazad_Click_1(object sender, RoutedEventArgs e)
         {
-            ListView listView;
-          
-                listView = _DataGrid2;
-
-
+            
+            ListView listView = _DataGrid2;
             if (listView != null)
             {
-
-
-
-                // StorageFolderQueryResult queryResult =
-                //  classListStroce.storageFolder.CreateFolderQuery(CommonFolderQuery.GroupByMonth);
-
-
-
-
-
                 try
                 {
-
                     StorageFolder storageFolder = await fileAndFolderViewer.storageFolderFirst1.GetParentAsync();
-                    IReadOnlyList<StorageFolder> folderList =
-                       await storageFolder.GetFoldersAsync();
-                    IReadOnlyList<StorageFile> fileList =
-                      await storageFolder.GetFilesAsync();
-
+                    fileAndFolderViewer.Path = storageFolder.Path;
+                    IReadOnlyList<StorageFolder> folderList = await storageFolder.GetFoldersAsync();
+                    IReadOnlyList<StorageFile> fileList = await storageFolder.GetFilesAsync();
                     fileAndFolderViewer.storageFolderFirst1 = storageFolder;
                     fileAndFolderViewer.ListCol1.Clear();
                     foreach (StorageFolder FlFolder1 in folderList)
                     {
+                        Debug.WriteLine("folder" + FlFolder1.Name);
                         var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
                         fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
                     }
                     foreach (StorageFile FlFolder1 in fileList)
                     {
+                        
                         var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
                         fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { storageFile = FlFolder1, FlagFolde = false, ThumbnailMode = thumbnail1 });
                     }
@@ -701,7 +781,8 @@ namespace FolderFile
                 _DataGrid.SelectedItem = null;
                 ClassListStroce classListStroce = (ClassListStroce)tag.SelectedItem;
                 if (fileAndFolderViewer.storageFolderFirst1 != null)
-                    FilePathTextBlock.Text = fileAndFolderViewer.storageFolderFirst1.Path;
+                   
+                fileAndFolderViewer.Path = fileAndFolderViewer.storageFolderFirst1.Path;
             }
            else
             {
@@ -709,7 +790,8 @@ namespace FolderFile
                 _DataGrid2.SelectedItem = null;
                 ClassListStroce classListStroce = (ClassListStroce)tag.SelectedItem;
                 if(fileAndFolderViewer.storageFolderFirst != null)
-                FilePathTextBlock.Text = fileAndFolderViewer.storageFolderFirst.Path;
+                
+                fileAndFolderViewer.Path = fileAndFolderViewer.storageFolderFirst.Path;
             }
             
             
@@ -740,7 +822,7 @@ namespace FolderFile
                             {
 
 
-
+                                fileAndFolderViewer.Path = classListStroce.StorageFolder.Path;
                                 IReadOnlyList<StorageFolder> folderList = await classListStroce.StorageFolder.GetFoldersAsync();
                                 IReadOnlyList<StorageFile> fileList = await classListStroce.StorageFolder.GetFilesAsync();
 
@@ -778,9 +860,10 @@ namespace FolderFile
             }
             else
             {
+                Debug.WriteLine("Start");
                 if (listView.SelectedItem != null)
                 {
-
+                    Debug.WriteLine(listView.SelectedItem.ToString());
                     ClassListStroce classListStroce = (ClassListStroce)listView.SelectedItem;
 
 
@@ -791,13 +874,14 @@ namespace FolderFile
 
                         if (classListStroce != null)
                         {
+                            Debug.WriteLine(classListStroce.FlagFolde.ToString());
                             if (classListStroce.FlagFolde)
                             {
 
 
                                 IReadOnlyList<StorageFolder> folderList = await classListStroce.StorageFolder.GetFoldersAsync();
                                 IReadOnlyList<StorageFile> fileList = await classListStroce.StorageFolder.GetFilesAsync();
-
+                                fileAndFolderViewer.Path = classListStroce.StorageFolder.Path;
                                 fileAndFolderViewer.storageFolderFirst1 = classListStroce.StorageFolder;
                                 fileAndFolderViewer.ListCol1.Clear();
                                 fileAndFolderViewer.ListColName.Clear();
@@ -947,22 +1031,37 @@ namespace FolderFile
             ListView listView = (ListView)sender;
             allContactsMenuFlyout.ShowAt(listView, e.GetPosition(listView));
             var a = ((FrameworkElement)e.OriginalSource).DataContext as ClassListStroce;
-            var content = a.FileAndFildeName;
-            Copy.Tag = a;
-            open.Tag = a;
-            Perem.Tag = a;
-            Paste.Tag = a;
-            
-            Delete.Tag = a;
-            Inf.Tag = a;
+            if(a!=null)
+            {
+                var content = a.FileAndFildeName;
+                Copy.Tag = a;
+                open.Tag = a;
+                Perem.Tag = a;
+                Paste.Tag = a;
+                Delete.Tag = a;
+                Inf.Tag = a;
+            }
+           
 
         }
-        private async void Remove_Click(object sender, RoutedEventArgs e)
+        DataPackage dataPackage = new DataPackage();
+        private  void Copi_Click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
             ClassListStroce cc = (ClassListStroce)secondItem.Tag;
-            MessageDialog messageDialog =new MessageDialog(cc.FileAndFildeTip.ToString());
-         await messageDialog.ShowAsync();
+            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            List<IStorageItem> list = new List<IStorageItem>();
+            if(cc.FlagFolde)
+            {
+                list.Add(cc.StorageFolder);
+            }
+         else
+            {
+                list.Add(cc.storageFile);
+            }
+            dataPackage.SetStorageItems(list);
+       
+            Clipboard.SetContent(dataPackage);
         }
 
         private async void Open_Click(object sender, RoutedEventArgs e)
@@ -977,7 +1076,78 @@ namespace FolderFile
 
         }
 
+        public async void Upgreid()
+        {
+           
+            ListView listView = _DataGrid2;
 
+            if (listView != null)
+            {
+
+                try
+                {
+                    StorageFolder storageFolder = fileAndFolderViewer.storageFolderFirst1;
+                    IReadOnlyList<StorageFolder> folderList =
+                       await storageFolder.GetFoldersAsync();
+                    IReadOnlyList<StorageFile> fileList =
+                      await storageFolder.GetFilesAsync();
+
+                    fileAndFolderViewer.storageFolderFirst1 = storageFolder;
+                    fileAndFolderViewer.ListCol1.Clear();
+                    foreach (StorageFolder FlFolder1 in folderList)
+                    {
+                        var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
+                    }
+                    foreach (StorageFile FlFolder1 in fileList)
+                    {
+                        var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { storageFile = FlFolder1, FlagFolde = false, ThumbnailMode = thumbnail1 });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    fileAndFolderViewer.ListCol1.Clear();
+                    InitializeDataGridView2();
+                }
+            }
+            _DataGrid2.ItemsSource = fileAndFolderViewer.ListCol1;
+
+            listView = _DataGrid;
+
+            if (listView != null)
+            {
+
+                try
+                {
+                    StorageFolder storageFolder = fileAndFolderViewer.storageFolderFirst;
+                    IReadOnlyList<StorageFolder> folderList =
+                       await storageFolder.GetFoldersAsync();
+                    IReadOnlyList<StorageFile> fileList =
+                      await storageFolder.GetFilesAsync();
+
+                    fileAndFolderViewer.storageFolderFirst = storageFolder;
+                    fileAndFolderViewer.ListCol.Clear();
+                    foreach (StorageFolder FlFolder1 in folderList)
+                    {
+                        var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
+                    }
+                    foreach (StorageFile FlFolder1 in fileList)
+                    {
+                        var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                        fileAndFolderViewer.ListCol.Add(new ClassListStroce() { storageFile = FlFolder1, FlagFolde = false, ThumbnailMode = thumbnail1 });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    fileAndFolderViewer.ListCol.Clear();
+                    InitializeDataGridView();
+                }
+            }
+            _DataGrid.ItemsSource = fileAndFolderViewer.ListCol;
+
+        }
         private async void AppBarButton_Click_6(object sender, RoutedEventArgs e)
         {
             if (focusOne == true)
@@ -1023,6 +1193,7 @@ namespace FolderFile
 
                 }
             }
+            Upgreid();
 
         }
 
@@ -1068,6 +1239,7 @@ namespace FolderFile
 
                 }
             }
+            Upgreid();
         }
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
@@ -1088,6 +1260,203 @@ namespace FolderFile
                 contentDialogProcecc.DeleteFolder(cc.StorageFolder);
                 var x = await contentDialogProcecc.ShowAsync();
 
+            }
+            Upgreid();
+        }
+
+        private async void Paste_Click(object sender, RoutedEventArgs e)
+        {
+            DataPackageView dataPackageView = Clipboard.GetContent();
+          
+            if (dataPackageView.Contains(StandardDataFormats.StorageItems))
+            { bool filder = true;
+                if (focusOne == true)
+                {
+                    var storageI = await dataPackageView.GetStorageItemsAsync();
+                    foreach(var dd in storageI)
+                    {
+                        
+                    }
+               try
+                    {
+                        StorageFolder storageFolder = (StorageFolder)storageI.ElementAt(0);
+                        filder = true;
+                    }
+                    catch
+                    {
+                        filder = false;
+                    }
+                    if (!filder)
+                    {
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
+                        contentDialogProcecc.CopyFile((StorageFile)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst);
+                        var x = await contentDialogProcecc.ShowAsync();
+
+                    }
+                    else
+                    {
+                        //  perebor_updates(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
+                        // CopyDir(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
+                        contentDialogProcecc.CopyFolder((StorageFolder)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst1);
+                        var x = await contentDialogProcecc.ShowAsync();
+
+
+                    }
+                }
+                else
+                {
+                    var storageI = await dataPackageView.GetStorageItemsAsync();
+                    foreach (var dd in storageI)
+                    {
+
+                    }
+                    try
+                    {
+                        StorageFolder storageFolder = (StorageFolder)storageI.ElementAt(0);
+                        filder = true;
+                    }
+                    catch
+                    {
+                        filder = false;
+                    }
+
+                    if (!filder)
+                    {
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
+                        contentDialogProcecc.CopyFile((StorageFile)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst1);
+                        var x = await contentDialogProcecc.ShowAsync();
+
+
+                    }
+                    else
+                    {
+                        //  perebor_updates(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
+                        // CopyDir(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
+                        contentDialogProcecc.CopyFolder((StorageFolder)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst1);
+                        var x = await contentDialogProcecc.ShowAsync();
+
+
+                    }
+                }
+                Upgreid();
+            }
+
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+                
+                if (focusOne == true)
+                {
+               await fileAndFolderViewer.storageFolderFirst.CreateFolderAsync("Новая папка", CreationCollisionOption.GenerateUniqueName);
+                }
+                else
+                {
+
+
+                await fileAndFolderViewer.storageFolderFirst1.CreateFolderAsync("Новая папка", CreationCollisionOption.GenerateUniqueName);
+
+                }
+                Upgreid();
+        }
+
+        private async void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (focusOne == true)
+            {
+                ContentDialogNewFile contentDialogNewFile = new ContentDialogNewFile() {};
+                contentDialogNewFile.storageFolder = fileAndFolderViewer.storageFolderFirst;
+               await contentDialogNewFile.ShowAsync(); 
+            }
+            else
+            {
+                ContentDialogNewFile contentDialogNewFile = new ContentDialogNewFile() { };
+                contentDialogNewFile.storageFolder = fileAndFolderViewer.storageFolderFirst1;
+                await contentDialogNewFile.ShowAsync();
+            }
+            Upgreid();
+        }
+
+        private async void AppBarButton_Click_8(object sender, RoutedEventArgs e)
+        {
+            if (focusOne == true)
+            {
+                var vs = (ClassListStroce)_DataGrid.SelectedItem;
+                ContentDialogRemove contentDialogNewFile = new ContentDialogRemove() { };
+                contentDialogNewFile.storageFolder = fileAndFolderViewer.storageFolderFirst;
+                if (vs.FlagFolde)
+                {   
+                    contentDialogNewFile.folder = vs.FlagFolde;
+                    contentDialogNewFile.storageFolder = vs.StorageFolder;
+                    await contentDialogNewFile.ShowAsync();
+                }
+                else
+                {
+                    contentDialogNewFile.folder = vs.FlagFolde;
+                    contentDialogNewFile.storageFile = vs.storageFile;
+                    await contentDialogNewFile.ShowAsync();
+                }
+            }
+            else
+            {
+                var vs = (ClassListStroce)_DataGrid2.SelectedItem;
+                ContentDialogRemove contentDialogNewFile = new ContentDialogRemove() { };
+                contentDialogNewFile.storageFolder = fileAndFolderViewer.storageFolderFirst1;
+                if (vs.FlagFolde)
+                {
+                    contentDialogNewFile.folder = vs.FlagFolde;
+                    contentDialogNewFile.storageFolder = vs.StorageFolder;
+                    await contentDialogNewFile.ShowAsync();
+                }
+                else
+                {
+                    contentDialogNewFile.folder = vs.FlagFolde;
+                    contentDialogNewFile.storageFile = vs.storageFile;
+                    await contentDialogNewFile.ShowAsync();
+                }
+
+            }
+            Upgreid();
+        }
+
+        private async void Inf_Click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
+            ClassListStroce cc = (ClassListStroce)secondItem.Tag;
+            if(cc.FlagFolde)
+            {
+                StringBuilder fileProperties = new StringBuilder();
+                fileProperties.AppendLine("Имя: " + cc.StorageFolder.Name);
+                fileProperties.AppendLine("Тип: " + cc.StorageFolder.DisplayType);
+                fileProperties.AppendLine("Путь: " + cc.StorageFolder.Path);
+                fileProperties.AppendLine("Создан: " + cc.StorageFolder.DateCreated.ToString());
+                // Get file's basic properties.
+                Windows.Storage.FileProperties.BasicProperties basicProperties =
+                    await cc.StorageFolder.GetBasicPropertiesAsync();
+             
+                fileProperties.AppendLine("Изменен: " + basicProperties.DateModified);
+                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), "Свойства");
+             await   messageDialog.ShowAsync();
+         
+            }
+            else
+            {
+                StringBuilder fileProperties = new StringBuilder();
+                fileProperties.AppendLine("Имя: " + cc.storageFile.Name);
+                fileProperties.AppendLine("Тип: " + cc.storageFile.DisplayType);
+                fileProperties.AppendLine("Путь: " + cc.storageFile.Path);
+                fileProperties.AppendLine("Создан: " + cc.storageFile.DateCreated.ToString());
+                // Get file's basic properties.
+                Windows.Storage.FileProperties.BasicProperties basicProperties =
+                    await cc.storageFile.GetBasicPropertiesAsync();
+                string fileSize = string.Format("{0:n0}", basicProperties.Size);
+                fileProperties.AppendLine("Размер: " + fileSize + " байт(ов)");
+                fileProperties.AppendLine("Изменен: " + basicProperties.DateModified);
+                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), "Свойства");
+                await messageDialog.ShowAsync();
             }
         }
     }

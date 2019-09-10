@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -9,8 +11,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace FolderFile
 {
-    class FileAndFolderViewer
+    class FileAndFolderViewer: INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            // Raise the PropertyChanged event, passing the name of the property whose value has changed.
+            this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
         ObservableCollection<ClassListStroce> _ListCol = new ObservableCollection<ClassListStroce>();
         public StorageFolder storageFolderFirst { get; set; }
         ObservableCollection<ClassListStroce> _ListCol1 = new ObservableCollection<ClassListStroce>();
@@ -66,7 +74,19 @@ namespace FolderFile
                 _ListColName2 = value;
             }
         }
-
+        string path;
+        public string Path
+        {
+            get
+            {
+                return path;
+            }
+            set
+            {
+                path = value;
+                this.OnPropertyChanged();
+            }
+        }
 
        
     }

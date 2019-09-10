@@ -67,7 +67,7 @@ namespace FolderFile
         {
             // Directory.CreateDirectory(ToDir);
             
-            StorageFolder end_dir1 = await ToDir.CreateFolderAsync(FromDir.DisplayName);
+            StorageFolder end_dir1 = await ToDir.CreateFolderAsync(FromDir.DisplayName, CreationCollisionOption.GenerateUniqueName);
             TextInfo.Text = "Копирование " + end_dir1.Path;
             IReadOnlyList<StorageFile> FileList =
                               await FromDir.GetFilesAsync();
@@ -99,7 +99,7 @@ namespace FolderFile
                 //Проверяем - если директории не существует, то создаём;
                 if (await end_dir1.TryGetItemAsync(dir.Name) == null)
                 {
-                    end_dir2 = await end_dir1.CreateFolderAsync(dir.Name);
+                    end_dir2 = await end_dir1.CreateFolderAsync(dir.Name, CreationCollisionOption.GenerateUniqueName);
                     //  Directory.CreateDirectory(end_dir + "\\" + dir.Name);
                 }
                

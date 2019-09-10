@@ -1,0 +1,21 @@
+﻿<ContentDialog
+    x:Class="FolderFile.ContentDialogNewFile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FolderFile"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Новый файл"
+    PrimaryButtonText="Создать"
+    SecondaryButtonText="Отмена"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <StackPanel>
+            <TextBox Header="Имя файла" x:Name="nameF" Text="Новый файл"/>
+            <TextBox Header="Тип файла" x:Name="tipF" Text=".txt"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>
