@@ -10,9 +10,9 @@
     PrimaryButtonText="Принять"
     SecondaryButtonText="Отмена"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" x:Uid="ContentButton">
 
     <Grid>
-        <TextBox Header="Новое имя" x:Name="newName"/>
+        <TextBox x:Uid="TextNewName" Header="Новое имя" x:Name="newName"/>
     </Grid>
 </ContentDialog>

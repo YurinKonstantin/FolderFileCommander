@@ -46,12 +46,13 @@ namespace FolderFile
 
 
         }
-      
+
        
         bool focusOne=true;
         FileAndFolderViewer fileAndFolderViewer { get; set; }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             bool tryOk = false;
             try
             {
@@ -60,7 +61,8 @@ namespace FolderFile
             }
             catch (UnauthorizedAccessException ex)
             {
-                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                //resourceLoader.GetString("MessageTiletDostup");
+                MessageDialog messageDialog = new MessageDialog(resourceLoader.GetString("MessageContentDostup"), resourceLoader.GetString("MessageTiletDostup"));
                 await messageDialog.ShowAsync();
                 App.Current.Exit();
             }
@@ -75,10 +77,10 @@ namespace FolderFile
                 {
                     ContentDialog subscribeDialog = new ContentDialog
                     {
-                        Title = "Перед тем как начать давайте добавим расположения для работы",
-                        Content = "Приложение будет иметь доступ к указанным папкам и содержимому. Вы так же можете вдальнейшем добавлять или удалять расположения. Вы так же имеете изначально доступ к папкам  с музыкой и изображением",
-                        CloseButtonText = "Не сейчас",
-                        PrimaryButtonText = "Добавить",
+                        Title = resourceLoader.GetString("MessageTileAdd"),
+                        Content = resourceLoader.GetString("MessageContentAdd"),
+                        CloseButtonText = resourceLoader.GetString("NoSey"),
+                        PrimaryButtonText = resourceLoader.GetString("Eas"),
 
                         DefaultButton = ContentDialogButton.Primary
                     };
@@ -379,7 +381,8 @@ namespace FolderFile
             }
             catch(UnauthorizedAccessException ex)
             {
-                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                MessageDialog messageDialog = new MessageDialog(resourceLoader.GetString("MessageContentDostup"), resourceLoader.GetString("MessageTiletDostup"));
                 await messageDialog.ShowAsync();
                 App.Current.Exit();
             }
@@ -439,7 +442,8 @@ namespace FolderFile
             }
             catch(UnauthorizedAccessException ex)
             {
-                MessageDialog messageDialog = new MessageDialog("Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  > Параметры  > Конфиденциальность > Файловая система.", "Доступ к файловой системе");
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                MessageDialog messageDialog = new MessageDialog(resourceLoader.GetString("MessageContentDostup"), resourceLoader.GetString("MessageTiletDostup"));
                 await messageDialog.ShowAsync();
                 App.Current.Exit();
             }
@@ -1199,12 +1203,14 @@ namespace FolderFile
 
         private async void AppBarButton_Click_7(object sender, RoutedEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            // MessageDialog messageDialog = new MessageDialog(resourceLoader.GetString("MessageContentDostup"), resourceLoader.GetString("TileDeleteFile"));
             if (focusOne == true)
             {
                 var vs = (ClassListStroce)_DataGrid.SelectedItem;
                 if (vs.FlagFolde != true)
                 {
-                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление файла" };
+                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFile") };
                     //contentDialogProcecc.DeleteFile(vs.storageFile);
                     // var x = await contentDialogProcecc.ShowAsync();
                     await vs.storageFile.DeleteAsync();
@@ -1213,7 +1219,7 @@ namespace FolderFile
                 else
                 {
                     
-                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление папки" };
+                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFolder") };
                     contentDialogProcecc.DeleteFolder(vs.StorageFolder);
                     var x = await contentDialogProcecc.ShowAsync();
                     
@@ -1224,7 +1230,7 @@ namespace FolderFile
                 var vs = (ClassListStroce)_DataGrid2.SelectedItem;
                 if (vs.FlagFolde != true)
                 {
-                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление файла" };
+                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFile") };
                     //  contentDialogProcecc.DeleteFile(vs.storageFile);
                     // var x = await contentDialogProcecc.ShowAsync();
                    await vs.storageFile.DeleteAsync();
@@ -1233,7 +1239,7 @@ namespace FolderFile
                 else
                 {
 
-                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление папки" };
+                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFolder") };
                     contentDialogProcecc.DeleteFolder(vs.StorageFolder);
                     var x = await contentDialogProcecc.ShowAsync();
 
@@ -1244,11 +1250,12 @@ namespace FolderFile
 
         private async void Delete_Click(object sender, RoutedEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
             ClassListStroce cc = (ClassListStroce)secondItem.Tag;
             if (cc.FlagFolde != true)
             {
-                ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление файла" };
+                ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFile") };
                 contentDialogProcecc.DeleteFile(cc.storageFile);
                 var x = await contentDialogProcecc.ShowAsync();
            
@@ -1256,7 +1263,7 @@ namespace FolderFile
             else
             {
 
-                ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Удаление папки" };
+                ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFolder") };
                 contentDialogProcecc.DeleteFolder(cc.StorageFolder);
                 var x = await contentDialogProcecc.ShowAsync();
 
@@ -1266,6 +1273,7 @@ namespace FolderFile
 
         private async void Paste_Click(object sender, RoutedEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             DataPackageView dataPackageView = Clipboard.GetContent();
           
             if (dataPackageView.Contains(StandardDataFormats.StorageItems))
@@ -1323,7 +1331,7 @@ namespace FolderFile
 
                     if (!filder)
                     {
-                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TilePasteFile") };
                         contentDialogProcecc.CopyFile((StorageFile)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst1);
                         var x = await contentDialogProcecc.ShowAsync();
 
@@ -1333,7 +1341,7 @@ namespace FolderFile
                     {
                         //  perebor_updates(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
                         // CopyDir(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
-                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TilePasteFolder") };
                         contentDialogProcecc.CopyFolder((StorageFolder)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst1);
                         var x = await contentDialogProcecc.ShowAsync();
 
@@ -1347,17 +1355,18 @@ namespace FolderFile
 
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            
-                
-                if (focusOne == true)
+
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            if (focusOne == true)
                 {
-               await fileAndFolderViewer.storageFolderFirst.CreateFolderAsync("Новая папка", CreationCollisionOption.GenerateUniqueName);
+                
+              await fileAndFolderViewer.storageFolderFirst.CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
                 }
                 else
                 {
 
 
-                await fileAndFolderViewer.storageFolderFirst1.CreateFolderAsync("Новая папка", CreationCollisionOption.GenerateUniqueName);
+                await fileAndFolderViewer.storageFolderFirst1.CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
 
                 }
                 Upgreid();
@@ -1424,38 +1433,39 @@ namespace FolderFile
 
         private async void Inf_Click(object sender, RoutedEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
             ClassListStroce cc = (ClassListStroce)secondItem.Tag;
             if(cc.FlagFolde)
             {
                 StringBuilder fileProperties = new StringBuilder();
-                fileProperties.AppendLine("Имя: " + cc.StorageFolder.Name);
-                fileProperties.AppendLine("Тип: " + cc.StorageFolder.DisplayType);
-                fileProperties.AppendLine("Путь: " + cc.StorageFolder.Path);
-                fileProperties.AppendLine("Создан: " + cc.StorageFolder.DateCreated.ToString());
+                fileProperties.AppendLine(resourceLoader.GetString("NameText") +": " + cc.StorageFolder.Name);
+                fileProperties.AppendLine(resourceLoader.GetString("TipText") + ": " + cc.StorageFolder.DisplayType);
+                fileProperties.AppendLine(resourceLoader.GetString("PathText") + ": " + cc.StorageFolder.Path);
+                fileProperties.AppendLine(resourceLoader.GetString("CreatText") + ": " + cc.StorageFolder.DateCreated.ToString());
                 // Get file's basic properties.
                 Windows.Storage.FileProperties.BasicProperties basicProperties =
                     await cc.StorageFolder.GetBasicPropertiesAsync();
              
-                fileProperties.AppendLine("Изменен: " + basicProperties.DateModified);
-                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), "Свойства");
+                fileProperties.AppendLine(resourceLoader.GetString("IzmenText") + ": " + basicProperties.DateModified);
+                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), resourceLoader.GetString("InfoText"));
              await   messageDialog.ShowAsync();
          
             }
             else
             {
                 StringBuilder fileProperties = new StringBuilder();
-                fileProperties.AppendLine("Имя: " + cc.storageFile.Name);
-                fileProperties.AppendLine("Тип: " + cc.storageFile.DisplayType);
-                fileProperties.AppendLine("Путь: " + cc.storageFile.Path);
-                fileProperties.AppendLine("Создан: " + cc.storageFile.DateCreated.ToString());
+                fileProperties.AppendLine(resourceLoader.GetString("NameText") + ": " + cc.storageFile.Name);
+                fileProperties.AppendLine(resourceLoader.GetString("TipText") + ": " + cc.StorageFolder.DisplayType);
+                fileProperties.AppendLine(resourceLoader.GetString("PathText") + ": " + cc.StorageFolder.Path);
+                fileProperties.AppendLine(resourceLoader.GetString("CreatText") + ": " + cc.StorageFolder.DateCreated.ToString());
                 // Get file's basic properties.
                 Windows.Storage.FileProperties.BasicProperties basicProperties =
                     await cc.storageFile.GetBasicPropertiesAsync();
                 string fileSize = string.Format("{0:n0}", basicProperties.Size);
-                fileProperties.AppendLine("Размер: " + fileSize + " байт(ов)");
-                fileProperties.AppendLine("Изменен: " + basicProperties.DateModified);
-                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), "Свойства");
+                fileProperties.AppendLine(resourceLoader.GetString("SizeText") + ": " + fileSize + " байт(ов)");
+                fileProperties.AppendLine(resourceLoader.GetString("IzmenText") + ": " + basicProperties.DateModified);
+                MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), resourceLoader.GetString("InfoText"));
                 await messageDialog.ShowAsync();
             }
         }

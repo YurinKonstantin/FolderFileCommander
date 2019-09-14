@@ -14,8 +14,8 @@
 
     <Grid>
         <StackPanel>
-            <TextBox Header="Имя файла" x:Name="nameF" Text="Новый файл"/>
-            <TextBox Header="Тип файла" x:Name="tipF" Text=".txt"/>
+            <TextBox x:Uid="TextNewFile" Header="Имя файла" x:Name="nameF" Text="Новый файл"/>
+            <TextBox x:Uid="TextNewFileTip" Header="Тип файла" x:Name="tipF" Text=".txt"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

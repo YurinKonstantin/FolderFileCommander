@@ -1570,31 +1570,31 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3">
-            <controls:TabViewItem Header="Главное" Icon="home">
+            <controls:TabViewItem Header="Главное" x:Uid="tabItem1" Icon="home">
                 <CommandBar Template="{StaticResource CommandBarTemplate1}" DefaultLabelPosition="Right">
-                    <AppBarButton Label="Просмотр" Icon="View" Click="AppBarButton_Click_4"/>
-                    <AppBarButton Label="Выделить всё" Icon="ViewAll" Click="AppBarButton_Click_5" Visibility="Collapsed"/>
-                    <AppBarButton Label="Изменить" Icon="Edit" Click="AppBarButton_Click_8"/>
-                    <AppBarButton Label="Копировать" Click="AppBarButton_Click_6" Icon="Copy" />
-                    <AppBarButton Label="Вставить" Icon="Paste"/>
-                    <AppBarButton Label="Переместить" Icon="Share" Visibility="Collapsed"/>
-                    <AppBarButton Label="Создать" Icon="NewFolder">
+                    <AppBarButton x:Uid="tabItem1LabVid"  Label="Просмотр" Icon="View" Click="AppBarButton_Click_4"/>
+                    <AppBarButton x:Uid="tabItem1LabSelectAll" Label="Выделить всё" Icon="ViewAll" Click="AppBarButton_Click_5" Visibility="Collapsed"/>
+                    <AppBarButton x:Uid="tabItem1LabIzmen" Label="Изменить" Icon="Edit" Click="AppBarButton_Click_8"/>
+                    <AppBarButton x:Uid="tabItem1LabCopi" Label="Копировать" Click="AppBarButton_Click_6" Icon="Copy" />
+                    <AppBarButton x:Uid="tabItem1LabPaste" Label="Вставить" Icon="Paste"/>
+                    <AppBarButton x:Uid="tabItem1LabPeremen" Label="Переместить" Icon="Share" Visibility="Collapsed"/>
+                    <AppBarButton x:Uid="tabItem1LabCreat" Label="Создать" Icon="NewFolder">
                         <AppBarButton.Flyout>
                             <MenuFlyout>
-                                <MenuFlyoutItem Text="Папку" Click="MenuFlyoutItem_Click"/>
+                                <MenuFlyoutItem  x:Uid="tabItem1TextFolder" Text="Папку" Click="MenuFlyoutItem_Click"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem Text="Файл" Click="MenuFlyoutItem_Click_1"/>
+                                <MenuFlyoutItem x:Uid="tabItem1TextFile"  Text="Файл" Click="MenuFlyoutItem_Click_1"/>
                             </MenuFlyout>
                         </AppBarButton.Flyout>
 
                     </AppBarButton>
-                    <AppBarButton Label="Удалить" Icon="Delete" Click="AppBarButton_Click_7"/>
+                    <AppBarButton x:Uid="tabItem1Labdelete" Label="Удалить" Icon="Delete" Click="AppBarButton_Click_7"/>
                 </CommandBar>
             </controls:TabViewItem>
-            <controls:TabViewItem Header="Вид" >
+            <controls:TabViewItem x:Uid="tabItem2" Header="Вид" >
                 <CommandBar DefaultLabelPosition="Right" IsOpen="True">
-                    <AppBarButton Label="Добавть расположение" Content="Добавить" Icon="Add" Click="AppBarButton_Click_2"/>
-                    <AppBarButton FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True" Icon="Delete" Label="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+                    <AppBarButton Label="Добавть расположение"  x:Uid="tabItem2LabAddPlase" Content="Добавить" Icon="Add" Click="AppBarButton_Click_2"/>
+                    <AppBarButton FrameworkElement.AllowFocusOnInteraction="True"  x:Uid="tabItem2LabDelete"  IsEnabled="True" Icon="Delete" Label="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
                         <FlyoutBase.AttachedFlyout>
                             <Flyout>
                                 <Grid>
@@ -1607,10 +1607,9 @@
                                         <ColumnDefinition Width="280"/>
                                     </Grid.ColumnDefinitions>
                                     <CommandBar>
-                                        <AppBarButton Icon="Delete" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
-
+                                        <AppBarButton Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
                                     </CommandBar>
-                                    <TextBlock Grid.Row="1"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
+                                    <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
                                     <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind listDostyp}">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:DataType="x:String">
@@ -1672,19 +1671,19 @@
                 <ListView.Resources>
                     <MenuFlyout x:Name="allContactsMenuFlyout">
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem x:Name="open"  Text="Открыть" Icon="View" Click="Open_Click"/>
+                            <MenuFlyoutItem x:Name="open" x:Uid="MenuTextOpen" Text="Открыть" Icon="View" Click="Open_Click"/>
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="Copy" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
-                            <MenuFlyoutItem Text="Вставить" Icon="Paste" x:Name="Paste" Click="Paste_Click">
+                            <MenuFlyoutItem x:Name="Copy" x:Uid="MenuTextCopi"  Text="Копировать" Icon="Copy"    Click="Copi_Click" />
+                            <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste" Click="Paste_Click">
                              
                             </MenuFlyoutItem>
                             <MenuFlyoutItem Text="Переместить" x:Name="Perem" Icon="Share" Visibility="Collapsed" />
                            
                             <MenuFlyoutSeparator />
-                         
-                            <MenuFlyoutItem Text="Удалить" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
+
+                            <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Свойство" x:Name="Inf"  Click="Inf_Click" />
+                            <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
 
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1756,17 +1755,17 @@
                         <MenuFlyout.Items>
                             <MenuFlyoutItem x:Name="open2"  Text="Открыть" Icon="View" Click="Open_Click"/>
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="Copy2" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
-                            <MenuFlyoutItem Text="Вставить" Icon="Paste" x:Name="Paste2">
+                            <MenuFlyoutItem x:Name="Copy2" x:Uid="MenuTextCopi" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
+                            <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste2">
 
                             </MenuFlyoutItem>
                             <MenuFlyoutItem Text="Переместить" x:Name="Perem2" Icon="Share" Visibility="Collapsed"/>
 
                             <MenuFlyoutSeparator />
 
-                            <MenuFlyoutItem Text="Удалить" Icon="Delete" x:Name="Delete2" Click="Delete_Click" />
+                            <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete2" Click="Delete_Click" />
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Свойство" x:Name="Inf2"   />
+                            <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf2"   />
 
                         </MenuFlyout.Items>
                     </MenuFlyout>

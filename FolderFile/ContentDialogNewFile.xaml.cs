@@ -29,6 +29,7 @@ namespace FolderFile
         public StorageFile storageFile;
         private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             try
             {
 
@@ -46,7 +47,7 @@ namespace FolderFile
             }
             catch(Exception ex)
             {
-                MessageDialog b = new MessageDialog("Произошла ошибка при создание файла. Файл не создан!", "Ошибка");
+                MessageDialog b = new MessageDialog(resourceLoader.GetString("MessageErorCreatContent"), resourceLoader.GetString("MessageErorCreatTile"));
                await b.ShowAsync();
             }
             this.Hide();
