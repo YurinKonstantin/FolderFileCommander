@@ -20,7 +20,8 @@ namespace FolderFile
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         ObservableCollection<ClassListStroce> _ListCol = new ObservableCollection<ClassListStroce>();
-        public StorageFolder storageFolderFirst { get; set; }
+        public StorageFolder storageFolderFirst
+        { get; set; }
         ObservableCollection<ClassListStroce> _ListCol1 = new ObservableCollection<ClassListStroce>();
         public StorageFolder storageFolderFirst1 { get; set; }
         public ObservableCollection<ClassListStroce> ListCol
@@ -87,7 +88,19 @@ namespace FolderFile
                 this.OnPropertyChanged();
             }
         }
+        string path2;
+        public string Path2
+        {
+            get
+            {
+                return path2;
+            }
+            set
+            {
+                path2 = value;
+                this.OnPropertyChanged();
+            }
+        }
 
-       
     }
 }

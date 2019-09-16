@@ -1566,7 +1566,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="4"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3">
@@ -1625,14 +1625,13 @@
                         </FlyoutBase.AttachedFlyout>
                     </AppBarButton>
                 </CommandBar>
-            
             </controls:TabViewItem>
         </controls:TabView>
-        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+        <Grid Grid.Row="1" Grid.ColumnSpan="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+             
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" >
                 <Button Click="AppBarButton_Click"   Background="WhiteSmoke"  VerticalAlignment="Stretch" VerticalContentAlignment="Top">
@@ -1641,14 +1640,24 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind fileAndFolderViewer.Path, Mode=TwoWay}"></TextBlock>
-            <Button Click="Button_Click" Grid.Column="2"  Background="WhiteSmoke"  VerticalAlignment="Stretch" VerticalContentAlignment="Top" >
+            <TextBox Grid.Column="1" VerticalAlignment="Center" BorderThickness="1"  Text="{x:Bind fileAndFolderViewer.Path, Mode=TwoWay}"></TextBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="3" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+               
+
+            </Grid.ColumnDefinitions>
+      
+            <TextBox Grid.Column="0" VerticalAlignment="Center" BorderThickness="1" Text="{x:Bind fileAndFolderViewer.Path2, Mode=TwoWay}"></TextBox>
+            <Button Click="Button_Click" Grid.Column="1"  Background="WhiteSmoke"  VerticalAlignment="Stretch" VerticalContentAlignment="Top" >
                 <Button.Content>
                     <SymbolIcon Symbol="GlobalNavigationButton"/>
                 </Button.Content>
             </Button>
         </Grid>
-      
+
         <SplitView Grid.Row="2" IsPaneOpen="True" 
                    DisplayMode="Inline" 
                    OpenPaneLength="200"  x:Name="Split">
@@ -1666,50 +1675,53 @@
                 </Grid>
 
             </SplitView.Pane>
-            
-            <ListView  Tag="One" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
-                <ListView.Resources>
-                    <MenuFlyout x:Name="allContactsMenuFlyout">
-                        <MenuFlyout.Items>
-                            <MenuFlyoutItem x:Name="open" x:Uid="MenuTextOpen" Text="Открыть" Icon="View" Click="Open_Click"/>
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="Copy" x:Uid="MenuTextCopi"  Text="Копировать" Icon="Copy"    Click="Copi_Click" />
-                            <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste" Click="Paste_Click">
-                             
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Переместить" x:Name="Perem" Icon="Share" Visibility="Collapsed" />
-                           
-                            <MenuFlyoutSeparator />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
 
-                            <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
+                    </Grid.ColumnDefinitions>
 
-                        </MenuFlyout.Items>
-                    </MenuFlyout>
-                </ListView.Resources>
-                <ListView.HeaderTemplate >
-                        <DataTemplate >
-                                <Grid >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                      
-                                    </Grid.ColumnDefinitions>
-                               
-                                <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,-6,0,0" VerticalAlignment="Top" />
-                                <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox" QueryIcon="Find" Grid.Column="1" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
-                            </Grid>
-                            </DataTemplate>
-                        </ListView.HeaderTemplate>
-                        <ListView.ItemTemplate>
-                            
-                            <DataTemplate x:DataType="local:ClassListStroce">
-                     
-                        <Grid Margin="0,8,0,8">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
+                    <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,0,0,0" VerticalAlignment="Top" />
+                    <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_1"/>
+                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
+                </Grid>
+                <ListView Grid.Row="1"  Tag="One" IsTapEnabled="True"  RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
+                    <ListView.Resources>
+                        <MenuFlyout x:Name="allContactsMenuFlyout">
+                            <MenuFlyout.Items>
+                                <MenuFlyoutItem x:Name="open" x:Uid="MenuTextOpen" Text="Открыть" Icon="View" Click="Open_Click"/>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem x:Name="Copy" x:Uid="MenuTextCopi"  Text="Копировать" Icon="Copy"    Click="Copi_Click" />
+                                <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste" Click="Paste_Click">
+
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Переместить" x:Name="Perem" Icon="Share" Visibility="Collapsed" />
+
+                                <MenuFlyoutSeparator />
+
+                                <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
+
+                            </MenuFlyout.Items>
+                        </MenuFlyout>
+                    </ListView.Resources>
+                   
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate x:DataType="local:ClassListStroce">
+
+                            <Grid Margin="0,8,0,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -1721,13 +1733,15 @@
                                 <TextBlock Text="{x:Bind FileAndFildeName}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
                                 <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
-                            
-                        </Grid>
-                    
-                    </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-        
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </Grid>
           
         </SplitView>
         <SplitView Grid.Row="2" IsPaneOpen="True" 
@@ -1749,72 +1763,77 @@
                     </Windows10version1803:TreeView>
                 </Grid>
             </SplitView.Pane>
-            <ListView  Tag="twy" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid2" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol1, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
-                <ListView.Resources>
-                    <MenuFlyout x:Name="allContactsMenuFlyout2">
-                        <MenuFlyout.Items>
-                            <MenuFlyoutItem x:Name="open2"  Text="Открыть" Icon="View" Click="Open_Click"/>
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="Copy2" x:Uid="MenuTextCopi" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
-                            <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
 
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Переместить" x:Name="Perem2" Icon="Share" Visibility="Collapsed"/>
+                    </Grid.ColumnDefinitions>
 
-                            <MenuFlyoutSeparator />
+                    <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButtonNazad_Click_1" Margin="0" VerticalAlignment="Top" />
+                    <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_2"/>
+                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox2" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
+                </Grid>
+                <ListView Grid.Row="2" Tag="twy" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid2" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol1, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
+                    <ListView.Resources>
+                        <MenuFlyout x:Name="allContactsMenuFlyout2">
+                            <MenuFlyout.Items>
+                                <MenuFlyoutItem x:Name="open2"  Text="Открыть" Icon="View" Click="Open_Click"/>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem x:Name="Copy2" x:Uid="MenuTextCopi" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
+                                <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste2">
 
-                            <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete2" Click="Delete_Click" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf2"   />
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Переместить" x:Name="Perem2" Icon="Share" Visibility="Collapsed"/>
 
-                        </MenuFlyout.Items>
-                    </MenuFlyout>
-                </ListView.Resources>
-                <ListView.HeaderTemplate >
-                    <DataTemplate >
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <MenuFlyoutSeparator />
 
-                            </Grid.ColumnDefinitions>
+                                <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete2" Click="Delete_Click" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf2"   />
 
-                            <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButtonNazad_Click_1" Margin="0,-6,0,0" VerticalAlignment="Top" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
-                <ListView.ItemTemplate>
+                            </MenuFlyout.Items>
+                        </MenuFlyout>
+                    </ListView.Resources>
+             
+                    <ListView.ItemTemplate>
 
-                    <DataTemplate x:DataType="local:ClassListStroce">
+                        <DataTemplate x:DataType="local:ClassListStroce">
 
-                        <Grid Margin="0,8,0,8">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Image Height="60" Width="60" VerticalAlignment="Top" x:Name="ThumbnailImage" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+                            <Grid Margin="0,8,0,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Height="60" Width="60" VerticalAlignment="Top" x:Name="ThumbnailImage" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
-                            <TextBlock Text="{x:Bind FileAndFildeName}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
-                            <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
-                            <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind FileAndFildeName}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
 
-                        </Grid>
+                            </Grid>
 
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </SplitView>
-        <controls:GridSplitter Grid.Column="1" Grid.Row="2" Width="8"  ResizeBehavior="PreviousAndNext"
-            ResizeDirection="Auto" Background="WhiteSmoke" Foreground="White" FontSize="8">
+        <controls:GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Width="2"  ResizeBehavior="PreviousAndNext"
+            ResizeDirection="Auto" Background="WhiteSmoke" Foreground="White" FontSize="4">
             <controls:GridSplitter.Element>
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" IsHitTestVisible="False" VerticalAlignment="Center" Text="&#xE784;" Foreground="Black" FontFamily="Segoe MDL2 Assets"/>
-
                 </Grid>
             </controls:GridSplitter.Element>
         </controls:GridSplitter>
