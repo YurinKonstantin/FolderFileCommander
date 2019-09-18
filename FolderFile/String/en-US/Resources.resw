@@ -249,6 +249,9 @@
   <data name="TextNewName.Header" xml:space="preserve">
     <value>New Name</value>
   </data>
+  <data name="TextOpenAs.Text" xml:space="preserve">
+    <value>To open with...</value>
+  </data>
   <data name="TileDeleteFile" xml:space="preserve">
     <value>File deletion</value>
   </data>

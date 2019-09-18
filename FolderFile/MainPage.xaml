@@ -1577,7 +1577,7 @@
                     <AppBarButton x:Uid="tabItem1LabIzmen" Label="Изменить" Icon="Edit" Click="AppBarButton_Click_8"/>
                     <AppBarButton x:Uid="tabItem1LabCopi" Label="Копировать" Click="AppBarButton_Click_6" Icon="Copy" />
                     <AppBarButton x:Uid="tabItem1LabPaste" Label="Вставить" Icon="Paste"/>
-                    <AppBarButton x:Uid="tabItem1LabPeremen" Label="Переместить" Icon="Share" Visibility="Collapsed"/>
+                    <AppBarButton x:Uid="tabItem1LabPeremen" Label="Переместить" Icon="Share" Visibility="Collapsed" Click="AppBarButton_Click_9"/>
                     <AppBarButton x:Uid="tabItem1LabCreat" Label="Создать" Icon="NewFolder">
                         <AppBarButton.Flyout>
                             <MenuFlyout>
@@ -1697,19 +1697,16 @@
                         <MenuFlyout x:Name="allContactsMenuFlyout">
                             <MenuFlyout.Items>
                                 <MenuFlyoutItem x:Name="open" x:Uid="MenuTextOpen" Text="Открыть" Icon="View" Click="Open_Click"/>
+                                <MenuFlyoutItem x:Name="OpenAs" x:Uid="TextOpenAs" Text="OpenAs" Icon="View" Click="OpenAs_Click"/>
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem x:Name="Copy" x:Uid="MenuTextCopi"  Text="Копировать" Icon="Copy"    Click="Copi_Click" />
                                 <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste" Click="Paste_Click">
-
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem Text="Переместить" x:Name="Perem" Icon="Share" Visibility="Collapsed" />
-
                                 <MenuFlyoutSeparator />
-
                                 <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
                                 <MenuFlyoutSeparator />
-                                <MenuFlyoutItem Text="Свойство" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
-
+                                <MenuFlyoutItem Text="Свойства" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </ListView.Resources>
@@ -1785,6 +1782,7 @@
                         <MenuFlyout x:Name="allContactsMenuFlyout2">
                             <MenuFlyout.Items>
                                 <MenuFlyoutItem x:Name="open2"  Text="Открыть" Icon="View" Click="Open_Click"/>
+                                <MenuFlyoutItem x:Name="OpenAs2" x:Uid="TextOpenAs" Icon="View" Click="OpenAs_Click"/>
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem x:Name="Copy2" x:Uid="MenuTextCopi" Text="Копировать" Icon="Copy"    Click="Copi_Click" />
                                 <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste2">

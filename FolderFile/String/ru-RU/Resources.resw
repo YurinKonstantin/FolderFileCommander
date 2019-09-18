@@ -142,7 +142,7 @@
     <value>Удалить</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Свойство</value>
+    <value>Свойства</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
     <value>Открыть</value>
@@ -248,6 +248,9 @@
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
     <value>Новое имя</value>
+  </data>
+  <data name="TextOpenAs.Text" xml:space="preserve">
+    <value>Открыть с помощью...</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
     <value>Удаление файла</value>

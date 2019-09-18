@@ -14,6 +14,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
@@ -843,7 +844,7 @@ namespace FolderFile
 
                 // Launch the retrieved file
                 bool success1 = await Windows.System.Launcher.LaunchFileAsync(storageFile, options);
-                if (success)
+                if (success1)
                 {
                     // File launched
                 }
@@ -1089,6 +1090,7 @@ namespace FolderFile
                 var content = a.FileAndFildeName;
                 Copy.Tag = a;
                 open.Tag = a;
+                OpenAs.Tag = a;
                 Perem.Tag = a;
                 Paste.Tag = a;
                 Delete.Tag = a;
@@ -1529,9 +1531,9 @@ namespace FolderFile
             {
                 StringBuilder fileProperties = new StringBuilder();
                 fileProperties.AppendLine(resourceLoader.GetString("NameText") + ": " + cc.storageFile.Name);
-                fileProperties.AppendLine(resourceLoader.GetString("TipText") + ": " + cc.StorageFolder.DisplayType);
-                fileProperties.AppendLine(resourceLoader.GetString("PathText") + ": " + cc.StorageFolder.Path);
-                fileProperties.AppendLine(resourceLoader.GetString("CreatText") + ": " + cc.StorageFolder.DateCreated.ToString());
+                fileProperties.AppendLine(resourceLoader.GetString("TipText") + ": " + cc.storageFile.DisplayType);
+                fileProperties.AppendLine(resourceLoader.GetString("PathText") + ": " + cc.storageFile.Path);
+                fileProperties.AppendLine(resourceLoader.GetString("CreatText") + ": " + cc.storageFile.DateCreated.ToString());
                 // Get file's basic properties.
                 Windows.Storage.FileProperties.BasicProperties basicProperties =
                     await cc.storageFile.GetBasicPropertiesAsync();
@@ -1552,6 +1554,46 @@ namespace FolderFile
         {
             fileAndFolderViewer.ListCol1.Clear();
             InitializeDataGridView2();
+        }
+
+        private async void AppBarButton_Click_9(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+            
+        
+       
+            }
+            catch(Exception ex)
+            {
+                MessageDialog messageDialog = new MessageDialog(ex.Message+"\n"+ex.ToString());
+               await messageDialog.ShowAsync();
+            }
+        }
+
+        private async void OpenAs_Click(object sender, RoutedEventArgs e)
+        {
+            MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
+            ClassListStroce cc = (ClassListStroce)secondItem.Tag;
+            if (cc.FlagFolde != true)
+            {
+                var options = new Windows.System.LauncherOptions();
+                options.DisplayApplicationPicker = true;
+
+                // Launch the retrieved file
+                bool success = await Windows.System.Launcher.LaunchFileAsync(cc.storageFile, options);
+                if (success)
+                {
+                    // File launched
+                }
+                else
+                {
+
+                }
+               
+            }
         }
     }
 }
