@@ -151,19 +151,19 @@
     <value>Вставить</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>Приложение будет иметь доступ к указанным папкам и содержимому. Вы так же можете вдальнейшем добавлять или удалять расположения. Вы так же имеете изначально доступ к папкам  с музыкой и изображением</value>
+    <value>Приложение будет иметь доступ к указанным папкам и содержимому.  В дальнейшем можно добавлять или удалять расположения.  Изначально открыт доступ к папкам с музыкой, изображениями и к локальным и съемным дискам.</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>Для работы приложению необходим доступ к файловой системе. Выполните следующее действия что бы продолжить и запустите приложение сново - Пуск  &gt; Параметры  &gt; Конфиденциальность &gt; Файловая система.</value>
+    <value>Для работы приложения необходим доступ к файловой системе. Выполните следующее действие, чтобы продолжить и запустите его снова: Пуск -&gt; Параметры  -&gt; Конфиденциальность -&gt;Файловая система.</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>Произошла ошибка при создание файла. Файл не создан!</value>
+    <value>Произошла ошибка при создании файла. Файл не создан!</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
     <value>Ошибка</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Перед тем как начать давайте добавим расположения для работы</value>
+    <value>Перед тем, как начать, добавим расположение для работы</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
     <value>Доступ к файловой системе</value>
@@ -223,13 +223,13 @@
     <value>Добавить расположение</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Удаление расположения</value>
+    <value>Удалить расположение</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
     <value>Подтвердить</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Выберите папку для удаления из списка ниже и нажмите Подтвердить</value>
+    <value>Выберите папку для удаления из списка ниже и нажмите "Подтвердить"</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
     <value>Имя файла</value>
@@ -251,6 +251,9 @@
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
     <value>Открыть с помощью...</value>
+  </data>
+  <data name="textViews.Text" xml:space="preserve">
+    <value>Структура</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
     <value>Удаление файла</value>

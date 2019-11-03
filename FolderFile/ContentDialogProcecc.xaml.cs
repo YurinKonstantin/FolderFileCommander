@@ -57,10 +57,30 @@ namespace FolderFile
            await CopyDir(begin_dir, end_dir);
             this.Hide();
         }
-        public async void CopyFile(StorageFile begin_dir, StorageFolder end_dir)
+        public async void CopyFile(StorageFile begin_fil, StorageFolder end_dir)
         {
-            await begin_dir.CopyAsync(end_dir);
            
+                await begin_fil.CopyAsync(end_dir, begin_fil.Name, NameCollisionOption.GenerateUniqueName);
+            
+            
+           
+            this.Hide();
+        }
+        public async void Copy(List<ClassListStroce> classListStroces, StorageFolder end_dir)
+        {
+            foreach (var s in classListStroces)
+            {
+                if (s.FlagFolde != true)
+                {
+                    await s.storageFile.CopyAsync(end_dir, s.storageFile.Name, NameCollisionOption.GenerateUniqueName);
+                }
+                else
+                {
+                    await CopyDir(s.StorageFolder, end_dir);
+                }
+            }
+
+
             this.Hide();
         }
         async Task CopyDir(StorageFolder FromDir, StorageFolder ToDir)

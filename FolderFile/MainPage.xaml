@@ -9,11 +9,13 @@
     xmlns:Windows10version1803="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 6)"
     xmlns:telerikGrid="using:Telerik.UI.Xaml.Controls.Grid"
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
+    
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
     xmlns:localprimitives="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives">
 
     <Page.Resources>
+
         <DataTemplate x:Key="TreeViewItemDataTemplate">
             <Grid Height="36">
                 <TextBlock
@@ -1204,7 +1206,7 @@
                                     </ObjectAnimationUsingKeyFrames>
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentTransform" Storyboard.TargetProperty="Y">
                                         <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding TemplateSettings.HiddenVerticalDelta, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                        <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="0}"/>
+                                        <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="0"/>
                                     </DoubleAnimationUsingKeyFrames>
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentTransform" Storyboard.TargetProperty="Y">
                                         <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
@@ -1554,8 +1556,60 @@
                 </Grid>
             </Grid>
         </ControlTemplate>
+        <DataTemplate x:Key="Maximum" x:DataType="local:ClassListStroce">
+            <Grid Margin="0,8,0,8" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="60" Width="60"  VerticalAlignment="Top" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}, Mode=OneWay}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
-        
+                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding FileAndFildeTip}" Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
+                <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Middle" x:DataType="local:ClassListStroce">
+            <Grid Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36"/>
+                    <ColumnDefinition  Width="200"/>
+                    <ColumnDefinition Width="76"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+
+                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
+                <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
+                <TextBlock Text="{x:Bind FileAndFildeData}"    Grid.Column="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="MiddleHead">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="248"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="94"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="18,0,0,0" Text="Name" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                <TextBlock Grid.Column="1" Text="Date" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                <TextBlock Grid.Column="2" Text="Tip" Style="{ThemeResource CaptionTextBlockStyle}"/>
+            </Grid>
+        </DataTemplate>
+        <local:ListViewDataTemplateSelector x:Key="selector" Maximum="{StaticResource Maximum}" Middle="{StaticResource Middle}"></local:ListViewDataTemplateSelector>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -1569,14 +1623,14 @@
             <ColumnDefinition Width="4"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3">
-            <controls:TabViewItem Header="Главное" x:Uid="tabItem1" Icon="home">
-                <CommandBar Template="{StaticResource CommandBarTemplate1}" DefaultLabelPosition="Right">
+        <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3" SelectionChanged="Tabs_SelectionChanged">
+            <controls:TabViewItem Header="Главное" x:Uid="tabItem1" Icon="home" >
+                <CommandBar Template="{StaticResource CommandBarTemplate1}" DefaultLabelPosition="Right" HorizontalAlignment="Stretch">
                     <AppBarButton x:Uid="tabItem1LabVid"  Label="Просмотр" Icon="View" Click="AppBarButton_Click_4"/>
                     <AppBarButton x:Uid="tabItem1LabSelectAll" Label="Выделить всё" Icon="ViewAll" Click="AppBarButton_Click_5" Visibility="Collapsed"/>
                     <AppBarButton x:Uid="tabItem1LabIzmen" Label="Изменить" Icon="Edit" Click="AppBarButton_Click_8"/>
                     <AppBarButton x:Uid="tabItem1LabCopi" Label="Копировать" Click="AppBarButton_Click_6" Icon="Copy" />
-                    <AppBarButton x:Uid="tabItem1LabPaste" Label="Вставить" Icon="Paste"/>
+                    <AppBarButton x:Uid="tabItem1LabPaste" Label="Вставить" Icon="Paste" Visibility="Collapsed"/>
                     <AppBarButton x:Uid="tabItem1LabPeremen" Label="Переместить" Icon="Share" Visibility="Collapsed" Click="AppBarButton_Click_9"/>
                     <AppBarButton x:Uid="tabItem1LabCreat" Label="Создать" Icon="NewFolder">
                         <AppBarButton.Flyout>
@@ -1589,69 +1643,82 @@
 
                     </AppBarButton>
                     <AppBarButton x:Uid="tabItem1Labdelete" Label="Удалить" Icon="Delete" Click="AppBarButton_Click_7"/>
+                    <AppBarSeparator/>
+                    <AppBarButton x:Name="ShareBut" IsEnabled="False"  Icon="Share" Click="AppBarButton_Click_10" Label="Share..." />
                 </CommandBar>
             </controls:TabViewItem>
             <controls:TabViewItem x:Uid="tabItem2" Header="Вид" >
-                <CommandBar DefaultLabelPosition="Right" IsOpen="True">
-                    <AppBarButton Label="Добавть расположение"  x:Uid="tabItem2LabAddPlase" Content="Добавить" Icon="Add" Click="AppBarButton_Click_2"/>
-                    <AppBarButton FrameworkElement.AllowFocusOnInteraction="True"  x:Uid="tabItem2LabDelete"  IsEnabled="True" Icon="Delete" Label="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="280"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CommandBar>
-                                        <AppBarButton Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
-                                    </CommandBar>
-                                    <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
-                                    <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind listDostyp}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding }" FontSize="16"></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock x:Uid="textViews" Style="{ThemeResource BaseTextBlockStyle}" VerticalAlignment="Center" FontSize="14" Margin="18,0,8,0"/>
+                        <StackPanel Orientation="Horizontal" >
+                            <RadioButton Content="Maximum" Tag="Max" Checked="BGRadioButton_Checked" x:Name="chec1" />
+                            <RadioButton Content="Minimum" Tag="Min" Checked="BGRadioButton_Checked"  x:Name="chec2" IsChecked="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <CommandBar Grid.Column="1" DefaultLabelPosition="Right" IsOpen="True">
+                        <AppBarButton Label="Добавть расположение"  x:Uid="tabItem2LabAddPlase" Content="Добавить" Icon="Add" Click="AppBarButton_Click_2"/>
+                        <AppBarButton FrameworkElement.AllowFocusOnInteraction="True"  x:Uid="tabItem2LabDelete"  IsEnabled="True" Icon="Delete" Label="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="280"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CommandBar>
+                                            <AppBarButton Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
+                                        </CommandBar>
+                                        <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
+                                        <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind listDostyp}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Grid>
+                                                        <TextBlock Text="{Binding }" FontSize="16"></TextBlock>
 
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
-                    </AppBarButton>
-                </CommandBar>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
             </controls:TabViewItem>
         </controls:TabView>
         <Grid Grid.Row="1" Grid.ColumnSpan="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-             
+
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" >
-                <Button Click="AppBarButton_Click"   Background="WhiteSmoke"  VerticalAlignment="Stretch" VerticalContentAlignment="Top">
+            
+                <Button Click="AppBarButton_Click"  VerticalAlignment="Stretch" VerticalContentAlignment="Top">
                     <Button.Content>
                         <SymbolIcon Symbol="GlobalNavigationButton"/>
                     </Button.Content>
                 </Button>
-            </StackPanel>
-            <TextBox Grid.Column="1" VerticalAlignment="Center" BorderThickness="1"  Text="{x:Bind fileAndFolderViewer.Path, Mode=TwoWay}"></TextBox>
+          
+            <TextBox Grid.Column="1" VerticalAlignment="Center" BorderThickness="1"  Text="{x:Bind fileAndFolderViewer.Path, Mode=TwoWay}" KeyDown="TextBox_KeyDown"></TextBox>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="3" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-               
-
             </Grid.ColumnDefinitions>
-      
-            <TextBox Grid.Column="0" VerticalAlignment="Center" BorderThickness="1" Text="{x:Bind fileAndFolderViewer.Path2, Mode=TwoWay}"></TextBox>
-            <Button Click="Button_Click" Grid.Column="1"  Background="WhiteSmoke"  VerticalAlignment="Stretch" VerticalContentAlignment="Top" >
+
+            <TextBox Grid.Column="0" VerticalAlignment="Center" BorderThickness="1" Text="{x:Bind fileAndFolderViewer2.Path, Mode=TwoWay}" KeyDown="TextBox_KeyDown_1"></TextBox>
+            <Button Click="Button_Click" Grid.Column="1"    VerticalAlignment="Stretch" VerticalContentAlignment="Top" >
                 <Button.Content>
                     <SymbolIcon Symbol="GlobalNavigationButton"/>
                 </Button.Content>
@@ -1663,24 +1730,29 @@
                    OpenPaneLength="200"  x:Name="Split">
             <SplitView.Pane >
 
-                <Grid Background="WhiteSmoke" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <Grid ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="181*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Windows10version1803:TreeView x:Name="sampleTreeView" Tag="1" SelectionMode="Single" Grid.Row="1" Padding="0" Margin="0,0,0,0"
+                    <Windows10version1803:TreeView x:Name="sampleTreeView" Tag="1" SelectionMode="Single" Grid.Row="1" Padding="0"
                               Expanding="SampleTreeView_Expanding"
                               Collapsed="SampleTreeView_Collapsed"
-                              ItemInvoked="SampleTreeView_ItemInvoked" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Background="WhiteSmoke"/>
+                              ItemInvoked="SampleTreeView_ItemInvoked" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" />
                 </Grid>
 
             </SplitView.Pane>
             <Grid>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid>
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
@@ -1688,11 +1760,11 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,0,0,0" VerticalAlignment="Top" />
+                    <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,0,0,0" VerticalAlignment="Top" />
                     <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_1"/>
                     <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
                 </Grid>
-                <ListView Grid.Row="1"  Tag="One" IsTapEnabled="True"  RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
+                <ListView Grid.Row="1"  Tag="One" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid"  Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}"  SelectionMode="Extended" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
                     <ListView.Resources>
                         <MenuFlyout x:Name="allContactsMenuFlyout">
                             <MenuFlyout.Items>
@@ -1703,6 +1775,7 @@
                                 <MenuFlyoutItem Text="Вставить" x:Uid="MenuTextpaste" Icon="Paste" x:Name="Paste" Click="Paste_Click">
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem Text="Переместить" x:Name="Perem" Icon="Share" Visibility="Collapsed" />
+                                <MenuFlyoutItem Text="Share..." Icon="Share" Click="MenuFlyoutItem_Click_2" x:Name="Share"/>
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete" Click="Delete_Click" />
                                 <MenuFlyoutSeparator />
@@ -1710,54 +1783,31 @@
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </ListView.Resources>
-                   
-                    <ListView.ItemTemplate>
-
-                        <DataTemplate x:DataType="local:ClassListStroce">
-
-                            <Grid Margin="0,8,0,8">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Height="60" Width="60" VerticalAlignment="Top" x:Name="ThumbnailImage" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
-
-                                <TextBlock Text="{x:Bind FileAndFildeName}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
-
-                            </Grid>
-
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+              
                 </ListView>
-
-
+                
             </Grid>
-          
+
         </SplitView>
         <SplitView Grid.Row="2" IsPaneOpen="True" 
                    DisplayMode="Inline" Grid.Column="2"
                    OpenPaneLength="200"  x:Name="Split1" PanePlacement="Right">
             <SplitView.Pane >
 
-                <Grid Background="WhiteSmoke" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <Grid  ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Windows10version1803:TreeView x:Name="sampleTreeView1" Grid.Row="1" Tag="2" SelectionMode="Single" Background="White" Padding="0" Margin="0,0,0,0"
+                    <Windows10version1803:TreeView x:Name="sampleTreeView1" Grid.Row="1" Tag="2" SelectionMode="Single"  Padding="0"
                               Expanding="SampleTreeView_Expanding1"
                               Collapsed="SampleTreeView_Collapsed1"
-                              ItemInvoked="SampleTreeView_ItemInvoked1" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-
-                    </Windows10version1803:TreeView>
+                              ItemInvoked="SampleTreeView_ItemInvoked1" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" />
                 </Grid>
             </SplitView.Pane>
             <Grid>
@@ -1773,11 +1823,11 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <AppBarButton Background="White" Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButtonNazad_Click_1" Margin="0" VerticalAlignment="Top" />
+                    <AppBarButton Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButtonNazad_Click_1" Margin="0" VerticalAlignment="Top" />
                     <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_2"/>
                     <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox2" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
                 </Grid>
-                <ListView Grid.Row="2" Tag="twy" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid2" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol1, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped">
+                <ListView Grid.Row="2" Tag="twy" IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid2" Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1" SelectionMode="Extended"  ItemsSource="{x:Bind fileAndFolderViewer2.ListCol, Mode=TwoWay}" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
                     <ListView.Resources>
                         <MenuFlyout x:Name="allContactsMenuFlyout2">
                             <MenuFlyout.Items>
@@ -1789,7 +1839,7 @@
 
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem Text="Переместить" x:Name="Perem2" Icon="Share" Visibility="Collapsed"/>
-
+                                <MenuFlyoutItem Text="Share..." Icon="Share" Click="MenuFlyoutItem_Click_2" x:Name="Share2"/>
                                 <MenuFlyoutSeparator />
 
                                 <MenuFlyoutItem Text="Удалить" x:Uid="MenuTextDelete" Icon="Delete" x:Name="Delete2" Click="Delete_Click" />
@@ -1799,31 +1849,6 @@
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </ListView.Resources>
-             
-                    <ListView.ItemTemplate>
-
-                        <DataTemplate x:DataType="local:ClassListStroce">
-
-                            <Grid Margin="0,8,0,8">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Height="60" Width="60" VerticalAlignment="Top" x:Name="ThumbnailImage" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
-
-                                <TextBlock Text="{x:Bind FileAndFildeName}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind FileAndFildeData}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
-
-                            </Grid>
-
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
                 </ListView>
             </Grid>
         </SplitView>
@@ -1836,8 +1861,8 @@
             </controls:GridSplitter.Element>
         </controls:GridSplitter>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3">
-      
+
         </StackPanel>
-  
+
     </Grid>
 </Page>

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace FolderFile
 {
@@ -44,8 +47,9 @@ namespace FolderFile
                 thumbnailMode = value;
             }
         }
-
+       
         public bool FlagFolde { get; set; }
+      
         public string FileAndFildeName
         {
             get
@@ -82,6 +86,12 @@ namespace FolderFile
                     return storageFile.DateCreated.ToString();
             }
         }
+
+        public string Type { get; set; }
+
+
+
+
 
     }
 }

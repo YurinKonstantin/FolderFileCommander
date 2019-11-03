@@ -124,7 +124,7 @@
     <value>Cancel</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created by</value>
+    <value>Created</value>
   </data>
   <data name="Eas" xml:space="preserve">
     <value>Add</value>
@@ -133,7 +133,7 @@
     <value>Properties</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Changed</value>
+    <value>Change</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
     <value>Copy</value>
@@ -151,10 +151,10 @@
     <value>Paste</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can also add or remove locations in the future. You also initially have access to folders with music and image</value>
+    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>For the application to work, access to the file system is required. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
+    <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
     <value>An error occurred while creating the file. File not created!</value>
@@ -163,7 +163,7 @@
     <value>Error</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before we begin, let's add locations for work</value>
+    <value>Before the beginning, add a location for a work</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
     <value>File system access</value>
@@ -193,7 +193,7 @@
     <value>Delete</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Changed</value>
+    <value>Change</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
     <value>Paste</value>
@@ -220,16 +220,16 @@
     <value>Add</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add Location</value>
+    <value>Add location</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete Location</value>
+    <value>Delete location</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
     <value>Confirm</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click Confirm</value>
+    <value>Select a folder to delete from the list below and click confirm</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
     <value>Name File</value>
@@ -252,11 +252,14 @@
   <data name="TextOpenAs.Text" xml:space="preserve">
     <value>To open with...</value>
   </data>
+  <data name="textViews.Text" xml:space="preserve">
+    <value>View</value>
+  </data>
   <data name="TileDeleteFile" xml:space="preserve">
     <value>File deletion</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Delete folder</value>
+    <value>Folder deletion</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
     <value>Copy file</value>

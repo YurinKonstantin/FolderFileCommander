@@ -31,6 +31,7 @@ namespace FolderFile
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            //Application.Current.RequestedTheme = ApplicationTheme.Dark;
         }
 
         /// <summary>
