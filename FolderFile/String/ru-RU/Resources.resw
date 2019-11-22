@@ -231,6 +231,9 @@
   <data name="tabItem2TextB.Text" xml:space="preserve">
     <value>Выберите папку для удаления из списка ниже и нажмите "Подтвердить"</value>
   </data>
+  <data name="textDostup.PrimaryButtonText" xml:space="preserve">
+    <value>Предоставить доступ</value>
+  </data>
   <data name="TextNewFile.Header" xml:space="preserve">
     <value>Имя файла</value>
   </data>

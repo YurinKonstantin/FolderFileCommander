@@ -27,7 +27,7 @@ namespace FolderFile
         public StorageFolder storageFolderFirst
         { get; set; }
         ObservableCollection<ClassListStroce> _ListCol2 = new ObservableCollection<ClassListStroce>();
-        public StorageFolder storageFolderFirst2 { get; set; }
+        
         public ObservableCollection<ClassListStroce> ListCol
         { get
             {

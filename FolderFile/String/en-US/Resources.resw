@@ -231,6 +231,9 @@
   <data name="tabItem2TextB.Text" xml:space="preserve">
     <value>Select a folder to delete from the list below and click confirm</value>
   </data>
+  <data name="textDostup.PrimaryButtonText" xml:space="preserve">
+    <value>Grant Access</value>
+  </data>
   <data name="TextNewFile.Header" xml:space="preserve">
     <value>Name File</value>
   </data>
