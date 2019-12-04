@@ -88,7 +88,7 @@ namespace FolderFile
         }
 
         public string Type { get; set; }
-
+      
 
 
 

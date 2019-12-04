@@ -89,8 +89,8 @@ namespace FolderFile
             {
 
              
-                InitializeTreeView();
-                InitializeTreeView1();
+                InitializeTreeView(sampleTreeView);
+                InitializeTreeView(sampleTreeView1);
                 InitializeDataGridView();
                 
 
@@ -145,7 +145,9 @@ namespace FolderFile
                 }
                 fileAndFolderViewer.ListCol.Clear();
                 sampleTreeView.RootNodes.Clear();
-                InitializeTreeView();
+                sampleTreeView1.RootNodes.Clear();
+                InitializeTreeView(sampleTreeView);
+                InitializeTreeView(sampleTreeView1);
                 InitializeDataGridView();
             }
             catch(Exception ex)
@@ -157,110 +159,8 @@ namespace FolderFile
      
        
         List<String> listDostyp = new List<string>();
-        private async void InitializeTreeView1()
-        {
-            // A TreeView can have more than 1 root node. The Pictures library
-            // and the Music library will each be a root node in the tree.
-            // Get Pictures library.
-
-
-            try
-            {
-                sampleTreeView1.RootNodes.Clear();
-                StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
-                TreeViewNode pictureNode1 = new TreeViewNode();
-                pictureNode1.Content = documentFolder;
-              
-                pictureNode1.IsExpanded = false;
-
-                pictureNode1.HasUnrealizedChildren = true;
-
-                sampleTreeView1.RootNodes.Add(pictureNode1);
-                FillTreeNode1(pictureNode1);
-
-
-                StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
-                TreeViewNode pictureNode = new TreeViewNode();
-                pictureNode.Content = picturesFolder;
-                pictureNode.IsExpanded = false;
-               
-                pictureNode.HasUnrealizedChildren = true;
-
-                sampleTreeView1.RootNodes.Add(pictureNode);
-                FillTreeNode1(pictureNode);
-                // Get Music library.
-                StorageFolder musicFolder = KnownFolders.MusicLibrary;
-                TreeViewNode musicNode = new TreeViewNode();
-                musicNode.Content = musicFolder;
-                musicNode.IsExpanded = false;
-                musicNode.HasUnrealizedChildren = true;
-
-                sampleTreeView1.RootNodes.Add(musicNode);
-                FillTreeNode1(musicNode);
-
-
-                var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
-                if (storageItemAccessList.Entries.Count != 0)
-                {
-
-
-                    foreach (Windows.Storage.AccessCache.AccessListEntry entry in storageItemAccessList.Entries)
-                    {
-                        string mruToken = entry.Token;
-                        string mruMetadata = entry.Metadata;
-                        Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
-                        StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                        TreeViewNode AssecNode = new TreeViewNode();
-                        AssecNode.Content = ss;
-                        AssecNode.IsExpanded = false;
-                        AssecNode.HasUnrealizedChildren = true;
-
-                        sampleTreeView1.RootNodes.Add(AssecNode);
-                        FillTreeNode1(AssecNode);
-                    }
-                }
-
-                StorageFolder Folder = KnownFolders.RemovableDevices;
-
-                IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
-                foreach (StorageFolder FlFolder1 in folderList)
-                {
-
-                    TreeViewNode FolderNode = new TreeViewNode();
-                    FolderNode.Content = FlFolder1;
-                    FolderNode.IsExpanded = false;
-                    FolderNode.HasUnrealizedChildren = true;
-
-                    sampleTreeView1.RootNodes.Add(FolderNode);
-                    FillTreeNode1(FolderNode);
-                }
-                DriveInfo[] drives = DriveInfo.GetDrives();
-
-                foreach (DriveInfo drive in drives)
-                {
-                  
-                    if (drive.DriveType==DriveType.Fixed)
-                    {
-                        TreeViewNode FolderNode = new TreeViewNode();
-;                        StorageFolder storageFolderL =await StorageFolder.GetFolderFromPathAsync(drive.Name);
-                        FolderNode.Content = storageFolderL;
-                        FolderNode.IsExpanded = false;
-                        FolderNode.HasUnrealizedChildren = true;
-
-                        sampleTreeView1.RootNodes.Add(FolderNode);
-                      
-                    }
-                  
-                }
-            }
-            catch(Exception ex)
-            {
-                await new MessageDialog(ex.Message).ShowAsync();
-            }
-           
-         
-        }
-        private async void InitializeTreeView()
+     
+        private async void InitializeTreeView(TreeView treeView)
         {
             // A TreeView can have more than 1 root node. The Pictures library
             // and the Music library will each be a root node in the tree.
@@ -268,33 +168,36 @@ namespace FolderFile
             try
             {
 
-                sampleTreeView.RootNodes.Clear();
+                treeView.RootNodes.Clear();
                 StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
                 TreeViewNode pictureNode1 = new TreeViewNode();
-                pictureNode1.Content = documentFolder;
+                var thumbnaild = await documentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 600, ThumbnailOptions.ResizeThumbnail);
+                pictureNode1.Content = new ClassListStroce() { StorageFolder = documentFolder, FlagFolde = true, ThumbnailMode= thumbnaild };
                 pictureNode1.IsExpanded = false;
 
                 pictureNode1.HasUnrealizedChildren = true;
 
-                sampleTreeView.RootNodes.Add(pictureNode1);
-                FillTreeNode1(pictureNode1);
+                treeView.RootNodes.Add(pictureNode1);
+                FillTreeNode(pictureNode1);
 
 
                 StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
                 TreeViewNode pictureNode = new TreeViewNode();
-                pictureNode.Content = picturesFolder;
+                var thumbnaild1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                pictureNode.Content = new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode= thumbnaild1 };
                 pictureNode.IsExpanded = false;
 
                 pictureNode.HasUnrealizedChildren = true;
-                sampleTreeView.RootNodes.Add(pictureNode);
+                treeView.RootNodes.Add(pictureNode);
                 FillTreeNode(pictureNode);
                 // Get Music library.
                 StorageFolder musicFolder = KnownFolders.MusicLibrary;
                 TreeViewNode musicNode = new TreeViewNode();
-                musicNode.Content = musicFolder;
+                var thumbnaild2 = await musicFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 600, ThumbnailOptions.UseCurrentScale);
+                musicNode.Content = new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode= thumbnaild2 }; 
                 musicNode.IsExpanded = false;
                 musicNode.HasUnrealizedChildren = true;
-                sampleTreeView.RootNodes.Add(musicNode);
+                treeView.RootNodes.Add(musicNode);
                 FillTreeNode(musicNode);
                 var storageItemAccessList = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList;
                 if (storageItemAccessList.Entries.Count != 0)
@@ -308,10 +211,11 @@ namespace FolderFile
                         Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
                         StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
                         TreeViewNode AssecNode = new TreeViewNode();
-                        AssecNode.Content = ss;
+                        var thumbnaild3 = await ss.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                        AssecNode.Content =  new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode= thumbnaild3 };
                         AssecNode.IsExpanded = false;
                         AssecNode.HasUnrealizedChildren = true;
-                        sampleTreeView.RootNodes.Add(AssecNode);
+                        treeView.RootNodes.Add(AssecNode);
 
                         FillTreeNode(AssecNode);
                     }
@@ -324,12 +228,13 @@ namespace FolderFile
                 {
 
                     TreeViewNode FolderNode = new TreeViewNode();
-                    FolderNode.Content = FlFolder1;
+                    var thumbnaild3 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                    FolderNode.Content = new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode= thumbnaild3 }; 
                     FolderNode.IsExpanded = false;
                     FolderNode.HasUnrealizedChildren = true;
 
-                    sampleTreeView.RootNodes.Add(FolderNode);
-                    FillTreeNode1(FolderNode);
+                    treeView.RootNodes.Add(FolderNode);
+                    FillTreeNode(FolderNode);
                 }
                 DriveInfo[] drives = DriveInfo.GetDrives();
 
@@ -340,10 +245,11 @@ namespace FolderFile
                     {
                         TreeViewNode FolderNode = new TreeViewNode();
                         StorageFolder storageFolderL = await StorageFolder.GetFolderFromPathAsync(drive.Name);
-                        FolderNode.Content = storageFolderL;
+                        var thumbnaild4 = await storageFolderL.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                        FolderNode.Content = new ClassListStroce() { StorageFolder = storageFolderL, FlagFolde = true, ThumbnailMode= thumbnaild4 };
                         FolderNode.IsExpanded = false;
                         FolderNode.HasUnrealizedChildren = true;
-                        sampleTreeView.RootNodes.Add(FolderNode);
+                        treeView.RootNodes.Add(FolderNode);
 
                     }
 
@@ -465,10 +371,10 @@ namespace FolderFile
             // Add each item as a new child node of the node that's being expanded.
 
             // Only process the node if it's a folder and has unrealized children.
-            StorageFolder folder = null;
-            if (node.Content is StorageFolder && node.HasUnrealizedChildren == true)
+            ClassListStroce folder = null;
+            if (node.Content is ClassListStroce && node.HasUnrealizedChildren == true)
             {
-                folder = node.Content as StorageFolder;
+                folder = node.Content as ClassListStroce;
             }
             else
             {
@@ -476,7 +382,7 @@ namespace FolderFile
                 return;
             }
 
-            IReadOnlyList<IStorageItem> itemsList = await folder.GetFoldersAsync();
+            IReadOnlyList<IStorageItem> itemsList = await folder.StorageFolder.GetFoldersAsync();
 
             if (itemsList.Count == 0)
             {
@@ -488,7 +394,10 @@ namespace FolderFile
             foreach (var item in itemsList)
             {
                 var newNode = new TreeViewNode();
-                newNode.Content = item;
+                var ss = item as StorageFolder;
+                var thumbnaild3 = await ss.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                var it = new ClassListStroce() { FlagFolde=true, StorageFolder= item as StorageFolder, ThumbnailMode= thumbnaild3 };
+                newNode.Content = it;
 
                 if (item is StorageFolder)
                 {
@@ -505,52 +414,7 @@ namespace FolderFile
             // Children were just added to this node, so set HasUnrealizedChildren to false.
             node.HasUnrealizedChildren = false;
         }
-        private async void FillTreeNode1(TreeViewNode node)
-        {
-            // Get the contents of the folder represented by the current tree node.
-            // Add each item as a new child node of the node that's being expanded.
-
-            // Only process the node if it's a folder and has unrealized children.
-            StorageFolder folder = null;
-            if (node.Content is StorageFolder && node.HasUnrealizedChildren == true)
-            {
-                folder = node.Content as StorageFolder;
-            }
-            else
-            {
-                // The node isn't a folder, or it's already been filled.
-                return;
-            }
-
-            IReadOnlyList<IStorageItem> itemsList = await folder.GetFoldersAsync();
-
-            if (itemsList.Count == 0)
-            {
-                // The item is a folder, but it's empty. Leave HasUnrealizedChildren = true so
-                // that the chevron appears, but don't try to process children that aren't there.
-                return;
-            }
-
-            foreach (var item in itemsList)
-            {
-                var newNode = new TreeViewNode();
-                newNode.Content = item;
-
-                if (item is StorageFolder)
-                {
-                    // If the item is a folder, set HasUnrealizedChildren to true. 
-                    // This makes the collapsed chevron show up.
-                    newNode.HasUnrealizedChildren = true;
-                }
-                else
-                {
-                    // Item is StorageFile. No processing needed for this scenario.
-                }
-                node.Children.Add(newNode);
-            }
-            // Children were just added to this node, so set HasUnrealizedChildren to false.
-            node.HasUnrealizedChildren = false;
-        }
+  
         private void SampleTreeView_Expanding(TreeView sender, TreeViewExpandingEventArgs args)
         {
             if (args.Node.HasUnrealizedChildren)
@@ -559,46 +423,35 @@ namespace FolderFile
                 FillTreeNode(args.Node);
             }
         }
-        private void SampleTreeView_Expanding1(TreeView sender, TreeViewExpandingEventArgs args)
-        {
-            if (args.Node.HasUnrealizedChildren)
-            {
-
-                FillTreeNode1(args.Node);
-            }
-        }
+   
         private void SampleTreeView_Collapsed(TreeView sender, TreeViewCollapsedEventArgs args)
         {
             args.Node.Children.Clear();
             args.Node.HasUnrealizedChildren = true;
         }
-        private void SampleTreeView_Collapsed1(TreeView sender, TreeViewCollapsedEventArgs args)
-        {
-            args.Node.Children.Clear();
-            args.Node.HasUnrealizedChildren = true;
-        }
+       
         private async void SampleTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
             TreeView treeView = (TreeView)sender;
                var node = args.InvokedItem as TreeViewNode;
-            if (node.Content is IStorageItem item)
+            if (node.Content is ClassListStroce item)
             {
                 
                // FileNameTextBlock.Text = item.Name;
                // FilePathTextBlock.Text = item.Path+" "+ node.Depth.ToString();
                // TreeDepthTextBlock.Text = node.Depth.ToString();
 
-                if (node.Content is StorageFolder folder)
+                if (node.Content is ClassListStroce folder)
                 {
                     
                         _DataGrid.SelectedItem = null;
 
                         fileAndFolderViewer.ListCol.Clear();
                         fileAndFolderViewer.ListColName.Clear();
-                        fileAndFolderViewer.storageFolderFirst = folder;
-                    fileAndFolderViewer.Path = folder.Path;
-                        IReadOnlyList<StorageFolder> folderList = await folder.GetFoldersAsync();
-                        IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
+                        fileAndFolderViewer.storageFolderFirst = folder.StorageFolder;
+                    fileAndFolderViewer.Path = folder.StorageFolder.Path;
+                        IReadOnlyList<StorageFolder> folderList = await folder.StorageFolder.GetFoldersAsync();
+                        IReadOnlyList<StorageFile> fileList = await folder.StorageFolder.GetFilesAsync();
                         if (fileList.Count != 0 || folderList.Count != 0)
                         {
 
@@ -627,44 +480,44 @@ namespace FolderFile
         {
             TreeView treeView = (TreeView)sender;
             var node = args.InvokedItem as TreeViewNode;
-            if (node.Content is IStorageItem item)
+            if (node.Content is ClassListStroce item)
             {
 
                 // FileNameTextBlock.Text = item.Name;
-           //     FilePathTextBlock.Text = item.Path + " " + node.Depth.ToString();
+                // FilePathTextBlock.Text = item.Path+" "+ node.Depth.ToString();
                 // TreeDepthTextBlock.Text = node.Depth.ToString();
 
-                if (node.Content is StorageFolder folder)
+                if (node.Content is ClassListStroce folder)
                 {
-                    
-                        _DataGrid2.SelectedItem = null;
 
-                        fileAndFolderViewer2.ListCol.Clear();
-                        fileAndFolderViewer2.ListColName.Clear();
-                        fileAndFolderViewer2.storageFolderFirst = folder;
-                    fileAndFolderViewer2.Path = folder.Path;
-                    IReadOnlyList<StorageFolder> folderList =  await folder.GetFoldersAsync();
-                        IReadOnlyList<StorageFile> fileList = await folder.GetFilesAsync();
-                        if (fileList.Count != 0 || folderList.Count != 0)
+                    _DataGrid.SelectedItem = null;
+
+                    fileAndFolderViewer2.ListCol.Clear();
+                    fileAndFolderViewer2.ListColName.Clear();
+                    fileAndFolderViewer2.storageFolderFirst = folder.StorageFolder;
+                    fileAndFolderViewer2.Path = folder.StorageFolder.Path;
+                    IReadOnlyList<StorageFolder> folderList = await folder.StorageFolder.GetFoldersAsync();
+                    IReadOnlyList<StorageFile> fileList = await folder.StorageFolder.GetFilesAsync();
+                    if (fileList.Count != 0 || folderList.Count != 0)
+                    {
+
+
+                        foreach (StorageFolder d in folderList)
                         {
-
-
-                            foreach (StorageFolder d in folderList)
-                            {
-                                var thumbnail1 = await d.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                                fileAndFolderViewer2.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                                fileAndFolderViewer2.ListColName.Add(d.DisplayName);
-                            }
-
-                            foreach (StorageFile file in fileList)
-                            {
-                                var thumbnail1 = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                                fileAndFolderViewer2.ListCol.Add(new ClassListStroce() { storageFile = file, FlagFolde = false, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                                fileAndFolderViewer2.ListColName.Add(file.DisplayName);
-                            }
+                            var thumbnail1 = await d.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                            fileAndFolderViewer2.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                            fileAndFolderViewer2.ListColName.Add(d.DisplayName);
                         }
-                        
-                    
+
+                        foreach (StorageFile file in fileList)
+                        {
+                            var thumbnail1 = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                            fileAndFolderViewer2.ListCol.Add(new ClassListStroce() { storageFile = file, FlagFolde = false, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                            fileAndFolderViewer2.ListColName.Add(file.DisplayName);
+                        }
+
+
+                    }
                     node.IsExpanded = !node.IsExpanded;
                 }
             }
@@ -719,7 +572,8 @@ namespace FolderFile
             fileAndFolderViewer2.ListCol.Clear();
             sampleTreeView.RootNodes.Clear();
             sampleTreeView1.RootNodes.Clear();
-            InitializeTreeView();
+            InitializeTreeView(sampleTreeView);
+            InitializeTreeView(sampleTreeView1);
             InitializeDataGridView();
          
         }
@@ -758,7 +612,7 @@ namespace FolderFile
                 shareList = classListStroce;
                 if (fileAndFolderViewer2.storageFolderFirst != null)
                 {
- fileAndFolderViewer2.Path = fileAndFolderViewer2.storageFolderFirst.Path;
+                  fileAndFolderViewer2.Path = fileAndFolderViewer2.storageFolderFirst.Path;
                 }
                 if (classListStroce != null)
                 {
@@ -1494,7 +1348,7 @@ namespace FolderFile
                       pictureNode1.HasUnrealizedChildren = true;
 
                       sampleTreeView1.RootNodes.Add(pictureNode1);
-                      FillTreeNode1(pictureNode1);
+                      FillTreeNode(pictureNode1);
 
                       TreeViewNode pictureNode2 = new TreeViewNode();
                       pictureNode2.Content = FlFolder1;
@@ -1503,7 +1357,7 @@ namespace FolderFile
                       pictureNode2.HasUnrealizedChildren = true;
 
                       sampleTreeView.RootNodes.Add(pictureNode2);
-                      FillTreeNode1(pictureNode2);
+                      FillTreeNode(pictureNode2);
                   //добавить в древовидное окружение и на панели
                   // fileAndFolderViewer.ListCol1.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1 });
 
@@ -1536,8 +1390,8 @@ namespace FolderFile
                               {
                                   fileAndFolderViewer2.InitializeDataGridView();
                               }
-                              InitializeTreeView1();
-                              InitializeTreeView();
+                              InitializeTreeView(sampleTreeView1);
+                              InitializeTreeView(sampleTreeView);
 
 
 

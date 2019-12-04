@@ -17,13 +17,17 @@
     <Page.Resources>
 
         <DataTemplate x:Key="TreeViewItemDataTemplate1">
-            <Grid Height="36">
-                <TextBlock Text="{Binding Content.DisplayName}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
+            <Grid Height="32">
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                    <TextBlock Text="{Binding Content.StorageFolder.DisplayName}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
+                </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="TreeViewItemDataTemplate">
-            <StackPanel Height="44" Orientation="Horizontal">
-                <TextBlock Text="{Binding Content.DisplayName}"
+            <StackPanel Height="32" Orientation="Horizontal" UseLayoutRounding="True">
+                <Image Height="24"   VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <TextBlock Text="{Binding Content.StorageFolder.DisplayName}" UseLayoutRounding="True"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            Style="{ThemeResource BodyTextBlockStyle}"/>
@@ -1782,7 +1786,7 @@
                    OpenPaneLength="200"  x:Name="Split">
             <SplitView.Pane >
 
-                <Grid ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <Grid ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" UseLayoutRounding="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="181*"/>
@@ -1791,7 +1795,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TreeView x:Name="sampleTreeView" Tag="1" SelectionMode="Single" Grid.Row="1" Padding="0"
+                    <TreeView x:Name="sampleTreeView" Tag="1" SelectionMode="Single" Grid.Row="1" Padding="0" Margin="0,4"
                               Expanding="SampleTreeView_Expanding" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelectorT}"
                               Collapsed="SampleTreeView_Collapsed"  ItemInvoked="SampleTreeView_ItemInvoked" 
                              FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" />
@@ -1860,8 +1864,8 @@
                     </Grid.RowDefinitions>
 
                     <Windows10version1803:TreeView x:Name="sampleTreeView1" Grid.Row="1" Tag="2" SelectionMode="Single"  Padding="0"
-                              Expanding="SampleTreeView_Expanding1"
-                              Collapsed="SampleTreeView_Collapsed1"
+                              Expanding="SampleTreeView_Expanding"
+                              Collapsed="SampleTreeView_Collapsed"
                               ItemInvoked="SampleTreeView_ItemInvoked1" FontSize="10" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" />
                 </Grid>
             </SplitView.Pane>

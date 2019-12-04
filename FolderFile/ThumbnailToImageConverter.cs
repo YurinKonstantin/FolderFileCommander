@@ -18,6 +18,7 @@ namespace FolderFile
             if (value != null)
             {
                 StorageItemThumbnail thumbnail = (StorageItemThumbnail)value;
+               
                 image = new BitmapImage();
                 image.SetSource(thumbnail);
             }
