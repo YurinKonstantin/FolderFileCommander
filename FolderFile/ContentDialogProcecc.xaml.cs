@@ -39,13 +39,44 @@ namespace FolderFile
           //  args.Cancel = true;
             this.Hide();
         }
-        public async void DeleteFolder(StorageFolder storageFolder)
+        public async void Delete(List<ClassListStroce> classListStroces)
         {
             try
             {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                if (classListStroces != null)
+                {
 
 
-                TextInfo.Text = "Удаление " + storageFolder.DisplayName;
+                    foreach (var s in classListStroces)
+                    {
+                        if (s.FlagFolde != true)
+                        {
+                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + s.storageFile.Name + "\n" + s.storageFile.Path;
+                          
+                             DeleteFile(s.storageFile);
+                        }
+                        else
+                        {
+                            DeleteFolder(s.StorageFolder);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message).ShowAsync();
+            }
+
+            this.Hide();
+        }
+        private async void DeleteFolder(StorageFolder storageFolder)
+        {
+            try
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+
+                TextInfo.Text = resourceLoader.GetString("TileDeleteFolder") + " " + storageFolder.Name + "\n" + storageFolder.Path;
                 await storageFolder.DeleteAsync();
             }
             catch(Exception ex)
@@ -55,13 +86,13 @@ namespace FolderFile
             this.Hide();
 
         }
-        public async void DeleteFile(StorageFile storageFile)
+        private async void DeleteFile(StorageFile storageFile)
         {
             try
             {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 
-
-                TextInfo.Text = "Удаление " + storageFile.DisplayName;
+                TextInfo.Text = resourceLoader.GetString("TileDeleteFile") + " " + storageFile.Name + "\n" + storageFile.Path;
                 await storageFile.DeleteAsync();
             }
             catch(Exception ex)
@@ -71,7 +102,7 @@ namespace FolderFile
             this.Hide();
 
         }
-        public async void CopyFolder(StorageFolder begin_dir, StorageFolder end_dir)
+      public async void CopyFolder(StorageFolder begin_dir, StorageFolder end_dir)
         {
             try
             {
@@ -85,7 +116,7 @@ namespace FolderFile
             }
             this.Hide();
         }
-        public async void CopyFile(StorageFile begin_fil, StorageFolder end_dir)
+       public async void CopyFile(StorageFile begin_fil, StorageFolder end_dir)
         {
             try
             {
@@ -99,21 +130,28 @@ namespace FolderFile
             }
             this.Hide();
         }
-        public async void Copy(List<ClassListStroce> classListStroces, StorageFolder end_dir)
+        public async void Copy(List<ClassListStroce> classListStroces, StorageFolder enddir)
         {
             try
-            { 
-            foreach (var s in classListStroces)
             {
-                if (s.FlagFolde != true)
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                if (classListStroces != null)
                 {
-                    await s.storageFile.CopyAsync(end_dir, s.storageFile.Name, NameCollisionOption.GenerateUniqueName);
+
+
+                    foreach (var s in classListStroces)
+                    {
+                        if (s.FlagFolde != true)
+                        {
+                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + s.storageFile.Name+"\n"+ s.storageFile.Path;
+                            await s.storageFile.CopyAsync(enddir, s.storageFile.Name, NameCollisionOption.GenerateUniqueName);
+                        }
+                        else
+                        {
+                            await CopyDir(s.StorageFolder, enddir);
+                        }
+                    }
                 }
-                else
-                {
-                    await CopyDir(s.StorageFolder, end_dir);
-                }
-            }
              }
             catch(Exception ex)
             {
@@ -122,20 +160,21 @@ namespace FolderFile
 
             this.Hide();
         }
-        async Task CopyDir(StorageFolder FromDir, StorageFolder ToDir)
+       public async Task CopyDir(StorageFolder FromDir, StorageFolder ToDir)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             // Directory.CreateDirectory(ToDir);
             try
             {
 
 
                 StorageFolder end_dir1 = await ToDir.CreateFolderAsync(FromDir.DisplayName, CreationCollisionOption.GenerateUniqueName);
-                TextInfo.Text = "Копирование " + end_dir1.Path;
+                TextInfo.Text = resourceLoader.GetString("TextCopi") +" " + end_dir1.Name+"\n"+ end_dir1.Path;
                 IReadOnlyList<StorageFile> FileList =
                                   await FromDir.GetFilesAsync();
                 foreach (var file in FileList)
                 {
-                    TextInfo.Text = "Копирование " + file.Path;
+                    TextInfo.Text = resourceLoader.GetString("TextCopi")+" " + end_dir1.Name + "\n" + end_dir1.Path;
                     await file.CopyAsync(end_dir1);
 
                 }
@@ -151,59 +190,7 @@ namespace FolderFile
                 await new MessageDialog(ex.Message).ShowAsync();
             }
         }
-        private async void perebor_updates(StorageFolder begin_dir, StorageFolder end_dir)
-        {
-            try
-            {
-
-
-                //Берём нашу исходную папку
-                StorageFolder end_dir1 = await end_dir.CreateFolderAsync(begin_dir.DisplayName);
-                StorageFolder end_dir2 = end_dir1;
-                IReadOnlyList<StorageFolder> folderList =
-                               await begin_dir.GetFoldersAsync();
-                //Перебираем все внутренние папки
-                foreach (StorageFolder dir in folderList)
-                {
-                    TextInfo.Text = "Копирование " + dir.DisplayName;
-
-                    //Проверяем - если директории не существует, то создаём;
-                    if (await end_dir1.TryGetItemAsync(dir.Name) == null)
-                    {
-                        end_dir2 = await end_dir1.CreateFolderAsync(dir.Name, CreationCollisionOption.GenerateUniqueName);
-                        //  Directory.CreateDirectory(end_dir + "\\" + dir.Name);
-                    }
-
-                    IReadOnlyList<StorageFolder> folderList1 =
-                              await dir.GetFoldersAsync();
-
-                    //Рекурсия (перебираем вложенные папки и делаем для них то-же самое).
-
-                    foreach (var ss in folderList1)
-                    {
-
-                        perebor_updates(ss, end_dir2);
-                    }
-
-                }
-
-                //Перебираем файлики в папке источнике.
-                IReadOnlyList<StorageFile> FileList =
-                               await begin_dir.GetFilesAsync();
-                foreach (var file in FileList)
-                {
-
-                    await file.CopyAsync(end_dir1);
-
-                }
-
-            }
-            catch(Exception ex)
-            {
-                await new MessageDialog(ex.Message).ShowAsync();
-            }
-           
-        }
+ 
 
         private void ContentDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {

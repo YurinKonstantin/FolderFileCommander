@@ -12,6 +12,8 @@ namespace FolderFile
     {
         public DataTemplate Maximum { set; get; }
         public DataTemplate Middle { set; get; }
+        public DataTemplate Drive { set; get; }
+        public DataTemplate DriveMiddle { set; get; }
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
@@ -24,6 +26,10 @@ namespace FolderFile
                         return Maximum;
                     case "Middle":
                         return Middle;
+                    case "Drive":
+                        return Drive;
+                    case "DriveMiddle":
+                        return DriveMiddle;
 
                 }
             }

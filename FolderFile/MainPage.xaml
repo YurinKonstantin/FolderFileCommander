@@ -1665,7 +1665,49 @@
                 <TextBlock Grid.Column="2" Text="Tip" Style="{ThemeResource CaptionTextBlockStyle}"/>
             </Grid>
         </DataTemplate>
-        <local:ListViewDataTemplateSelector x:Key="selector" Maximum="{StaticResource Maximum}" Middle="{StaticResource Middle}"></local:ListViewDataTemplateSelector>
+        <DataTemplate x:Key="Drive" x:DataType="local:ClassListStroce">
+            <Grid Margin="0,8,0,8" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="60" Width="60"  VerticalAlignment="Top" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}, Mode=OneWay}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+
+                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
+                <ProgressBar Foreground="{x:Bind brush, Mode=OneWay}" Width="130" Value="{x:Bind FreeSpace, Mode=OneWay}" Maximum="{x:Bind TotalSpace, Mode=OneWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
+
+                <TextBlock Text="{x:Bind SpaseSize,  Mode=OneWay}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DriveMiddle" x:DataType="local:ClassListStroce">
+            <Grid Margin="0" AllowDrop="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36"/>
+                    <ColumnDefinition  Width="200"/>
+                    <ColumnDefinition Width="196"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+
+                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
+                <TextBlock Text="{x:Bind SpaseSize,  Mode=OneWay}"  Grid.Column="2" Grid.ColumnSpan="2"  VerticalAlignment="Center" Margin="0,0,0,0" />
+              
+
+            </Grid>
+        </DataTemplate>
+        <local:ListViewDataTemplateSelector x:Key="selector" Maximum="{StaticResource Maximum}" Middle="{StaticResource Middle}" Drive="{StaticResource Drive}" DriveMiddle="{StaticResource DriveMiddle}"></local:ListViewDataTemplateSelector>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>

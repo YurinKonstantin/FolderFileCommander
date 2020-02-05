@@ -145,6 +145,7 @@ namespace FolderFile
 
         }
         List<String> listDostyp = new List<string>();
+        public bool dr = false;
         public async void InitializeDataGridView()
         {
             // A TreeView can have more than 1 root node. The Pictures library
@@ -155,6 +156,30 @@ namespace FolderFile
 
                 ListCol.Clear();
               storageFolderFirst = null;
+                try
+                {
+
+
+                    StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Desktop);
+                    var thumbnailddes = await storageFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 200);
+                    ListCol.Add(new ClassListStroce() { StorageFolder = storageFolder, FlagFolde = true, ThumbnailMode = thumbnailddes, Type = Type });
+                }
+                catch(Exception ex)
+                {
+                 
+                }
+                try
+                {
+
+
+                    StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Downloads);
+                    var thumbnailddesDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 200);
+                    ListCol.Add(new ClassListStroce() { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnailddesDownloads, Type = Type });
+                }
+                catch(Exception ex)
+                {
+                    
+                }
                 StorageFolder DocumentFolder = KnownFolders.DocumentsLibrary;
                 var thumbnaild = await DocumentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 200);
                 ListCol.Add(new ClassListStroce() { StorageFolder = DocumentFolder, FlagFolde = true, ThumbnailMode = thumbnaild, Type = Type });
@@ -192,9 +217,31 @@ namespace FolderFile
                     if (drive.DriveType == DriveType.Fixed)
                     {
                         StorageFolder FolderL = await StorageFolder.GetFolderFromPathAsync(drive.Name);
-
+                        
                         var thumbnailL = await FolderL.GetThumbnailAsync(ThumbnailMode.SingleItem, 50);
-                       ListCol.Add(new ClassListStroce() { StorageFolder = FolderL, FlagFolde = true, ThumbnailMode = thumbnailL, Type = Type });
+                        var clas = new ClassListStroce() { StorageFolder = FolderL, FlagFolde = true, ThumbnailMode = thumbnailL};
+                        if (Type== "Maximum")
+                        {
+                            clas.Type =  "Drive" ;
+                      
+                        }
+                        else
+                        {
+                            clas.Type = "DriveMiddle" ;
+                            
+                        }
+                        try
+                        {
+                            clas.Spase();
+                        }
+                        catch(Exception ex)
+                        {
+                            
+                        }
+                       
+                        ListCol.Add(clas);
+
+
                     }
                 }
 
@@ -231,10 +278,8 @@ namespace FolderFile
                         {
 
 
-                            IReadOnlyList<StorageFolder> folderList =
-                               await storageFolder.GetFoldersAsync();
-                            IReadOnlyList<StorageFile> fileList =
-                              await storageFolder.GetFilesAsync();
+                            IReadOnlyList<StorageFolder> folderList = await storageFolder.GetFoldersAsync();
+                            IReadOnlyList<StorageFile> fileList = await storageFolder.GetFilesAsync();
                            
                             storageFolderFirst = storageFolder;
                             ListCol.Clear();
@@ -305,8 +350,10 @@ namespace FolderFile
 
 
                             Path = classListStroceSelect.ElementAt(0).StorageFolder.Path;
+                           
                             IReadOnlyList<StorageFolder> folderList = await FileAndFolderViewer.classListStroceSelect.ElementAt(0).StorageFolder.GetFoldersAsync();
                             IReadOnlyList<StorageFile> fileList = await FileAndFolderViewer.classListStroceSelect.ElementAt(0).StorageFolder.GetFilesAsync();
+
 
                             storageFolderFirst = FileAndFolderViewer.classListStroceSelect.ElementAt(0).StorageFolder;
                             ListCol.Clear();
@@ -317,6 +364,7 @@ namespace FolderFile
                                 ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail, Type = Type });
                                 ListColName.Add(FlFolder1.DisplayName);
                             }
+                  
                             foreach (StorageFile FlFolder1 in fileList)
                             {
                                 var thumbnail = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 200);

@@ -24,10 +24,10 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
     <AppInstallerUri>C:\Users\Konstantin\Source\Repos\YurinKonstantin\FolderFileCommander\FolderFile\AppPackages\</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>2BA43E87F5A5FDFFB72453D1C44DD99E038FF144</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>9690EA42AFABE95BF5E700EE5EC4D5F485BA979A</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -185,6 +185,11 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="String\zh-CN\Resources.resw" />
+    <PRIResource Include="String\fr\Resources.resw" />
+    <PRIResource Include="String\ru\Resources.resw" />
+    <PRIResource Include="String\es\Resources.resw" />
+    <PRIResource Include="String\de-DE\Resources.resw" />
     <PRIResource Include="String\ru-RU\Resources.resw" />
     <PRIResource Include="String\en-US\Resources.resw" />
   </ItemGroup>
@@ -234,7 +239,7 @@
       <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.1.7</Version>
+      <Version>1.0.1.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
