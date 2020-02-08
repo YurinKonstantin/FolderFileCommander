@@ -1613,7 +1613,7 @@
             </Grid>
         </ControlTemplate>
         <DataTemplate x:Key="Maximum" x:DataType="local:ClassListStroce">
-            <Grid Margin="0,8,0,8" >
+            <Grid Margin="0,0,0,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -1666,7 +1666,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Drive" x:DataType="local:ClassListStroce">
-            <Grid Margin="0,8,0,8" >
+            <Grid Margin="0,0,0,0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -1854,6 +1854,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
 
                     </Grid.ColumnDefinitions>
@@ -1861,7 +1863,9 @@
                     <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,0,0,0" VerticalAlignment="Top" />
                    
                     <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_1"/>
-                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
+                    <AppBarButton Icon="Contact" Grid.Column="2" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_3"/>
+                   
+                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox" QueryIcon="Find" Grid.Column="4" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
                 </Grid>
                 <ListView  Grid.Row="1"
                             AllowDrop="True" DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
@@ -1920,13 +1924,15 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
 
                     </Grid.ColumnDefinitions>
 
                     <AppBarButton Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButtonNazad_Click_1" Margin="0" VerticalAlignment="Top" />
                     <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_2"/>
-                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox2" QueryIcon="Find" Grid.Column="2" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
+                    <AppBarButton Icon="Contact" Grid.Column="2" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_4"/>
+                    <AutoSuggestBox Visibility="Collapsed"  x:Name="suggestBox2" QueryIcon="Find" Grid.Column="4" PlaceholderText="Поиск внутри папки" TextChanged="suggestBox_TextChanged"    QuerySubmitted="suggestBox_QuerySubmitted" SuggestionChosen="suggestBox_SuggestionChosen"/>
                 </Grid>
                 <ListView  Grid.Row="2" Tag="twy"  IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid2" Margin="12" 
                           AllowDrop="True"  DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop1"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
