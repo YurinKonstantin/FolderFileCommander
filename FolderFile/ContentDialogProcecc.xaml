@@ -12,6 +12,7 @@
         <StackPanel>
             <TextBlock x:Name="TextInfo" TextWrapping="Wrap"/>
             <ProgressBar Width="130" IsIndeterminate="True" ShowPaused="False" ShowError="False" />
+            <AppBarButton HorizontalAlignment="Right" Content="Stop" Icon="Stop" Label="Stop" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

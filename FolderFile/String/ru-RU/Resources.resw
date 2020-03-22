@@ -276,4 +276,7 @@
   <data name="TipText" xml:space="preserve">
     <value>Тип</value>
   </data>
+  <data name="ToggleTheme.Header" xml:space="preserve">
+    <value>Тема</value>
+  </data>
 </root>

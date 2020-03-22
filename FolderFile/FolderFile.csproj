@@ -185,6 +185,10 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="String\ja\Resources.resw" />
+    <PRIResource Include="String\pt\Resources.resw" />
+    <PRIResource Include="String\zh\Resources.resw" />
+    <PRIResource Include="String\de\Resources.resw" />
     <PRIResource Include="String\zh-CN\Resources.resw" />
     <PRIResource Include="String\fr\Resources.resw" />
     <PRIResource Include="String\ru\Resources.resw" />

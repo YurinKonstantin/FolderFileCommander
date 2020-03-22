@@ -44,10 +44,13 @@ namespace FolderFile
     {
         public MainPage()
         {
-           // Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "zh-CN");
+           // Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "ja");
             this.InitializeComponent();
-         
-           this.fileAndFolderViewer = new FileAndFolderViewer();
+            FrameworkElement root = (FrameworkElement)Window.Current.Content;
+            root.RequestedTheme = AppSettings.Theme;
+            SetThemeToggle(AppSettings.Theme);
+
+            this.fileAndFolderViewer = new FileAndFolderViewer();
             this.fileAndFolderViewer2 = new FileAndFolderViewer();
 
 
@@ -57,7 +60,73 @@ namespace FolderFile
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
            
         }
+        private void SetThemeToggle(ElementTheme theme)
+        {
+            if (theme == AppSettings.DEFAULTTHEME)
+                tglAppTheme.IsOn = false;
+            else
+                tglAppTheme.IsOn = true;
+        }
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement window = (FrameworkElement)Window.Current.Content;
 
+            if (((ToggleSwitch)sender).IsOn)
+            {
+                AppSettings.Theme = AppSettings.NONDEFLTHEME;
+                window.RequestedTheme = AppSettings.NONDEFLTHEME;
+            }
+            else
+            {
+                AppSettings.Theme = AppSettings.DEFAULTTHEME;
+                window.RequestedTheme = AppSettings.DEFAULTTHEME;
+            }
+        }
+        class AppSettings
+        {
+            public const ElementTheme DEFAULTTHEME = ElementTheme.Light;
+            public const ElementTheme NONDEFLTHEME = ElementTheme.Dark;
+
+            const string KEY_THEME = "appColourMode";
+            static ApplicationDataContainer LOCALSETTINGS = ApplicationData.Current.LocalSettings;
+
+            /// <summary>
+            /// Gets or sets the current app colour setting from memory (light or dark mode).
+            /// </summary>
+            public static ElementTheme Theme
+            {
+                get
+                {
+                    // Never set: default theme
+                    if (LOCALSETTINGS.Values[KEY_THEME] == null)
+                    {
+                        LOCALSETTINGS.Values[KEY_THEME] = (int)DEFAULTTHEME;
+                        return DEFAULTTHEME;
+                    }
+                    // Previously set to default theme
+                    else if ((int)LOCALSETTINGS.Values[KEY_THEME] == (int)DEFAULTTHEME)
+                        return DEFAULTTHEME;
+                    // Previously set to non-default theme
+                    else
+                        return NONDEFLTHEME;
+                }
+                set
+                {
+                    // Error check
+                    if (value == ElementTheme.Default)
+                        throw new System.Exception("Only set the theme to light or dark mode!");
+                    // Never set
+                    else if (LOCALSETTINGS.Values[KEY_THEME] == null)
+                        LOCALSETTINGS.Values[KEY_THEME] = (int)value;
+                    // No change
+                    else if ((int)value == (int)LOCALSETTINGS.Values[KEY_THEME])
+                        return;
+                    // Change
+                    else
+                        LOCALSETTINGS.Values[KEY_THEME] = (int)value;
+                }
+            }
+        }
         private DataTransferManager dataTransferManager;
       
         FileAndFolderViewer fileAndFolderViewer { get; set; }
@@ -1775,6 +1844,16 @@ namespace FolderFile
         private void AppBarButton_Tapped_4(object sender, TappedRoutedEventArgs e)
         {
             fileAndFolderViewer2.FavoritSpeed();
+        }
+
+        private void AppBarToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.RequestedTheme = ApplicationTheme.Dark;
+        }
+
+        private void AppBarToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.RequestedTheme = ApplicationTheme.Light;
         }
     }
   
