@@ -121,168 +121,162 @@
     <value>Ok</value>
   </data>
   <data name="ContentButton.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annulla</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created</value>
+    <value>Creato</value>
   </data>
   <data name="Eas" xml:space="preserve">
-    <value>Add</value>
+    <value>Inserisci</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>Properties</value>
+    <value>Proprietà</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Change</value>
+    <value>Modificare</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
-    <value>Copy</value>
+    <value>copia</value>
   </data>
   <data name="MenuTextDelete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Elimina</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Properties</value>
+    <value>Proprietà</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
-    <value>Open</value>
+    <value>Aperto</value>
   </data>
   <data name="MenuTextpaste.Text" xml:space="preserve">
-    <value>Paste</value>
+    <value>Incolla</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
+    <value>L'applicazione avrà accesso alle cartelle e ai contenuti specificati. Puoi aggiungere o rimuovere posizioni in un secondo momento. Inizialmente l'accesso viene aperto alle cartelle con musica, immagini e ai dischi locali e rimovibili.</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
+    <value>L'accesso al file system è necessario per il funzionamento dell'applicazione. Seguire questi passaggi per continuare ed eseguire nuovamente l'applicazione - Start> Impostazioni> Privacy> File system.</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>An error occurred while creating the file. File not created!</value>
+    <value>Si è verificato un errore durante la creazione del file. File non creato!</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
-    <value>Error</value>
+    <value>Errore</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before the beginning, add a location for a work</value>
+    <value>Prima dell'inizio, aggiungi una posizione per un'opera</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
-    <value>File system access</value>
+    <value>Accesso al file system</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="NoSey" xml:space="preserve">
-    <value>Not now</value>
+    <value>Non adesso</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path</value>
+    <value>Sentiero</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="sortingDownABC.Text" xml:space="preserve">
-    <value>Name Descending</value>
-  </data>
-  <data name="sortingUpABC.Text" xml:space="preserve">
-    <value>Name Ascending</value>
+    <value>Dimensione</value>
   </data>
   <data name="tabItem1.Header" xml:space="preserve">
-    <value>Home</value>
+    <value>Casa</value>
   </data>
   <data name="tabItem1LabCopi.Label" xml:space="preserve">
-    <value>Copy</value>
+    <value>copia</value>
   </data>
   <data name="tabItem1LabCreat.Label" xml:space="preserve">
-    <value>Create</value>
+    <value>Creare</value>
   </data>
   <data name="tabItem1Labdelete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Elimina</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Change</value>
+    <value>Modificare</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
-    <value>Paste</value>
+    <value>Incolla</value>
   </data>
   <data name="tabItem1LabPeremen.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>Mossa</value>
   </data>
   <data name="tabItem1LabSelectAll.Label" xml:space="preserve">
-    <value>Select all</value>
+    <value>Seleziona tutto</value>
   </data>
   <data name="tabItem1LabVid.Label" xml:space="preserve">
-    <value>View</value>
+    <value>Visualizza</value>
   </data>
   <data name="tabItem1TextFile.Text" xml:space="preserve">
     <value>File</value>
   </data>
   <data name="tabItem1TextFolder.Text" xml:space="preserve">
-    <value>Folder</value>
+    <value>Cartella</value>
   </data>
   <data name="tabItem2.Header" xml:space="preserve">
-    <value>View</value>
+    <value>Visualizza</value>
   </data>
   <data name="tabItem2LabAddPlase.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>Inserisci</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add location</value>
+    <value>Aggiungi luogo</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete location</value>
+    <value>Elimina posizione</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Confermare</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click confirm</value>
+    <value>Seleziona una cartella da eliminare dall'elenco seguente e fai clic su Conferma</value>
   </data>
   <data name="TextCopi" xml:space="preserve">
-    <value>Copy</value>
+    <value>copia</value>
   </data>
   <data name="textDostup.PrimaryButtonText" xml:space="preserve">
-    <value>Grant Access</value>
+    <value>Concedere l'accesso</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
-    <value>Name File</value>
+    <value>Nome file</value>
   </data>
   <data name="TextNewFile.Text" xml:space="preserve">
-    <value>New File</value>
+    <value>Nuovo file</value>
   </data>
   <data name="TextNewFile1" xml:space="preserve">
-    <value>New File</value>
+    <value>Nuovo file</value>
   </data>
   <data name="TextNewFileTip.Text" xml:space="preserve">
-    <value>File type</value>
+    <value>Tipo di file</value>
   </data>
   <data name="TextNewFolder" xml:space="preserve">
-    <value>New Folder</value>
+    <value>Nuova cartella</value>
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
-    <value>New Name</value>
+    <value>Nuovo nome</value>
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
-    <value>To open with...</value>
+    <value>Per aprire con...</value>
   </data>
   <data name="textViews.Text" xml:space="preserve">
-    <value>View</value>
+    <value>Visualizza</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
-    <value>File deletion</value>
+    <value>Cancellazione dei file</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Folder deletion</value>
+    <value>Cancellazione della cartella</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
-    <value>Copy file</value>
+    <value>Copia il file</value>
   </data>
   <data name="TilePasteFolder" xml:space="preserve">
-    <value>Copy folder</value>
+    <value>Copia cartella</value>
   </data>
   <data name="TipText" xml:space="preserve">
-    <value>Type of</value>
+    <value>Tipo di</value>
   </data>
   <data name="ToggleTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>Tema</value>
   </data>
 </root>

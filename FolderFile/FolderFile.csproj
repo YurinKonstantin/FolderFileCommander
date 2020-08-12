@@ -131,6 +131,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BlankPage1EditFileFolder.xaml.cs">
+      <DependentUpon>BlankPage1EditFileFolder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BlankPageSetting.xaml.cs">
+      <DependentUpon>BlankPageSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ClassListStroce.cs" />
     <Compile Include="ContentDialogDostup.xaml.cs">
       <DependentUpon>ContentDialogDostup.xaml</DependentUpon>
@@ -141,14 +147,33 @@
     <Compile Include="ContentDialogProcecc.xaml.cs">
       <DependentUpon>ContentDialogProcecc.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentDialogPropertFile.xaml.cs">
+      <DependentUpon>ContentDialogPropertFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContentDialogPropertFolder.xaml.cs">
+      <DependentUpon>ContentDialogPropertFolder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentDialogRemove.xaml.cs">
       <DependentUpon>ContentDialogRemove.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\FileFolderView.xaml.cs">
+      <DependentUpon>FileFolderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExceptionDialog.xaml.cs">
       <DependentUpon>ExceptionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExplorerItemTemplateSelector.cs" />
-    <Compile Include="FileAndFolderViewer.cs" />
+    <Compile Include="settingPage\BlankPageAbout.xaml.cs">
+      <DependentUpon>BlankPageAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="settingPage\BlankPageFilesFolders.xaml.cs">
+      <DependentUpon>BlankPageFilesFolders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="settingPage\BlankPageVid.xaml.cs">
+      <DependentUpon>BlankPageVid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewFocusName.cs" />
+    <Compile Include="ViewModal\FileAndFolderViewer.cs" />
     <Compile Include="ListViewDataTemplateSelector.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -185,6 +210,22 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="String\it\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="String\ko\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="String\hi-IN\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="String\hi\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="String\ar\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="String\ja-jp\Resources.resw" />
     <PRIResource Include="String\ja\Resources.resw" />
     <PRIResource Include="String\pt\Resources.resw" />
     <PRIResource Include="String\zh\Resources.resw" />
@@ -202,6 +243,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BlankPage1EditFileFolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BlankPageSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ContentDialogDostup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,7 +263,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ContentDialogPropertFile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentDialogPropertFolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ContentDialogRemove.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\FileFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,15 +287,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="settingPage\BlankPageAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="settingPage\BlankPageFilesFolders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="settingPage\BlankPageVid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.8</Version>
+      <Version>3.0.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>6.0.0</Version>
@@ -246,7 +319,18 @@
       <Version>1.0.1.8</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="String\bn\" />
+    <Folder Include="String\el\" />
+    <Folder Include="String\fa\" />
+    <Folder Include="String\fi\" />
+    <Folder Include="String\id\" />
+    <Folder Include="String\nl\" />
+    <Folder Include="String\pl\" />
+    <Folder Include="String\th\" />
+    <Folder Include="String\zh-TW\" />
+    <Folder Include="view\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

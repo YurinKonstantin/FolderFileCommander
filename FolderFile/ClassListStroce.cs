@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+
 
 namespace FolderFile
 {
@@ -36,28 +38,90 @@ namespace FolderFile
             set
             {
                 storageFolder = value;
+                this.OnPropertyChanged();
 
             }
         }
    
         public  StorageFile storageFile { get; set; }
         StorageItemThumbnail thumbnailMode;
-
+       
         public StorageItemThumbnail ThumbnailMode
         {
             get
             {
-               
-                    return thumbnailMode;
+
+                
+                return thumbnailMode;
                 
               
             }
             set
             {
-                thumbnailMode = value;
+                
+                    thumbnailMode = value;
+                this.OnPropertyChanged();
             }
         }
-       
+        public async  Task<StorageItemThumbnail> ThumbnailMode2()
+        {
+
+           StorageItemThumbnail thumbnailMode3= ThumbnailMode;
+                if (FlagFolde)
+                {
+                   var thumbnailMode32 =await StorageFolder.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                    return thumbnailMode32;
+                }
+                
+
+
+                return thumbnailMode3;
+
+
+            
+           
+        }
+        public async Task ggg()
+        {
+            if (FlagFolde)
+            {
+
+
+                ThumbnailMode = await StorageFolder.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+              //  this.OnPropertyChanged();
+            }
+            else
+            {
+                ThumbnailMode = await storageFile.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+               // this.OnPropertyChanged();
+            }
+        }
+        public BitmapImage bitmapImage1()
+        {
+
+
+            BitmapImage image = new BitmapImage();
+            image.UriSource = new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.RelativeOrAbsolute);
+            try
+            {
+                
+
+                StorageItemThumbnail thumbnail = ThumbnailMode;
+                if (thumbnail != null)
+                {
+
+
+                    image.SetSource(thumbnail);
+                   
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            return (image);
+        }
         public bool FlagFolde { get; set; }
       
         public string FileAndFildeName

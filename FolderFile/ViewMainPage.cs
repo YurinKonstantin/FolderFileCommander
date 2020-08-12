@@ -10,10 +10,14 @@ namespace FolderFile
     public sealed partial class FileAndFolderViewer
     {
 
-       static public string viewFocusTag { get; set; }
-     static  public List<ClassListStroce> classListStroceSelect { get; set; }
+       
+     public List<ClassListStroce> classListStroceSelect { get; set; }
    
       
        static public string Type = "Maximum";
+      
+
     }
+    
+ 
 }

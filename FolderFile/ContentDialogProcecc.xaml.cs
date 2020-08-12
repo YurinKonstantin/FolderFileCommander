@@ -77,6 +77,8 @@ namespace FolderFile
                 var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 
                 TextInfo.Text = resourceLoader.GetString("TileDeleteFolder") + " " + storageFolder.Name + "\n" + storageFolder.Path;
+           
+               
                 await storageFolder.DeleteAsync();
             }
             catch(Exception ex)

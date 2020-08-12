@@ -180,6 +180,12 @@
   <data name="SizeText" xml:space="preserve">
     <value>Размер</value>
   </data>
+  <data name="sortingDownABC.Text" xml:space="preserve">
+    <value>Алфавит по убыванию</value>
+  </data>
+  <data name="sortingUpABC.Text" xml:space="preserve">
+    <value>Алфавит по возрастанию</value>
+  </data>
   <data name="tabItem1.Header" xml:space="preserve">
     <value>Главное</value>
   </data>

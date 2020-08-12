@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="FolderFile.settingPage.BlankPageFilesFolders"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FolderFile.settingPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StackPanel
+                Margin="12,12,8,8"
+                Orientation="Vertical"
+                Spacing="14">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock
+                    x:Uid="SettingsFilesAndFoldersTitle"
+                    FontSize="22"
+                    FontWeight="Medium"
+                    Text="Files and Folders" />
+
+                <StackPanel Spacing="10" Visibility="Collapsed">
+                    <TextBlock
+                        x:Uid="SettingsFilesAndFoldersShowHiddenFiles"
+                        FontSize="17"
+                        Text="Show hidden files, folders, and drives" />
+                    <ToggleSwitch IsEnabled="False" />
+                </StackPanel>
+
+                <StackPanel Spacing="10" Visibility="Collapsed">
+                    <TextBlock
+                        x:Uid="SettingsFilesAndFoldersShowFileExtensions"
+                        FontSize="17"
+                        Text="Show extensions for known file types" />
+                    <ToggleSwitch x:Name="FileExtensionsToggle"  />
+                </StackPanel>
+                <StackPanel Spacing="10" Margin="0,-30,0,0">
+                    <TextBlock
+                        x:Uid="SettingsFilesAndFoldersShowHiddenFiles"
+                        FontSize="17"
+                        Text="Управление расположениями на панели быстрого запуска " />
+                    <Button Content="Добавть новое расположение"  x:Uid="tabItem2LabAddPlase1"  Click="AppBarButton_Click_2"/>
+                    <Button FrameworkElement.AllowFocusOnInteraction="True"  x:Uid="tabItem2LabDelete1"  IsEnabled="True" Content="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="280"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CommandBar>
+                                        <AppBarButton Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
+                                    </CommandBar>
+                                    <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
+                                    <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind fileAndFolderViewer.listDostyp, Mode=OneWay}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Grid>
+                                                    <TextBlock Text="{Binding }" FontSize="16"></TextBlock>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </Button>
+                </StackPanel>
+                <StackPanel Spacing="10">
+                    <TextBlock
+                        x:Uid="SettingsFilesAndFoldersShowDriveLetters"
+                        FontSize="17"
+                        Text="Show drive letters" />
+                    <ToggleSwitch
+                        IsEnabled="False"
+                        OffContent=""
+                        OnContent="" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

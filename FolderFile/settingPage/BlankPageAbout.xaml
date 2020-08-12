@@ -1,0 +1,122 @@
+﻿<Page
+    x:Class="FolderFile.settingPage.BlankPageAbout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FolderFile.settingPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel
+                Margin="12,12,8,8"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Orientation="Vertical"
+                Spacing="14">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock
+                    x:Uid="SettingsAboutTitle"
+                    FontSize="22"
+                    FontWeight="Medium"
+                    Text="About" />
+
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="60"
+                        Source="/Assets/StoreLogo.png"
+                        Stretch="Uniform" />
+                    <StackPanel Padding="12,0,0,0" Orientation="Vertical">
+                        <TextBlock
+                            x:Uid="SettingsAboutAppName"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            Text="File Commander" />
+                        <TextBlock
+                            x:Name="VersionNumber"
+                            Padding="0,4"
+                            FontSize="14"
+                            Opacity=".5"
+                            Text="Version number" />
+                    </StackPanel>
+                </StackPanel>
+
+                <ListView
+                    HorizontalAlignment="Left"
+                    IsItemClickEnabled="True"
+                   ItemClick="ListView_ItemClick_1">
+                    <ListViewItem
+                        x:Name="FeedbackForm"
+                        Padding="8,2"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsEnabled="True">
+                        <StackPanel
+                            Padding="0,4"
+                            Orientation="Horizontal"
+                            Spacing="14">
+                            <FontIcon Glyph="&#xeD15;" />
+                  
+                            <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Submit Feedback" />
+                                <TextBlock
+                                    x:Uid="SettingsAboutSubmitFeedbackDescription"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="Что бы другие пользователи узнали больше о приложении"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <ListView
+                    HorizontalAlignment="Left"
+                    IsItemClickEnabled="True"
+                    ItemClick="ListView_ItemClick">
+                    <ListViewItem
+                      
+                        Padding="8,2"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsEnabled="True">
+                        <StackPanel
+                            Padding="0,4"
+                            Orientation="Horizontal"
+                            Spacing="14">
+                            <FontIcon Glyph="&#xeBE8;" />
+                            <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Сообщить разработчику о проблеме" />
+                                <TextBlock
+                                    x:Uid="SettingsAboutSubmitFeedbackDescription"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="Send the developers an issue report with more information"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+
+             
+
+                <StackPanel Orientation="Horizontal">
+            
+                    <TextBlock
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Bottom"
+                        TextWrapping="WrapWholeWords">
+                        <Span xml:space="preserve"><Run x:Uid="SettingsAboutWebsite">Website: </Run><Hyperlink NavigateUri="https://filecommander.blogspot.com/p/file-commander.html">filecommander.blogspot.com</Hyperlink></Span>
+                    </TextBlock>
+              
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

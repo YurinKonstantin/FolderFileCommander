@@ -118,171 +118,165 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContentButton.PrimaryButtonText" xml:space="preserve">
-    <value>Ok</value>
+    <value>확인</value>
   </data>
   <data name="ContentButton.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>취소</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created</value>
+    <value>만들어진</value>
   </data>
   <data name="Eas" xml:space="preserve">
-    <value>Add</value>
+    <value>더하다</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>Properties</value>
+    <value>속성</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Change</value>
+    <value>변화</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
-    <value>Copy</value>
+    <value>부</value>
   </data>
   <data name="MenuTextDelete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>지우다</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Properties</value>
+    <value>속성</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
-    <value>Open</value>
+    <value>열다</value>
   </data>
   <data name="MenuTextpaste.Text" xml:space="preserve">
-    <value>Paste</value>
+    <value>풀</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
+    <value>응용 프로그램은 지정된 폴더와 내용에 액세스 할 수 있습니다. 나중에 위치를 추가하거나 제거 할 수 있습니다. 처음에는 음악, 이미지가있는 폴더 및 로컬 및 이동식 디스크에 액세스 할 수 있습니다.</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
+    <value>응용 프로그램 작업을 위해서는 파일 시스템에 액세스해야합니다. 다음 단계에 따라 애플리케이션을 계속 진행하고 다시 시작하십시오 (시작> 설정> 개인 정보> 파일 시스템).</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>An error occurred while creating the file. File not created!</value>
+    <value>파일을 작성하는 중에 오류가 발생했습니다. 파일이 생성되지 않았습니다!</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
-    <value>Error</value>
+    <value>오류</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before the beginning, add a location for a work</value>
+    <value>시작하기 전에 작업 위치를 추가하십시오</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
-    <value>File system access</value>
+    <value>파일 시스템 액세스</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name</value>
+    <value>이름</value>
   </data>
   <data name="NoSey" xml:space="preserve">
-    <value>Not now</value>
+    <value>지금은 아닙니다</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path</value>
+    <value>통로</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="sortingDownABC.Text" xml:space="preserve">
-    <value>Name Descending</value>
-  </data>
-  <data name="sortingUpABC.Text" xml:space="preserve">
-    <value>Name Ascending</value>
+    <value>크기</value>
   </data>
   <data name="tabItem1.Header" xml:space="preserve">
-    <value>Home</value>
+    <value>집</value>
   </data>
   <data name="tabItem1LabCopi.Label" xml:space="preserve">
-    <value>Copy</value>
+    <value>부</value>
   </data>
   <data name="tabItem1LabCreat.Label" xml:space="preserve">
-    <value>Create</value>
+    <value>창조하다</value>
   </data>
   <data name="tabItem1Labdelete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>지우다</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Change</value>
+    <value>변화</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
-    <value>Paste</value>
+    <value>풀</value>
   </data>
   <data name="tabItem1LabPeremen.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>움직임</value>
   </data>
   <data name="tabItem1LabSelectAll.Label" xml:space="preserve">
-    <value>Select all</value>
+    <value>모두 선택</value>
   </data>
   <data name="tabItem1LabVid.Label" xml:space="preserve">
-    <value>View</value>
+    <value>전망</value>
   </data>
   <data name="tabItem1TextFile.Text" xml:space="preserve">
-    <value>File</value>
+    <value>파일</value>
   </data>
   <data name="tabItem1TextFolder.Text" xml:space="preserve">
-    <value>Folder</value>
+    <value>폴더</value>
   </data>
   <data name="tabItem2.Header" xml:space="preserve">
-    <value>View</value>
+    <value>전망</value>
   </data>
   <data name="tabItem2LabAddPlase.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>더하다</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add location</value>
+    <value>위치 추가</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete location</value>
+    <value>위치 삭제</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
-    <value>Confirm</value>
+    <value>확인</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click confirm</value>
+    <value>아래 목록에서 삭제할 폴더를 선택하고 확인을 클릭하십시오</value>
   </data>
   <data name="TextCopi" xml:space="preserve">
-    <value>Copy</value>
+    <value>부</value>
   </data>
   <data name="textDostup.PrimaryButtonText" xml:space="preserve">
-    <value>Grant Access</value>
+    <value>액세스 권한 부여</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
-    <value>Name File</value>
+    <value>이름 파일</value>
   </data>
   <data name="TextNewFile.Text" xml:space="preserve">
-    <value>New File</value>
+    <value>새로운 파일</value>
   </data>
   <data name="TextNewFile1" xml:space="preserve">
-    <value>New File</value>
+    <value>새로운 파일</value>
   </data>
   <data name="TextNewFileTip.Text" xml:space="preserve">
-    <value>File type</value>
+    <value>파일 타입</value>
   </data>
   <data name="TextNewFolder" xml:space="preserve">
-    <value>New Folder</value>
+    <value>새 폴더</value>
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
-    <value>New Name</value>
+    <value>새로운 이름</value>
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
-    <value>To open with...</value>
+    <value>로 열려면...</value>
   </data>
   <data name="textViews.Text" xml:space="preserve">
-    <value>View</value>
+    <value>전망</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
-    <value>File deletion</value>
+    <value>파일 삭제</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Folder deletion</value>
+    <value>폴더 삭제</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
-    <value>Copy file</value>
+    <value>파일 복사</value>
   </data>
   <data name="TilePasteFolder" xml:space="preserve">
-    <value>Copy folder</value>
+    <value>폴더 복사</value>
   </data>
   <data name="TipText" xml:space="preserve">
-    <value>Type of</value>
+    <value>유형</value>
   </data>
   <data name="ToggleTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>테마</value>
   </data>
 </root>

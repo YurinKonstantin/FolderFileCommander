@@ -118,171 +118,165 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContentButton.PrimaryButtonText" xml:space="preserve">
-    <value>Ok</value>
+    <value>حسنا</value>
   </data>
   <data name="ContentButton.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>إلغاء</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created</value>
+    <value>خلقت</value>
   </data>
   <data name="Eas" xml:space="preserve">
-    <value>Add</value>
+    <value>أضف</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>Properties</value>
+    <value>الخصائص</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Change</value>
+    <value>يتغيرون</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
-    <value>Copy</value>
+    <value>نسخ</value>
   </data>
   <data name="MenuTextDelete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>حذف</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Properties</value>
+    <value>الخصائص</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
-    <value>Open</value>
+    <value>افتح</value>
   </data>
   <data name="MenuTextpaste.Text" xml:space="preserve">
-    <value>Paste</value>
+    <value>معجون</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
+    <value>سيتمكن التطبيق من الوصول إلى المجلدات والمحتويات المحددة. يمكنك إضافة أو إزالة المواقع لاحقًا. في البداية يتم فتح الوصول إلى المجلدات التي تحتوي على الموسيقى والصور والأقراص المحلية والقابلة للإزالة.</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
+    <value>مطلوب الوصول إلى نظام الملفات لعمل التطبيق. اتبع هذه الخطوات للمتابعة وتشغيل التطبيق مرة أخرى - ابدأ الإعدادات> الخصوصية> نظام الملفات.</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>An error occurred while creating the file. File not created!</value>
+    <value>حدث خطأ أثناء إنشاء الملف. لم يتم إنشاء الملف!</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before the beginning, add a location for a work</value>
+    <value>قبل البداية ، أضف موقعًا للعمل</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
-    <value>File system access</value>
+    <value>الوصول إلى نظام الملفات</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name</value>
+    <value>اسم</value>
   </data>
   <data name="NoSey" xml:space="preserve">
-    <value>Not now</value>
+    <value>ليس الان</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path</value>
+    <value>مسار</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="sortingDownABC.Text" xml:space="preserve">
-    <value>Name Descending</value>
-  </data>
-  <data name="sortingUpABC.Text" xml:space="preserve">
-    <value>Name Ascending</value>
+    <value>بحجم</value>
   </data>
   <data name="tabItem1.Header" xml:space="preserve">
-    <value>Home</value>
+    <value>الصفحة الرئيسية</value>
   </data>
   <data name="tabItem1LabCopi.Label" xml:space="preserve">
-    <value>Copy</value>
+    <value>نسخ</value>
   </data>
   <data name="tabItem1LabCreat.Label" xml:space="preserve">
-    <value>Create</value>
+    <value>خلق</value>
   </data>
   <data name="tabItem1Labdelete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>حذف</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Change</value>
+    <value>يتغيرون</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
-    <value>Paste</value>
+    <value>معجون</value>
   </data>
   <data name="tabItem1LabPeremen.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>نقل</value>
   </data>
   <data name="tabItem1LabSelectAll.Label" xml:space="preserve">
-    <value>Select all</value>
+    <value>اختر الكل</value>
   </data>
   <data name="tabItem1LabVid.Label" xml:space="preserve">
-    <value>View</value>
+    <value>رأي</value>
   </data>
   <data name="tabItem1TextFile.Text" xml:space="preserve">
-    <value>File</value>
+    <value>ملف</value>
   </data>
   <data name="tabItem1TextFolder.Text" xml:space="preserve">
-    <value>Folder</value>
+    <value>مجلد</value>
   </data>
   <data name="tabItem2.Header" xml:space="preserve">
-    <value>View</value>
+    <value>رأي</value>
   </data>
   <data name="tabItem2LabAddPlase.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>أضف</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add location</value>
+    <value>أضف موقعًا</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete location</value>
+    <value>حذف الموقع</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
-    <value>Confirm</value>
+    <value>تؤكد</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click confirm</value>
+    <value>حدد مجلدًا لحذفه من القائمة أدناه وانقر فوق تأكيد</value>
   </data>
   <data name="TextCopi" xml:space="preserve">
-    <value>Copy</value>
+    <value>نسخ</value>
   </data>
   <data name="textDostup.PrimaryButtonText" xml:space="preserve">
-    <value>Grant Access</value>
+    <value>منح الوصول</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
-    <value>Name File</value>
+    <value>ملف الاسم</value>
   </data>
   <data name="TextNewFile.Text" xml:space="preserve">
-    <value>New File</value>
+    <value>ملف جديد</value>
   </data>
   <data name="TextNewFile1" xml:space="preserve">
-    <value>New File</value>
+    <value>ملف جديد</value>
   </data>
   <data name="TextNewFileTip.Text" xml:space="preserve">
-    <value>File type</value>
+    <value>نوع الملف</value>
   </data>
   <data name="TextNewFolder" xml:space="preserve">
-    <value>New Folder</value>
+    <value>ملف جديد</value>
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
-    <value>New Name</value>
+    <value>اسم جديد</value>
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
-    <value>To open with...</value>
+    <value>لفتح</value>
   </data>
   <data name="textViews.Text" xml:space="preserve">
-    <value>View</value>
+    <value>رأي</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
-    <value>File deletion</value>
+    <value>حذف الملف</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Folder deletion</value>
+    <value>حذف المجلد</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
-    <value>Copy file</value>
+    <value>نسخة ارشيف</value>
   </data>
   <data name="TilePasteFolder" xml:space="preserve">
-    <value>Copy folder</value>
+    <value>انسخ المجلد</value>
   </data>
   <data name="TipText" xml:space="preserve">
-    <value>Type of</value>
+    <value>نوع من</value>
   </data>
   <data name="ToggleTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>موضوع</value>
   </data>
 </root>

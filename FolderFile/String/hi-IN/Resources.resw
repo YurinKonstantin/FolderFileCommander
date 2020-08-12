@@ -118,171 +118,165 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContentButton.PrimaryButtonText" xml:space="preserve">
-    <value>Ok</value>
+    <value>ठीक</value>
   </data>
   <data name="ContentButton.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>रद्द करना</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created</value>
+    <value>बनाया था</value>
   </data>
   <data name="Eas" xml:space="preserve">
-    <value>Add</value>
+    <value>जोड़ना</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>Properties</value>
+    <value>गुण</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Change</value>
+    <value>परिवर्तन</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
-    <value>Copy</value>
+    <value>प्रतिलिपि</value>
   </data>
   <data name="MenuTextDelete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>हटाएं</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Properties</value>
+    <value>गुण</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
-    <value>Open</value>
+    <value>खुला हुआ</value>
   </data>
   <data name="MenuTextpaste.Text" xml:space="preserve">
-    <value>Paste</value>
+    <value>पेस्ट करें</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
+    <value>एप्लिकेशन में निर्दिष्ट फ़ोल्डर और सामग्री तक पहुंच होगी। आप बाद में स्थानों को जोड़ या निकाल सकते हैं। प्रारंभ में संगीत, चित्र और स्थानीय और हटाने योग्य डिस्क के साथ फ़ोल्डर्स तक पहुंच खोली जाती है।</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
-    <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
+    <value>एप्लिकेशन कार्य के लिए फ़ाइल सिस्टम तक पहुंच आवश्यक है। एप्लिकेशन को जारी रखने और फिर से चलाने के लिए इन चरणों का पालन करें - प्रारंभ> सेटिंग्स> गोपनीयता> फ़ाइल सिस्टम।</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>An error occurred while creating the file. File not created!</value>
+    <value>फ़ाइल बनाते समय एक त्रुटि हुई। फ़ाइल नहीं बनाई गई!</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
-    <value>Error</value>
+    <value>त्रुटि</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before the beginning, add a location for a work</value>
+    <value>शुरुआत से पहले, एक काम के लिए एक स्थान जोड़ें</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
-    <value>File system access</value>
+    <value>फ़ाइल सिस्टम एक्सेस</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name</value>
+    <value>नाम</value>
   </data>
   <data name="NoSey" xml:space="preserve">
-    <value>Not now</value>
+    <value>अभी नहीं</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path</value>
+    <value>पथ</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="sortingDownABC.Text" xml:space="preserve">
-    <value>Name Descending</value>
-  </data>
-  <data name="sortingUpABC.Text" xml:space="preserve">
-    <value>Name Ascending</value>
+    <value>आकार</value>
   </data>
   <data name="tabItem1.Header" xml:space="preserve">
-    <value>Home</value>
+    <value>घर</value>
   </data>
   <data name="tabItem1LabCopi.Label" xml:space="preserve">
-    <value>Copy</value>
+    <value>प्रतिलिपि</value>
   </data>
   <data name="tabItem1LabCreat.Label" xml:space="preserve">
-    <value>Create</value>
+    <value>सृजन करना</value>
   </data>
   <data name="tabItem1Labdelete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>हटाएं</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Change</value>
+    <value>परिवर्तन</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
-    <value>Paste</value>
+    <value>पेस्ट करें</value>
   </data>
   <data name="tabItem1LabPeremen.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>चाल</value>
   </data>
   <data name="tabItem1LabSelectAll.Label" xml:space="preserve">
-    <value>Select all</value>
+    <value>सभी का चयन करे</value>
   </data>
   <data name="tabItem1LabVid.Label" xml:space="preserve">
-    <value>View</value>
+    <value>राय</value>
   </data>
   <data name="tabItem1TextFile.Text" xml:space="preserve">
-    <value>File</value>
+    <value>फ़ाइल</value>
   </data>
   <data name="tabItem1TextFolder.Text" xml:space="preserve">
-    <value>Folder</value>
+    <value>फ़ोल्डर</value>
   </data>
   <data name="tabItem2.Header" xml:space="preserve">
-    <value>View</value>
+    <value>राय</value>
   </data>
   <data name="tabItem2LabAddPlase.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>जोड़ना</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add location</value>
+    <value>स्थान जोड़ना</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete location</value>
+    <value>स्थान हटाएं</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
-    <value>Confirm</value>
+    <value>पुष्टि करें</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click confirm</value>
+    <value>नीचे दी गई सूची से हटाने के लिए एक फ़ोल्डर का चयन करें और पुष्टि करें पर क्लिक करें</value>
   </data>
   <data name="TextCopi" xml:space="preserve">
-    <value>Copy</value>
+    <value>प्रतिलिपि</value>
   </data>
   <data name="textDostup.PrimaryButtonText" xml:space="preserve">
-    <value>Grant Access</value>
+    <value>पहुँच प्रदान करें</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
-    <value>Name File</value>
+    <value>नाम फ़ाइल</value>
   </data>
   <data name="TextNewFile.Text" xml:space="preserve">
-    <value>New File</value>
+    <value>नई फ़ाइल</value>
   </data>
   <data name="TextNewFile1" xml:space="preserve">
-    <value>New File</value>
+    <value>नई फ़ाइल</value>
   </data>
   <data name="TextNewFileTip.Text" xml:space="preserve">
-    <value>File type</value>
+    <value>फाइल का प्रकार</value>
   </data>
   <data name="TextNewFolder" xml:space="preserve">
-    <value>New Folder</value>
+    <value>नया फोल्डर</value>
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
-    <value>New Name</value>
+    <value>नया नाम</value>
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
-    <value>To open with...</value>
+    <value>के साथ खोलने के लिए...</value>
   </data>
   <data name="textViews.Text" xml:space="preserve">
-    <value>View</value>
+    <value>राय</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
-    <value>File deletion</value>
+    <value>फ़ाइल विलोपन</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Folder deletion</value>
+    <value>फोल्डर डिलीट</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
-    <value>Copy file</value>
+    <value>प्रतिलिपि फ़ाइल</value>
   </data>
   <data name="TilePasteFolder" xml:space="preserve">
-    <value>Copy folder</value>
+    <value>फोल्डर कॉपी करें</value>
   </data>
   <data name="TipText" xml:space="preserve">
-    <value>Type of</value>
+    <value>प्रकार का</value>
   </data>
   <data name="ToggleTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>विषय</value>
   </data>
 </root>

@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" 
          xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" 
          IgnorableNamespaces="uap mp rescap">
-  <Identity Name="38673Yurin.FileCommander-" Publisher="CN=6DBA1DE5-9EA9-4313-BEA7-F315A6AEEB19" Version="1.0.86.0" />
+  <Identity Name="38673Yurin.FileCommander-" Publisher="CN=6DBA1DE5-9EA9-4313-BEA7-F315A6AEEB19" Version="1.0.114.0" />
   <mp:PhoneIdentity PhoneProductId="2f590657-1e9a-42cf-9a12-698a849f9878" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>File Commander - Файловый менеджер</DisplayName>

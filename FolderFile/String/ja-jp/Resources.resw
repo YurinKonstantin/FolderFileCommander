@@ -118,171 +118,165 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContentButton.PrimaryButtonText" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="ContentButton.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>キャンセル</value>
   </data>
   <data name="CreatText" xml:space="preserve">
-    <value>Created</value>
+    <value>作成した</value>
   </data>
   <data name="Eas" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>Properties</value>
+    <value>プロパティ</value>
   </data>
   <data name="IzmenText" xml:space="preserve">
-    <value>Change</value>
+    <value>変化する</value>
   </data>
   <data name="MenuTextCopi.Text" xml:space="preserve">
-    <value>Copy</value>
+    <value>コピーする</value>
   </data>
   <data name="MenuTextDelete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>削除する</value>
   </data>
   <data name="MenuTextInfo.Text" xml:space="preserve">
-    <value>Properties</value>
+    <value>プロパティ</value>
   </data>
   <data name="MenuTextOpen.Text" xml:space="preserve">
-    <value>Open</value>
+    <value>開いた</value>
   </data>
   <data name="MenuTextpaste.Text" xml:space="preserve">
-    <value>Paste</value>
+    <value>開いた...</value>
   </data>
   <data name="MessageContentAdd" xml:space="preserve">
-    <value>The application will have access to the specified folders and contents. You can add or remove locations later. Initially access are opened to folders with music, images and to local and removable disks.</value>
+    <value>アプリケーションは、指定されたフォルダとコンテンツにアクセスできます。 場所は後で追加または削除できます。 最初にアクセスできるのは、音楽、画像、ローカルディスク、リムーバブルディスクを含むフォルダーです。</value>
   </data>
   <data name="MessageContentDostup" xml:space="preserve">
     <value>Access to the file system is required for the application work. Follow these steps to continue and run the application again - Start&gt; Settings&gt; Privacy&gt; File System.</value>
   </data>
   <data name="MessageErorCreatContent" xml:space="preserve">
-    <value>An error occurred while creating the file. File not created!</value>
+    <value>ファイルの作成中にエラーが発生しました。 ファイルが作成されていません！</value>
   </data>
   <data name="MessageErorCreatTile" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="MessageTileAdd" xml:space="preserve">
-    <value>Before the beginning, add a location for a work</value>
+    <value>始める前に、作品の場所を追加</value>
   </data>
   <data name="MessageTiletDostup" xml:space="preserve">
-    <value>File system access</value>
+    <value>ファイルシステムアクセス</value>
   </data>
   <data name="NameText" xml:space="preserve">
-    <value>Name</value>
+    <value>名前</value>
   </data>
   <data name="NoSey" xml:space="preserve">
-    <value>Not now</value>
+    <value>今はやめろ</value>
   </data>
   <data name="PathText" xml:space="preserve">
-    <value>Path</value>
+    <value>道</value>
   </data>
   <data name="SizeText" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="sortingDownABC.Text" xml:space="preserve">
-    <value>Name Descending</value>
-  </data>
-  <data name="sortingUpABC.Text" xml:space="preserve">
-    <value>Name Ascending</value>
+    <value>サイズ</value>
   </data>
   <data name="tabItem1.Header" xml:space="preserve">
-    <value>Home</value>
+    <value>ホーム</value>
   </data>
   <data name="tabItem1LabCopi.Label" xml:space="preserve">
-    <value>Copy</value>
+    <value>コピーする</value>
   </data>
   <data name="tabItem1LabCreat.Label" xml:space="preserve">
-    <value>Create</value>
+    <value>作成する</value>
   </data>
   <data name="tabItem1Labdelete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>削除する</value>
   </data>
   <data name="tabItem1LabIzmen.Label" xml:space="preserve">
-    <value>Change</value>
+    <value>変化する</value>
   </data>
   <data name="tabItem1LabPaste.Label" xml:space="preserve">
-    <value>Paste</value>
+    <value>開いた...</value>
   </data>
   <data name="tabItem1LabPeremen.Label" xml:space="preserve">
-    <value>Move</value>
+    <value>動く</value>
   </data>
   <data name="tabItem1LabSelectAll.Label" xml:space="preserve">
-    <value>Select all</value>
+    <value>すべて選択</value>
   </data>
   <data name="tabItem1LabVid.Label" xml:space="preserve">
-    <value>View</value>
+    <value>見る</value>
   </data>
   <data name="tabItem1TextFile.Text" xml:space="preserve">
-    <value>File</value>
+    <value>ファイル</value>
   </data>
   <data name="tabItem1TextFolder.Text" xml:space="preserve">
-    <value>Folder</value>
+    <value>フォルダ</value>
   </data>
   <data name="tabItem2.Header" xml:space="preserve">
-    <value>View</value>
+    <value>見る</value>
   </data>
   <data name="tabItem2LabAddPlase.Content" xml:space="preserve">
-    <value>Add</value>
+    <value>追加</value>
   </data>
   <data name="tabItem2LabAddPlase.Label" xml:space="preserve">
-    <value>Add location</value>
+    <value>場所を追加</value>
   </data>
   <data name="tabItem2LabDelete.Label" xml:space="preserve">
-    <value>Delete location</value>
+    <value>場所を削除</value>
   </data>
   <data name="tabItem2LabdeletePod.Label" xml:space="preserve">
-    <value>Confirm</value>
+    <value>確認</value>
   </data>
   <data name="tabItem2TextB.Text" xml:space="preserve">
-    <value>Select a folder to delete from the list below and click confirm</value>
+    <value>以下のリストから削除するフォルダを選択し、確認をクリックしてください</value>
   </data>
   <data name="TextCopi" xml:space="preserve">
-    <value>Copy</value>
+    <value>コピーする</value>
   </data>
   <data name="textDostup.PrimaryButtonText" xml:space="preserve">
-    <value>Grant Access</value>
+    <value>アクセス許可</value>
   </data>
   <data name="TextNewFile.Header" xml:space="preserve">
-    <value>Name File</value>
+    <value>名前ファイル</value>
   </data>
   <data name="TextNewFile.Text" xml:space="preserve">
-    <value>New File</value>
+    <value>新しいファイル</value>
   </data>
   <data name="TextNewFile1" xml:space="preserve">
-    <value>New File</value>
+    <value>新しいファイル</value>
   </data>
   <data name="TextNewFileTip.Text" xml:space="preserve">
-    <value>File type</value>
+    <value>ファイルタイプ</value>
   </data>
   <data name="TextNewFolder" xml:space="preserve">
-    <value>New Folder</value>
+    <value>新しいフォルダ</value>
   </data>
   <data name="TextNewName.Header" xml:space="preserve">
-    <value>New Name</value>
+    <value>新しい名前</value>
   </data>
   <data name="TextOpenAs.Text" xml:space="preserve">
-    <value>To open with...</value>
+    <value>で開くには...</value>
   </data>
   <data name="textViews.Text" xml:space="preserve">
-    <value>View</value>
+    <value>見る</value>
   </data>
   <data name="TileDeleteFile" xml:space="preserve">
-    <value>File deletion</value>
+    <value>ファイルの削除</value>
   </data>
   <data name="TileDeleteFolder" xml:space="preserve">
-    <value>Folder deletion</value>
+    <value>フォルダーの削除</value>
   </data>
   <data name="TilePasteFile" xml:space="preserve">
-    <value>Copy file</value>
+    <value>ファイルをコピー</value>
   </data>
   <data name="TilePasteFolder" xml:space="preserve">
-    <value>Copy folder</value>
+    <value>フォルダをコピー</value>
   </data>
   <data name="TipText" xml:space="preserve">
-    <value>Type of</value>
+    <value>タイプ</value>
   </data>
   <data name="ToggleTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>テーマ</value>
   </data>
 </root>
