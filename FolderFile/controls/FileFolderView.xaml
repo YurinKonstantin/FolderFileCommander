@@ -1635,7 +1635,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="60" Width="60"   VerticalAlignment="Top" x:Phase="3" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="60" Width="60" x:Phase="1"   VerticalAlignment="Top" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding FileAndFildeTip}" Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
@@ -1654,7 +1654,7 @@
                     <ColumnDefinition Width="76"/>
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="28" Width="28" x:Phase="1"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
                 <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
@@ -1823,6 +1823,7 @@
                                 <MenuFlyoutItem Text="Свойства" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
                             </MenuFlyout.Items>
                         </MenuFlyout>
+                        
                     </ListView.Resources>
 
      

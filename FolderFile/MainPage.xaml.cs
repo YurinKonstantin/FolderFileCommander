@@ -55,7 +55,7 @@ namespace FolderFile
           
             FrameworkElement root = (FrameworkElement)Window.Current.Content;
             root.RequestedTheme = AppSettings.Theme;
-            SetThemeToggle(AppSettings.Theme);
+            
            
 
             dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -68,28 +68,8 @@ namespace FolderFile
         }
         public FileFolderView viewFocusTag { get; set; }
         public FileAndFolderViewer fileAndFolderViewer { get; set; }
-        private void SetThemeToggle(ElementTheme theme)
-        {
-            if (theme == AppSettings.DEFAULTTHEME)
-                tglAppTheme.IsOn = false;
-            else
-                tglAppTheme.IsOn = true;
-        }
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            FrameworkElement window = (FrameworkElement)Window.Current.Content;
-
-            if (((ToggleSwitch)sender).IsOn)
-            {
-                AppSettings.Theme = AppSettings.NONDEFLTHEME;
-                window.RequestedTheme = AppSettings.NONDEFLTHEME;
-            }
-            else
-            {
-                AppSettings.Theme = AppSettings.DEFAULTTHEME;
-                window.RequestedTheme = AppSettings.DEFAULTTHEME;
-            }
-        }
+        
+        
         class AppSettings
         {
             public const ElementTheme DEFAULTTHEME = ElementTheme.Light;
@@ -1068,7 +1048,7 @@ namespace FolderFile
     private void test()
         {
             var watch = Stopwatch.StartNew();
-            var path = @"C:\gameUnity";
+            var path = @"C:\";
             WIN32_FIND_DATA findData;
             FINDEX_INFO_LEVELS findInfoLevel = FINDEX_INFO_LEVELS.FindExInfoStandard;
             int additionalFlags = 0;
@@ -1085,10 +1065,11 @@ namespace FolderFile
             {
                 do
                 {
-                    if (((System.IO.FileAttributes)findData.dwFileAttributes & System.IO.FileAttributes.Directory) != System.IO.FileAttributes.Directory)
+                    if (((System.IO.FileAttributes)findData.dwFileAttributes & System.IO.FileAttributes.Directory) == System.IO.FileAttributes.System)
                     {
                         // do something with it
                         var fn = findData.cFileName;
+                        Debug.WriteLine(fn);
                         ++count;
                     }
                 } while (FindNextFile(hFile, out findData));
@@ -1118,6 +1099,11 @@ namespace FolderFile
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(BlankPageSetting));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            test();
         }
     }
   

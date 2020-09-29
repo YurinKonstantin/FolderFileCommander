@@ -49,9 +49,8 @@ namespace FolderFile
         public StorageItemThumbnail ThumbnailMode
         {
             get
-            {
+            { 
 
-                
                 return thumbnailMode;
                 
               

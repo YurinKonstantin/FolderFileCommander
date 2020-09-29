@@ -197,8 +197,9 @@ namespace FolderFile.controls
 
                         foreach (StorageFolder d in folderList)
                         {
-                            var thumbnail1 = await d.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                            //var thumbnail1 = await d.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                            // fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, Type = FileAndFolderViewer.Type });
                             fileAndFolderViewer.ListColName.Add(d.DisplayName);
                         }
 

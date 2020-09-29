@@ -177,6 +177,18 @@
   <data name="PathText" xml:space="preserve">
     <value>Путь</value>
   </data>
+  <data name="SettingsAboutSubmitFeedback.Text" xml:space="preserve">
+    <value>Отправить отзыв</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedback1.Text" xml:space="preserve">
+    <value>Сообщить разработчику о проблеме</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedbackDescription.Text" xml:space="preserve">
+    <value>Что бы другие пользователи узнали больше о приложении</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedbackDescription1.Text" xml:space="preserve">
+    <value>Отправьте разработчикам отчет о проблеме с дополнительной информацией</value>
+  </data>
   <data name="SizeText" xml:space="preserve">
     <value>Размер</value>
   </data>

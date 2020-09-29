@@ -78,7 +78,7 @@
                         </FlyoutBase.AttachedFlyout>
                     </Button>
                 </StackPanel>
-                <StackPanel Spacing="10">
+                <StackPanel Spacing="10" Visibility="Collapsed">
                     <TextBlock
                         x:Uid="SettingsFilesAndFoldersShowDriveLetters"
                         FontSize="17"

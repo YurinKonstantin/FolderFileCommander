@@ -177,6 +177,18 @@
   <data name="PathText" xml:space="preserve">
     <value>Path</value>
   </data>
+  <data name="SettingsAboutSubmitFeedback.Text" xml:space="preserve">
+    <value>Submit Feedback</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedback1.Text" xml:space="preserve">
+    <value>Report the problem to the developer</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedbackDescription.Text" xml:space="preserve">
+    <value>For other users to learn more about the application</value>
+  </data>
+  <data name="SettingsAboutSubmitFeedbackDescription1.Text" xml:space="preserve">
+    <value>Send the developers an issue report with more information</value>
+  </data>
   <data name="SizeText" xml:space="preserve">
     <value>Size</value>
   </data>

@@ -70,7 +70,7 @@
                                     x:Uid="SettingsAboutSubmitFeedbackDescription"
                                     FontSize="12"
                                     Foreground="Gray"
-                                    Text="Что бы другие пользователи узнали больше о приложении"
+                                    Text="For other users to learn more about the application"
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </StackPanel>
@@ -92,7 +92,7 @@
                             Spacing="14">
                             <FontIcon Glyph="&#xeBE8;" />
                             <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Сообщить разработчику о проблеме" />
+                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Report the problem to the developer" />
                                 <TextBlock
                                     x:Uid="SettingsAboutSubmitFeedbackDescription"
                                     FontSize="12"

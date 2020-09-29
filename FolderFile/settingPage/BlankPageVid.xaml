@@ -25,17 +25,23 @@
                     FontSize="22"
                     FontWeight="Medium"
                     Text="Appearance" />
-
-                <StackPanel Spacing="10">
+                <ToggleSwitch Name="tglAppTheme" Grid.Column="1" x:Uid="ToggleTheme"
+              Header="Theme"
+              OffContent="Light"
+              OnContent="Dark"
+              IsOn="False"
+              Toggled="ToggleSwitch_Toggled" />
+                <StackPanel Spacing="10" Visibility="Collapsed">
                     <TextBlock
                         x:Uid="SettingsAppearanceTheme"
                         FontSize="17"
-                        Text="App theme" />
+                        Text="App theme" Visibility="Collapsed"/>
                     <ComboBox
                         x:Name="ThemeChooser"
                         Width="Auto"
                         MinWidth="200"
-                        MaxWidth="250" />
+                        MaxWidth="250" Visibility="Collapsed"/>
+                  
                 </StackPanel>
 
                 <StackPanel Spacing="10">

@@ -14,7 +14,7 @@ namespace FolderFile
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             BitmapImage image=new BitmapImage();
-            image.UriSource = new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.RelativeOrAbsolute);
+            image.UriSource = new Uri("ms-appx:///Assets/FolderIcon.png", UriKind.RelativeOrAbsolute);
             if (value != null)
             {
                 StorageItemThumbnail thumbnail = (StorageItemThumbnail)value;

@@ -1536,9 +1536,7 @@
             <ColumnDefinition Width="4"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <controls:TabView x:Name="Tabs" Grid.ColumnSpan="3" SelectionChanged="Tabs_SelectionChanged">
-            <controls:TabViewItem Header="Главное" x:Uid="tabItem1" Icon="home" >
-                <CommandBar Template="{StaticResource CommandBarTemplate1}" DefaultLabelPosition="Right" HorizontalAlignment="Stretch">
+        <CommandBar Template="{StaticResource CommandBarTemplate1}" DefaultLabelPosition="Right" HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
                     <AppBarButton x:Uid="tabItem1LabVid"  Label="Просмотр" Icon="View" Click="AppBarButton_Click_4"/>
                     <AppBarButton x:Uid="tabItem1LabSelectAll" Label="Выделить всё" Icon="ViewAll" Click="AppBarButton_Click_5" Visibility="Collapsed"/>
                     <AppBarButton x:Uid="tabItem1LabIzmen" Label="Изменить" Icon="Edit" Click="AppBarButton_Click_8"/>
@@ -1563,27 +1561,9 @@
                        
                     </CommandBar.SecondaryCommands>
                 </CommandBar>
-            </controls:TabViewItem>
-            <controls:TabViewItem x:Uid="tabItem2" Header="Вид" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                
-
-                    <ToggleSwitch Name="tglAppTheme" Grid.Column="1" x:Uid="ToggleTheme"
-              Header="Theme"
-              OffContent="Light"
-              OnContent="Dark"
-              IsOn="False"
-              Toggled="ToggleSwitch_Toggled" />
-              
-             
-                </Grid>
-            </controls:TabViewItem>
-        </controls:TabView>
+           
+         
+    
         <controls1:FileFolderView x:Name="ViewLeft" Grid.Row="1" Grid.RowSpan="2" GotFocus="ViewLeft_GotFocus"/>
         <controls1:FileFolderView x:Name="ViewRight" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" GotFocus="ViewLeft_GotFocus"/>
 
@@ -1603,6 +1583,6 @@
                 <TextBlock>Buy app (<Run x:Name="PurchasePrice">Price unknown</Run>)</TextBlock>
             </Button>
         </StackPanel>
-       
+        <Button Content="sss" VerticalAlignment="Bottom" Grid.Row="2" Click="Button_Click"/>
     </Grid>
 </Page>
