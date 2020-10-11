@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -32,17 +33,18 @@ namespace FolderFile.controls
     {
         public FileFolderView()
         {
-            Debug.WriteLine("r0");
+           
             this.InitializeComponent();
             FrameworkElement root = (FrameworkElement)Window.Current.Content;
 
-            Debug.WriteLine("r1");
+           
             this.fileAndFolderViewer = new FileAndFolderViewer();
-            Debug.WriteLine("r1");
+            fileAndFolderViewer.ListCol.CollectionChanged += Users_CollectionChanged;
+            _DataGrid.SelectionChanged += Users_CollectionChanged1;
 
 
             InitializeTreeView();
-            Debug.WriteLine("r3");
+         
 
 
 
@@ -51,8 +53,30 @@ namespace FolderFile.controls
 
 
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            
         }
-
+        private void Users_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ElementsText.Text = fileAndFolderViewer.CountElements;
+            FoldersText.Text = fileAndFolderViewer.CountFolders;
+            FilesText.Text= fileAndFolderViewer.Countfiles;
+        }
+        private void Users_CollectionChanged1(object sender, SelectionChangedEventArgs e)
+        {
+            int count = _DataGrid.SelectedItems.Count;
+            if(count == 0)
+            {
+                SelectText.Text = String.Empty;
+            }
+            else
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                
+     
+                SelectText.Text = resourceLoader.GetString("SelectedText") + " " + _DataGrid.SelectedItems.Count.ToString();
+            }
+            
+        }
 
         public void iniz(string s)
         {
@@ -90,15 +114,16 @@ namespace FolderFile.controls
                         {
                             fileAndFolderViewer.classListStroceSelect.Clear();
                         }
-
-                        fileAndFolderViewer.classListStroceSelect.Add(new ClassListStroce() { StorageFolder = folder, FlagFolde = true, Type = FileAndFolderViewer.Type });
-                        fileAndFolderViewer.Next();
+                        ClassListStroce classListStroce = new ClassListStroce(folder.Path, folder.DisplayName, true, folder.DisplayType, folder.DateCreated.ToString(), FileAndFolderViewer.Type);
+                        fileAndFolderViewer.classListStroceSelect.Add(classListStroce) ;
+                        fileAndFolderViewer.Next(classListStroce);
                     }
                     catch (Exception ex)
                     {
                         await new MessageDialog(ex.Message).ShowAsync();
                     }
                 }
+
             }
         }
         private async void FillTreeNode(TreeViewNode node)
@@ -121,37 +146,48 @@ namespace FolderFile.controls
 
             }
 
-            IReadOnlyList<IStorageItem> itemsList = await folder.StorageFolder.GetFoldersAsync();
-
-            if (itemsList.Count == 0)
+            IReadOnlyList<IStorageItem> itemsList;
+            try
             {
-                // The item is a folder, but it's empty. Leave HasUnrealizedChildren = true so
-                // that the chevron appears, but don't try to process children that aren't there.
-                return;
-            }
 
-            foreach (var item in itemsList)
+
+                itemsList = await (await StorageFolder.GetFolderFromPathAsync(folder.Path)).GetFoldersAsync();
+                if (itemsList.Count == 0 && itemsList != null)
+                {
+                    // The item is a folder, but it's empty. Leave HasUnrealizedChildren = true so
+                    // that the chevron appears, but don't try to process children that aren't there.
+                    return;
+                }
+
+                foreach (var item in itemsList)
+                {
+                    var newNode = new TreeViewNode();
+                    var ss = item as StorageFolder;
+                    var thumbnaild3 = await ss.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
+                    var it = new ClassListStroce((item as StorageFolder).Path, (item as StorageFolder).DisplayName, true, (item as StorageFolder).DisplayType, (item as StorageFolder).DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild3 }; // { FlagFolde = true, StorageFolder = item as StorageFolder, ThumbnailMode = thumbnaild3 };
+                    newNode.Content = it;
+
+                    if (item is StorageFolder)
+                    {
+                        // If the item is a folder, set HasUnrealizedChildren to true. 
+                        // This makes the collapsed chevron show up.
+                        newNode.HasUnrealizedChildren = true;
+                    }
+                    else
+                    {
+                        // Item is StorageFile. No processing needed for this scenario.
+                    }
+                    node.Children.Add(newNode);
+                    node.HasUnrealizedChildren = false;
+                }
+            }
+            catch(Exception)
             {
-                var newNode = new TreeViewNode();
-                var ss = item as StorageFolder;
-                var thumbnaild3 = await ss.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
-                var it = new ClassListStroce() { FlagFolde = true, StorageFolder = item as StorageFolder, ThumbnailMode = thumbnaild3 };
-                newNode.Content = it;
 
-                if (item is StorageFolder)
-                {
-                    // If the item is a folder, set HasUnrealizedChildren to true. 
-                    // This makes the collapsed chevron show up.
-                    newNode.HasUnrealizedChildren = true;
-                }
-                else
-                {
-                    // Item is StorageFile. No processing needed for this scenario.
-                }
-                node.Children.Add(newNode);
             }
+            
             // Children were just added to this node, so set HasUnrealizedChildren to false.
-            node.HasUnrealizedChildren = false;
+           
         }
 
         private void SampleTreeView_Expanding(TreeView sender, TreeViewExpandingEventArgs args)
@@ -173,48 +209,12 @@ namespace FolderFile.controls
         {
             TreeView treeView = (TreeView)sender;
             var node = args.InvokedItem as TreeViewNode;
-            if (node.Content is ClassListStroce item)
-            {
-
-                // FileNameTextBlock.Text = item.Name;
-                // FilePathTextBlock.Text = item.Path+" "+ node.Depth.ToString();
-                // TreeDepthTextBlock.Text = node.Depth.ToString();
-
                 if (node.Content is ClassListStroce folder)
                 {
-
-                    _DataGrid.SelectedItem = null;
-
-                    fileAndFolderViewer.ListCol.Clear();
-                    fileAndFolderViewer.ListColName.Clear();
-                    fileAndFolderViewer.storageFolderFirst = folder.StorageFolder;
-                    fileAndFolderViewer.Path = folder.StorageFolder.Path;
-                    IReadOnlyList<StorageFolder> folderList = await folder.StorageFolder.GetFoldersAsync();
-                    IReadOnlyList<StorageFile> fileList = await folder.StorageFolder.GetFilesAsync();
-                    if (fileList.Count != 0 || folderList.Count != 0)
-                    {
-
-
-                        foreach (StorageFolder d in folderList)
-                        {
-                            //var thumbnail1 = await d.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                            // fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = d, FlagFolde = true, Type = FileAndFolderViewer.Type });
-                            fileAndFolderViewer.ListColName.Add(d.DisplayName);
-                        }
-
-                        foreach (StorageFile file in fileList)
-                        {
-                            var thumbnail1 = await file.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                            fileAndFolderViewer.ListCol.Add(new ClassListStroce() { storageFile = file, FlagFolde = false, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                            fileAndFolderViewer.ListColName.Add(file.DisplayName);
-                        }
-
-
-                    }
-                    node.IsExpanded = !node.IsExpanded;
+                fileAndFolderViewer.Next(folder);
                 }
-            }
+
+
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -231,11 +231,16 @@ namespace FolderFile.controls
         {
             try
             {
-                fileAndFolderViewer.Nazad();
+                StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path)).GetParentAsync(); 
+                ClassListStroce classListStroce = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type);
+                fileAndFolderViewer.Next(classListStroce);
+       
             }
             catch (Exception ex)
             {
-                await new MessageDialog(ex.Message).ShowAsync();
+                fileAndFolderViewer.ListCol.Clear();
+                fileAndFolderViewer.InitializeDataGridView();
+              
             }
         }
 
@@ -250,7 +255,7 @@ namespace FolderFile.controls
             // Get Pictures library.
             try
             {
-
+                
                 try
                 {
 
@@ -258,7 +263,7 @@ namespace FolderFile.controls
                     StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Desktop);
 
                     var thumbnaildstorageFolder = await storageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNodestorageFolder.Content = new ClassListStroce() { StorageFolder = storageFolder, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolder };
+                    pictureNodestorageFolder.Content = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolder };// { StorageFolder = storageFolder, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolder };
                     pictureNodestorageFolder.IsExpanded = false;
                     pictureNodestorageFolder.HasUnrealizedChildren = true;
                     sampleTreeView.RootNodes.Add(pictureNodestorageFolder);
@@ -268,7 +273,25 @@ namespace FolderFile.controls
                 {
 
                 }
+                try
+                {
 
+
+                    StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Videos);
+                    TreeViewNode pictureNodestorageFolderDownloads = new TreeViewNode();
+                    //var thumbnaildstorageFolderDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                   // pictureNodestorageFolderDownloads.Content = new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolderDownloads };// { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
+                    //pictureNodestorageFolderDownloads.IsExpanded = false;
+
+                   // pictureNodestorageFolderDownloads.HasUnrealizedChildren = true;
+
+                   // sampleTreeView.RootNodes.Add(pictureNodestorageFolderDownloads);
+                   // FillTreeNode(pictureNodestorageFolder);
+                }
+                catch (Exception)
+                {
+
+                }
 
                 try
                 {
@@ -277,7 +300,7 @@ namespace FolderFile.controls
                     StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Downloads);
                     TreeViewNode pictureNodestorageFolderDownloads = new TreeViewNode();
                     var thumbnaildstorageFolderDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNodestorageFolderDownloads.Content = new ClassListStroce() { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
+                    pictureNodestorageFolderDownloads.Content = new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolderDownloads };// { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
                     pictureNodestorageFolderDownloads.IsExpanded = false;
 
                     pictureNodestorageFolderDownloads.HasUnrealizedChildren = true;
@@ -296,10 +319,10 @@ namespace FolderFile.controls
                 {
 
 
-                    StorageFolder documentFolder = KnownFolders.DocumentsLibrary;
+                    StorageFolder documentFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Documents);
                     TreeViewNode pictureNode1 = new TreeViewNode();
                     var thumbnaild = await documentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNode1.Content = new ClassListStroce() { StorageFolder = documentFolder, FlagFolde = true, ThumbnailMode = thumbnaild };
+                    pictureNode1.Content = new ClassListStroce(documentFolder.Path, documentFolder.DisplayName, true, documentFolder.DisplayType, documentFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild };// { StorageFolder = documentFolder, FlagFolde = true, ThumbnailMode = thumbnaild };
                     pictureNode1.IsExpanded = false;
 
                     pictureNode1.HasUnrealizedChildren = true;
@@ -315,10 +338,10 @@ namespace FolderFile.controls
                 {
 
 
-                    StorageFolder picturesFolder = KnownFolders.PicturesLibrary;
+                    StorageFolder picturesFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Pictures);
                     TreeViewNode pictureNode = new TreeViewNode();
                     var thumbnaild1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNode.Content = new ClassListStroce() { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnaild1 };
+                    pictureNode.Content = new ClassListStroce(picturesFolder.Path, picturesFolder.DisplayName, true, picturesFolder.DisplayType, picturesFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild1 };// { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnaild1 };
                     pictureNode.IsExpanded = false;
 
                     pictureNode.HasUnrealizedChildren = true;
@@ -334,10 +357,10 @@ namespace FolderFile.controls
 
 
                     // Get Music library.
-                    StorageFolder musicFolder = KnownFolders.MusicLibrary;
+                    StorageFolder musicFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Music);
                     TreeViewNode musicNode = new TreeViewNode();
                     var thumbnaild2 = await musicFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                    musicNode.Content = new ClassListStroce() { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnaild2 };
+                    musicNode.Content = new ClassListStroce(musicFolder.Path, musicFolder.DisplayName, true, musicFolder.DisplayType, musicFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild2 };// { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnaild2 };
                     musicNode.IsExpanded = false;
                     musicNode.HasUnrealizedChildren = true;
                     sampleTreeView.RootNodes.Add(musicNode);
@@ -365,7 +388,7 @@ namespace FolderFile.controls
                             StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
                             TreeViewNode AssecNode = new TreeViewNode();
                             var thumbnaild3 = await ss.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                            AssecNode.Content = new ClassListStroce() { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnaild3 };
+                            AssecNode.Content = new ClassListStroce(ss.Path, ss.DisplayName, true, ss.DisplayType, ss.DateCreated.ToString(), FileAndFolderViewer.Type);// { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnaild3 };
                             AssecNode.IsExpanded = false;
                             AssecNode.HasUnrealizedChildren = true;
                             sampleTreeView.RootNodes.Add(AssecNode);
@@ -394,7 +417,7 @@ namespace FolderFile.controls
 
                             TreeViewNode pictureNode1 = new TreeViewNode();
                             var thumbnaild = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                            pictureNode1.Content = new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild };
+                            pictureNode1.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild };// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild };
                             pictureNode1.IsExpanded = false;
 
                             pictureNode1.HasUnrealizedChildren = true;
@@ -430,7 +453,7 @@ namespace FolderFile.controls
                                 TreeViewNode FolderNode = new TreeViewNode();
                                 StorageFolder storageFolderL = await StorageFolder.GetFolderFromPathAsync(drive.Name);
                                 var thumbnaild4 = await storageFolderL.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                                FolderNode.Content = new ClassListStroce() { StorageFolder = storageFolderL, FlagFolde = true, ThumbnailMode = thumbnaild4 };
+                                FolderNode.Content = new ClassListStroce(storageFolderL.Path, storageFolderL.DisplayName, true, storageFolderL.DisplayType, storageFolderL.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild4 };// { StorageFolder = storageFolderL, FlagFolde = true, ThumbnailMode = thumbnaild4 };
                                 FolderNode.IsExpanded = false;
                                 FolderNode.HasUnrealizedChildren = true;
                                 sampleTreeView.RootNodes.Add(FolderNode);
@@ -460,7 +483,7 @@ namespace FolderFile.controls
 
                         TreeViewNode FolderNode = new TreeViewNode();
                         var thumbnaild3 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                        FolderNode.Content = new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild3 };
+                        FolderNode.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type);// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild3 };
                         FolderNode.IsExpanded = false;
                         FolderNode.HasUnrealizedChildren = true;
 
@@ -475,6 +498,7 @@ namespace FolderFile.controls
                 {
 
                 }
+                
             }
             catch (Exception ex)
             {
@@ -484,16 +508,13 @@ namespace FolderFile.controls
 
       
 
-        private void AppBarButton_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-        }
 
 
         int x = -1;
 
-        private async void List1_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {try
+        public async void List1_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            try
             {
 
 
@@ -524,10 +545,10 @@ namespace FolderFile.controls
 
                 ClassListStroce classListStroce = (ClassListStroce)tag.SelectedItem;
                 shareList = classListStroce;
-                if (fileAndFolderViewer.storageFolderFirst != null)
-                {
-                    fileAndFolderViewer.Path = fileAndFolderViewer.storageFolderFirst.Path;
-                }
+                //if (fileAndFolderViewer.storageFolderFirst != null)
+               // {
+                   // fileAndFolderViewer.Path = fileAndFolderViewer.storageFolderFirst.Path;
+                //}
                 if (classListStroce != null)
                 {
 
@@ -599,9 +620,9 @@ namespace FolderFile.controls
 
                     ListView listView = (ListView)sender;
                
-                    fileAndFolderViewer.Next();
-                
-              
+                    fileAndFolderViewer.Next((ClassListStroce)listView.SelectedItem);
+            
+
             }
             catch (Exception ex)
             {
@@ -619,9 +640,9 @@ namespace FolderFile.controls
             {
 
                 var term = autoSuggestBox.Text.ToLower();
-                var results = fileAndFolderViewer.ListColName.Where(i => i.ToLower().Contains(term)).ToList();
+                //var results = fileAndFolderViewer.ListColName.Where(i => i.ToLower().Contains(term)).ToList();
 
-                autoSuggestBox.ItemsSource = results;
+               // autoSuggestBox.ItemsSource = results;
 
             }
         }
@@ -629,12 +650,12 @@ namespace FolderFile.controls
         {
             var term = args.QueryText.ToLower();
             AutoSuggestBox autoSuggestBox = (AutoSuggestBox)sender;
-            var results = fileAndFolderViewer.ListColName.Where(i => i.ToLower().Contains(term)).ToList();
-            autoSuggestBox.ItemsSource = results;
+           // var results = fileAndFolderViewer.ListColName.Where(i => i.ToLower().Contains(term)).ToList();
+           // autoSuggestBox.ItemsSource = results;
             autoSuggestBox.IsSuggestionListOpen = true;
         }
 
-        private async void suggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+       /* private async void suggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             AutoSuggestBox autoSuggestBox = (AutoSuggestBox)sender;
             string str = args.SelectedItem as string;
@@ -675,7 +696,7 @@ namespace FolderFile.controls
             }
             //  textBlock1.Text = args.SelectedItem as string;
         }
-
+       */
         private async void _DataGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             ListView listView = (ListView)sender;
@@ -703,21 +724,48 @@ namespace FolderFile.controls
             try
             {
 
-                MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
-                ClassListStroce cc = (ClassListStroce)secondItem.Tag;
-                dataPackage.RequestedOperation = DataPackageOperation.Copy;
-                List<IStorageItem> list = new List<IStorageItem>();
-                if (cc.FlagFolde)
+                
+                var sd = _DataGrid.SelectedItems;
+                if(sd.Count ==0)
                 {
-                    list.Add(cc.StorageFolder);
+                    MenuFlyoutItem secondItem = (MenuFlyoutItem)sender;
+                     ClassListStroce cc = (ClassListStroce)secondItem.Tag;
+                    dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                    List<IStorageItem> list = new List<IStorageItem>();
+                        if (cc.FlagFolde)
+                        {
+                            list.Add(await StorageFolder.GetFolderFromPathAsync(cc.Path));
+                        }
+                        else
+                        {
+                            list.Add(await StorageFile.GetFileFromPathAsync(cc.Path));
+                        }
+                    dataPackage.SetStorageItems(list);
+                    Clipboard.SetContent(dataPackage);
                 }
                 else
                 {
-                    list.Add(cc.storageFile);
-                }
-                dataPackage.SetStorageItems(list);
+                    dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                    List<IStorageItem> list = new List<IStorageItem>();
+                    foreach (ClassListStroce cc in sd)
+                    {
 
-                Clipboard.SetContent(dataPackage);
+
+                        if (cc.FlagFolde)
+                        {
+                            list.Add(await StorageFolder.GetFolderFromPathAsync(cc.Path));
+                        }
+                        else
+                        {
+                            list.Add(await StorageFile.GetFileFromPathAsync(cc.Path));
+                        }
+                    }
+
+                    dataPackage.SetStorageItems(list);
+
+                    Clipboard.SetContent(dataPackage);
+                }
+               
             }
             catch (Exception ex)
             {
@@ -735,7 +783,7 @@ namespace FolderFile.controls
                 if (cc.FlagFolde != true)
                 {
 
-                    await ActivateFile(cc.storageFile);
+                    await ActivateFile(await StorageFile.GetFileFromPathAsync(cc.Path));
                 }
             }
             catch (Exception ex)
@@ -749,7 +797,7 @@ namespace FolderFile.controls
         {
 
             fileAndFolderViewer.Upgreid();
-      
+
 
         }
     
@@ -801,36 +849,27 @@ namespace FolderFile.controls
                   
                         var storageI = await dataPackageView.GetStorageItemsAsync();
                         foreach (var dd in storageI)
-                        {
+                    {
+                        Windows.Storage.FileAttributes attr = dd.Attributes;
 
-                        }
-                        try
+                        if (attr.HasFlag(Windows.Storage.FileAttributes.Directory))
                         {
-                            StorageFolder storageFolder = (StorageFolder)storageI.ElementAt(0);
-                            filder = true;
-                        }
-                        catch
-                        {
-                            filder = false;
-                        }
-                        if (!filder)
-                        {
-                            ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
-                            contentDialogProcecc.CopyFile((StorageFile)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst);
+                            ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
+                            contentDialogProcecc.CopyFolder((StorageFolder)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
                             var x = await contentDialogProcecc.ShowAsync();
-
                         }
                         else
                         {
-                            //  perebor_updates(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
-                            // CopyDir(vs.StorageFolder, fileAndFolderViewer.storageFolderFirst1);
-                            ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
-                            contentDialogProcecc.CopyFolder((StorageFolder)storageI.ElementAt(0), fileAndFolderViewer.storageFolderFirst);
+                            ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
+                            contentDialogProcecc.CopyFile((StorageFile)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
                             var x = await contentDialogProcecc.ShowAsync();
-
-
                         }
-                    Upgreid();
+                      
+
+                    }
+
+                    fileAndFolderViewer.Upgreid();
+                   // Upgreid();
                      
                     
                
@@ -901,6 +940,7 @@ namespace FolderFile.controls
         private void AppBarButton_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
             fileAndFolderViewer.InitializeDataGridView();
+      
         }
       
 
@@ -915,7 +955,7 @@ namespace FolderFile.controls
                 options.DisplayApplicationPicker = true;
 
                 // Launch the retrieved file
-                bool success = await Windows.System.Launcher.LaunchFileAsync(cc.storageFile, options);
+                bool success = await Windows.System.Launcher.LaunchFileAsync((await StorageFile.GetFileFromPathAsync(cc.Path)), options);
                 if (success)
                 {
                     // File launched
@@ -956,7 +996,7 @@ namespace FolderFile.controls
                         {
 
 
-                            StorageFile myFile = shareList.storageFile;
+                            StorageFile myFile = await StorageFile.GetFileFromPathAsync(shareList.Path);
                             request.Data.Properties.Title = "Share My File";
                             request.Data.Properties.Description = string.Format("Share log file {0}.", myFile.DisplayName);
 
@@ -1043,7 +1083,7 @@ namespace FolderFile.controls
                 if (cc.FlagFolde != true)
                 {
 
-                    StorageFile myFile = cc.storageFile;
+                    StorageFile myFile = await StorageFile.GetFileFromPathAsync(cc.Path);
                     List<IStorageItem> myStorageItems = new List<IStorageItem>() { myFile };
                     e.Data.SetStorageItems(myStorageItems);
                     e.Data.RequestedOperation = DataPackageOperation.Copy;
@@ -1052,7 +1092,7 @@ namespace FolderFile.controls
                 }
                 else
                 {
-                    StorageFolder myFile = cc.StorageFolder;
+                    StorageFolder myFile = await StorageFolder.GetFolderFromPathAsync(cc.Path); ;
                     List<IStorageItem> myStorageItems = new List<IStorageItem>() { myFile };
                     e.Data.SetStorageItems(myStorageItems);
                     e.Data.RequestedOperation = DataPackageOperation.Copy;
@@ -1082,7 +1122,7 @@ namespace FolderFile.controls
                         if (item.IsOfType(StorageItemTypes.Folder))
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TextCopi") };
-                            contentDialogProcecc.CopyFolder(item as StorageFolder, fileAndFolderViewer.storageFolderFirst);
+                            contentDialogProcecc.CopyFolder(item as StorageFolder, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                             fileAndFolderViewer.Upgreid();
                             // tabInstance.instanceInteraction.CloneDirectoryAsync((item as StorageFolder).Path, tabInstance.instanceViewModel.Universal.path, (item as StorageFolder).DisplayName);
@@ -1090,7 +1130,7 @@ namespace FolderFile.controls
                         else
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TextCopi") };
-                            contentDialogProcecc.CopyFile(item as StorageFile, fileAndFolderViewer.storageFolderFirst);
+                            contentDialogProcecc.CopyFile(item as StorageFile, await StorageFolder.GetFolderFromPathAsync( fileAndFolderViewer.storageFolderFirst.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                             fileAndFolderViewer.Upgreid();
                             // await (item as StorageFile).CopyAsync(await StorageFolder.GetFolderFromPathAsync(tabInstance.instanceViewModel.Universal.path));
@@ -1140,11 +1180,16 @@ namespace FolderFile.controls
 
                 if (e.Key == VirtualKey.Back)
                 {
-                    fileAndFolderViewer.Nazad();
+                    StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path)).GetParentAsync();
+                    ClassListStroce classListStroce = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type);
+
+                    fileAndFolderViewer.Next(classListStroce);
+                    ElementsText.Text = fileAndFolderViewer.CountElements;
                 }
                 if (e.Key == VirtualKey.Enter)
                 {
-                    fileAndFolderViewer.Next();
+                    fileAndFolderViewer.Next(fileAndFolderViewer.classListStroceSelect.ElementAt(0));
+                    ElementsText.Text = fileAndFolderViewer.CountElements;
                 }
                 if (e.Key == VirtualKey.Delete)
                 {
@@ -1155,6 +1200,7 @@ namespace FolderFile.controls
                     var x = await contentDialogProcecc.ShowAsync();
 
                     fileAndFolderViewer.Upgreid();
+                    ElementsText.Text = fileAndFolderViewer.CountElements;
                 }
 
             }

@@ -71,18 +71,21 @@ namespace FolderFile.settingPage
         private async void AppBarButton_Click_2(object sender, RoutedEventArgs e)
         {
             await addLocation();
+            fileAndFolderViewer.InitializeDataGridView();
+            this.InitializeComponent();
         }
         private void AppBarButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
-        private void AppBarButton_Click_3(object sender, RoutedEventArgs e)
+        private async void AppBarButton_Click_3(object sender, RoutedEventArgs e)
         {
             try
             {
 
-
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Remove(listDop.SelectedItem.ToString());
+               var d = ((Button)sender).DataContext;
+               
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Remove(d.ToString());
                 fileAndFolderViewer.InitializeDataGridView();
                 this.InitializeComponent();
 

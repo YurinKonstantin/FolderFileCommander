@@ -17,84 +17,49 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace FolderFile
 {
-   /// <summary>
-   /// Содежит информацию о папке или файле
-   /// </summary>
-   public class ClassListStroce : INotifyPropertyChanged
+    /// <summary>
+    /// Содежит информацию о папке или файле
+    /// </summary>
+    public class ClassListStroce : INotifyPropertyChanged
     {
+        public ClassListStroce(string path, string displauName, bool folderFlag, string tip, string data, string type)
+        {
+            Path = path;
+            FlagFolde = folderFlag;
+            FileAndFildeName = displauName;
+            FileAndFildeTip = tip;
+            Type = type;
+            FileAndFildeData = data;
+
+
+        }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             // Raise the PropertyChanged event, passing the name of the property whose value has changed.
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-        StorageFolder storageFolder;
-       public StorageFolder StorageFolder
-        {
-            get
-            {
-                return storageFolder;
-            }
-            set
-            {
-                storageFolder = value;
-                this.OnPropertyChanged();
-
-            }
-        }
-   
-        public  StorageFile storageFile { get; set; }
+      
         StorageItemThumbnail thumbnailMode;
-       
+
         public StorageItemThumbnail ThumbnailMode
         {
             get
-            { 
+            {
 
                 return thumbnailMode;
-                
-              
+
+
             }
             set
             {
-                
-                    thumbnailMode = value;
+
+                thumbnailMode = value;
                 this.OnPropertyChanged();
             }
         }
-        public async  Task<StorageItemThumbnail> ThumbnailMode2()
-        {
-
-           StorageItemThumbnail thumbnailMode3= ThumbnailMode;
-                if (FlagFolde)
-                {
-                   var thumbnailMode32 =await StorageFolder.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                    return thumbnailMode32;
-                }
-                
-
-
-                return thumbnailMode3;
-
-
-            
-           
-        }
-        public async Task ggg()
-        {
-            if (FlagFolde)
-            {
-
-
-                ThumbnailMode = await StorageFolder.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-              //  this.OnPropertyChanged();
-            }
-            else
-            {
-                ThumbnailMode = await storageFile.GetScaledImageAsThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-               // this.OnPropertyChanged();
-            }
-        }
+   
+      
         public BitmapImage bitmapImage1()
         {
 
@@ -103,7 +68,7 @@ namespace FolderFile
             image.UriSource = new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.RelativeOrAbsolute);
             try
             {
-                
+
 
                 StorageItemThumbnail thumbnail = ThumbnailMode;
                 if (thumbnail != null)
@@ -111,55 +76,26 @@ namespace FolderFile
 
 
                     image.SetSource(thumbnail);
-                   
+
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
             }
             return (image);
         }
         public bool FlagFolde { get; set; }
-      
-        public string FileAndFildeName
-        {
-            get
-            {
-                if (FlagFolde)
-                {
-                    return storageFolder.DisplayName;
-                }
-                else
-                    return storageFile.DisplayName;
-            }
-        }
-        public string FileAndFildeTip
-        {
-            get
-            {
-                if (FlagFolde)
-                {
-                    return storageFolder.DisplayType;
-                }
-                else
-                    return storageFile.DisplayType;
-            }
-        }
-        public string FileAndFildeData
-        {
-            get
-            {
-                if (FlagFolde)
-                {
-                    return storageFolder.DateCreated.ToString();
-                }
-                else
-                    return storageFile.DateCreated.ToString();
-            }
-        }
 
+        
+        public string Path { get; set; }
+        public string FileAndFildeName { get; set; }
+        public string FileAndFildeTip { get; set; }
+
+   
+        public string FileAndFildeData { get; set; }
+     
         public string Type { get; set; }
         public async void Spase()
         {
@@ -168,10 +104,11 @@ namespace FolderFile
                 try
                 {
 
+                StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(Path);
 
                     const String k_freeSpace = "System.FreeSpace";
                     const String k_totalSpace = "System.Capacity";
-                    var props = await StorageFolder.Properties.RetrievePropertiesAsync(new string[] { k_freeSpace, k_totalSpace });
+                    var props = await storageFolder.Properties.RetrievePropertiesAsync(new string[] { k_freeSpace, k_totalSpace });
                 double svoboda =Convert.ToDouble(props[k_freeSpace])/1000000000.0;
                
                 double vsego = Convert.ToDouble(props[k_totalSpace]) / 1000000000.0;

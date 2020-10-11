@@ -1555,7 +1555,7 @@
                     </AppBarButton>
                     <AppBarButton x:Uid="tabItem1Labdelete" Label="Удалить" Icon="Delete" Click="AppBarButton_Click_7"/>
                     <AppBarSeparator/>
-                    <AppBarButton x:Name="ShareBut" IsEnabled="False"  Icon="Share" Click="AppBarButton_Click_10" Label="Share..." />
+                    <AppBarButton x:Name="ShareBut" IsEnabled="False"  Icon="Share" Click="AppBarButton_Click_10" Label="Share..." Visibility="Collapsed" />
                     <AppBarButton Icon="Setting" Click="AppBarButton_Click" Label="Setting"/>
                     <CommandBar.SecondaryCommands>
                        
@@ -1583,6 +1583,6 @@
                 <TextBlock>Buy app (<Run x:Name="PurchasePrice">Price unknown</Run>)</TextBlock>
             </Button>
         </StackPanel>
-        <Button Content="sss" VerticalAlignment="Bottom" Grid.Row="2" Click="Button_Click"/>
+        <Button Content="sss" VerticalAlignment="Bottom" Grid.Row="2" Click="Button_Click" Visibility="Collapsed"/>
     </Grid>
 </Page>

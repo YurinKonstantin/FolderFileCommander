@@ -129,6 +129,15 @@
   <data name="Eas" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="elementsText" xml:space="preserve">
+    <value>Elements:</value>
+  </data>
+  <data name="FilesText" xml:space="preserve">
+    <value>Files:</value>
+  </data>
+  <data name="FoldersText" xml:space="preserve">
+    <value>Folders:</value>
+  </data>
   <data name="InfoText" xml:space="preserve">
     <value>Properties</value>
   </data>
@@ -176,6 +185,9 @@
   </data>
   <data name="PathText" xml:space="preserve">
     <value>Path</value>
+  </data>
+  <data name="SelectedText" xml:space="preserve">
+    <value>Selected:</value>
   </data>
   <data name="SettingsAboutSubmitFeedback.Text" xml:space="preserve">
     <value>Submit Feedback</value>

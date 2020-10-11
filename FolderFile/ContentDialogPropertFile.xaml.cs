@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,13 +42,13 @@ namespace FolderFile
    
             // Get file's basic properties.
             Windows.Storage.FileProperties.BasicProperties basicProperties =
-                await cc.storageFile.GetBasicPropertiesAsync();
+                await (await StorageFile.GetFileFromPathAsync(cc.Path)).GetBasicPropertiesAsync();
          
             
             string fileSize = string.Format("{0:n0}", basicProperties.Size);
          
        
-        Windows.Storage.FileAttributes folderAttributes = cc.storageFile.Attributes;
+        Windows.Storage.FileAttributes folderAttributes = (await StorageFile.GetFileFromPathAsync(cc.Path)).Attributes;
            
             if ((folderAttributes & Windows.Storage.FileAttributes.ReadOnly) == Windows.Storage.FileAttributes.ReadOnly)
                 Debug.WriteLine("The item is read-only.");
@@ -62,8 +63,8 @@ namespace FolderFile
                 Debug.WriteLine("The item is temporary.");
 
 
-            textName.Text = resourceLoader.GetString("NameText") + ": " + cc.storageFile.Name;
-            var thumbnaildstorageFolder = await cc.storageFile.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 40, ThumbnailOptions.UseCurrentScale);
+            textName.Text = resourceLoader.GetString("NameText") + ": " + (await StorageFile.GetFileFromPathAsync(cc.Path)).Name;
+            var thumbnaildstorageFolder = await (await StorageFile.GetFileFromPathAsync(cc.Path)).GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 40, ThumbnailOptions.UseCurrentScale);
             // MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), resourceLoader.GetString("InfoText"));
             //await messageDialog.ShowAsync();
             this.Title = resourceLoader.GetString("InfoText");
@@ -76,13 +77,13 @@ namespace FolderFile
 
 
             textTip.Text = resourceLoader.GetString("TipText") + ": ";
-            textTip1.Text = cc.storageFile.DisplayType;
+            textTip1.Text = (await StorageFile.GetFileFromPathAsync(cc.Path)).DisplayType;
 
             textpath.Text = resourceLoader.GetString("PathText") + ": ";
-            textpath1.Text = cc.storageFile.Path;
+            textpath1.Text = (await StorageFile.GetFileFromPathAsync(cc.Path)).Path;
 
             textcreate.Text = resourceLoader.GetString("CreatText") + ": ";
-            textcreate1.Text = cc.storageFile.DateCreated.ToString();
+            textcreate1.Text = (await StorageFile.GetFileFromPathAsync(cc.Path)).DateCreated.ToString();
             textizm.Text = resourceLoader.GetString("IzmenText") + ": ";
             textizm1.Text = basicProperties.DateModified.ToLocalTime().ToString();
 

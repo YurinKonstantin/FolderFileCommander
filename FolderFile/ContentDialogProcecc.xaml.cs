@@ -52,13 +52,13 @@ namespace FolderFile
                     {
                         if (s.FlagFolde != true)
                         {
-                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + s.storageFile.Name + "\n" + s.storageFile.Path;
+                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + (await StorageFile.GetFileFromPathAsync(s.Path)).Name + "\n" + (await StorageFile.GetFileFromPathAsync(s.Path)).Path;
                           
-                             DeleteFile(s.storageFile);
+                             DeleteFile((await StorageFile.GetFileFromPathAsync(s.Path)));
                         }
                         else
                         {
-                            DeleteFolder(s.StorageFolder);
+                            DeleteFolder((await StorageFolder.GetFolderFromPathAsync(s.Path)));
                         }
                     }
                 }
@@ -145,12 +145,12 @@ namespace FolderFile
                     {
                         if (s.FlagFolde != true)
                         {
-                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + s.storageFile.Name+"\n"+ s.storageFile.Path;
-                            await s.storageFile.CopyAsync(enddir, s.storageFile.Name, NameCollisionOption.GenerateUniqueName);
+                            TextInfo.Text = resourceLoader.GetString("TextCopi") + " " + (await StorageFile.GetFileFromPathAsync(s.Path)).Name+"\n"+ (await StorageFile.GetFileFromPathAsync(s.Path)).Path;
+                            await (await StorageFile.GetFileFromPathAsync(s.Path)).CopyAsync(enddir, (await StorageFile.GetFileFromPathAsync(s.Path)).Name, NameCollisionOption.GenerateUniqueName);
                         }
                         else
                         {
-                            await CopyDir(s.StorageFolder, enddir);
+                            await CopyDir((await StorageFolder.GetFolderFromPathAsync(s.Path)), enddir);
                         }
                     }
                 }

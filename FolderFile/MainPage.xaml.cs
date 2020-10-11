@@ -62,7 +62,7 @@ namespace FolderFile
             
 
              dataTransferManager.DataRequested += DataTransferManager_DataRequested;
-
+            
 
 
         }
@@ -116,9 +116,13 @@ namespace FolderFile
             }
         }
         private DataTransferManager dataTransferManager;
-      
 
-   
+        private async void List1_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
 
@@ -501,6 +505,11 @@ namespace FolderFile
      
 
 
+        /// <summary>
+        /// Кнопка Просмотр
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void AppBarButton_Click_4(object sender, RoutedEventArgs e)
         {
 
@@ -514,8 +523,14 @@ namespace FolderFile
                         //var vs = FileAndFolderViewer.classListStroceSelect;
                         if (vs.FlagFolde != true)
                         {
-                            await ActivateFile(vs.storageFile);
+                        Debug.WriteLine(vs.Path);
+                        await viewFocusTag.fileAndFolderViewer.ActivateFile((await StorageFile.GetFileFromPathAsync(vs.Path)));
+                            //await ActivateFile((await StorageFile.GetFileFromPathAsync(vs.Path)));
                         }
+                        else
+                    {
+                        viewFocusTag.fileAndFolderViewer.Next(vs);
+                    }
                     }
                 
             }
@@ -551,7 +566,7 @@ namespace FolderFile
             {
               
                         ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() {  };
-                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, ViewRight.fileAndFolderViewer.storageFolderFirst);
+                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewRight.fileAndFolderViewer.storageFolderFirst.Path));
                         var x = await contentDialogProcecc.ShowAsync();
                 ViewRight.fileAndFolderViewer.Upgreid();
 
@@ -563,7 +578,7 @@ namespace FolderFile
                             
 
                         ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { };
-                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, ViewLeft.fileAndFolderViewer.storageFolderFirst);
+                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewLeft.fileAndFolderViewer.storageFolderFirst.Path));
                         var x = await contentDialogProcecc.ShowAsync();
                 ViewLeft.fileAndFolderViewer.Upgreid();
 
@@ -615,9 +630,9 @@ namespace FolderFile
 
 
                 var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-               
 
-                    await viewFocusTag.fileAndFolderViewer.storageFolderFirst.CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
+
+                await (await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.storageFolderFirst.Path)).CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
                     viewFocusTag.fileAndFolderViewer.Upgreid();
                 
               
@@ -637,7 +652,7 @@ namespace FolderFile
 
                 
                     ContentDialogNewFile contentDialogNewFile = new ContentDialogNewFile() { };
-                    contentDialogNewFile.storageFolder = viewFocusTag.fileAndFolderViewer.storageFolderFirst;
+                    contentDialogNewFile.storageFolder = await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.storageFolderFirst.Path);
                     await contentDialogNewFile.ShowAsync();
                     viewFocusTag.fileAndFolderViewer.Upgreid();
                 
@@ -662,17 +677,17 @@ namespace FolderFile
                         {
 
                             ContentDialogRemove contentDialogNewFile = new ContentDialogRemove() { };
-                            contentDialogNewFile.storageFolder = vs.StorageFolder;
+                           // contentDialogNewFile.storageFolder = (await StorageFolder.GetFolderFromPathAsync(vs.Path));
                             if (vs.FlagFolde)
                             {
                                 contentDialogNewFile.folder = vs.FlagFolde;
-                                contentDialogNewFile.storageFolder = vs.StorageFolder;
+                                contentDialogNewFile.storageFolder = (await StorageFolder.GetFolderFromPathAsync(vs.Path));
                                 await contentDialogNewFile.ShowAsync();
                             }
                             else
                             {
                                 contentDialogNewFile.folder = vs.FlagFolde;
-                                contentDialogNewFile.storageFile = vs.storageFile;
+                                contentDialogNewFile.storageFile = (await StorageFile.GetFileFromPathAsync(vs.Path));
                                 await contentDialogNewFile.ShowAsync();
                             }
                             Upgreid();
@@ -728,12 +743,12 @@ namespace FolderFile
                       if (ViewLeft.fileAndFolderViewer.Path == String.Empty)
                       {
                           var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                          ViewLeft.fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                          ViewLeft.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type));// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
                       }
                       if (ViewRight.fileAndFolderViewer.Path == String.Empty)
                       {
                           var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                          ViewRight.fileAndFolderViewer.ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                          ViewRight.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type));// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
                       }
                       ViewLeft.fileAndFolderViewer.ListUSB.Add(FlFolder1);
                       ViewRight.InitializeTreeView();
@@ -820,7 +835,7 @@ namespace FolderFile
                             {
 
 
-                                StorageFile myFile = shareList.storageFile;
+                            StorageFile myFile = await StorageFile.GetFileFromPathAsync(shareList.Path);// shareList.storageFile;
                                 request.Data.Properties.Title = "Share My File";
                                 request.Data.Properties.Description = string.Format("Share log file {0}.", myFile.DisplayName);
 

@@ -129,6 +129,15 @@
   <data name="Eas" xml:space="preserve">
     <value>Добавить</value>
   </data>
+  <data name="elementsText" xml:space="preserve">
+    <value>Элементы:</value>
+  </data>
+  <data name="FilesText" xml:space="preserve">
+    <value>Файлы:</value>
+  </data>
+  <data name="FoldersText" xml:space="preserve">
+    <value>Папки:</value>
+  </data>
   <data name="InfoText" xml:space="preserve">
     <value>Свойства</value>
   </data>
@@ -176,6 +185,9 @@
   </data>
   <data name="PathText" xml:space="preserve">
     <value>Путь</value>
+  </data>
+  <data name="SelectedText" xml:space="preserve">
+    <value>Выбрано:</value>
   </data>
   <data name="SettingsAboutSubmitFeedback.Text" xml:space="preserve">
     <value>Отправить отзыв</value>

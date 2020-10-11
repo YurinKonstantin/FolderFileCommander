@@ -11,25 +11,23 @@
     xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     xmlns:localprimitives="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives" xmlns:local1="using:FolderFile">
     <UserControl.Resources>
-
         <DataTemplate x:Key="TreeViewItemDataTemplate1">
             <Grid Height="32">
                 <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Content.StorageFolder.DisplayName}">
                     <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
-                    <TextBlock Text="{Binding Content.StorageFolder.DisplayName}" ToolTipService.ToolTip="{Binding Content.StorageFolder.DisplayName}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
+                    <TextBlock Text="{Binding Content.FileAndFildeName}" ToolTipService.ToolTip="{Binding Content.FileAndFildeName}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="TreeViewItemDataTemplate">
             <StackPanel Height="32" Orientation="Horizontal" UseLayoutRounding="True" ToolTipService.ToolTip="{Binding Content.StorageFolder.DisplayName}">
                 <Image Height="24"   VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
-                <TextBlock Text="{Binding Content.StorageFolder.DisplayName}" UseLayoutRounding="True"
+                <TextBlock Text="{Binding Content.FileAndFildeName}" UseLayoutRounding="True"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            Style="{ThemeResource BodyTextBlockStyle}"/>
             </StackPanel>
         </DataTemplate>
-
         <DataTemplate x:Key="MusicItemDataTemplate">
             <StackPanel Height="44" Orientation="Horizontal">
                 <SymbolIcon Symbol="Audio" Margin="0,0,4,0"/>
@@ -40,7 +38,6 @@
                            Style="{ThemeResource BodyTextBlockStyle}"/>
             </StackPanel>
         </DataTemplate>
-
         <DataTemplate x:Key="PictureItemDataTemplate">
             <StackPanel Height="44" Orientation="Horizontal">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB9F;"
@@ -52,7 +49,6 @@
                            Style="{ThemeResource BodyTextBlockStyle}"/>
             </StackPanel>
         </DataTemplate>
-
         <DataTemplate x:Key="MusicFolderDataTemplate">
             <StackPanel Height="44" Orientation="Horizontal">
                 <SymbolIcon Symbol="MusicInfo" Margin="0,0,4,0"/>
@@ -62,7 +58,6 @@
                            Style="{ThemeResource BodyTextBlockStyle}"/>
             </StackPanel>
         </DataTemplate>
-
         <DataTemplate x:Key="PictureFolderDataTemplate">
             <StackPanel Height="44" Orientation="Horizontal">
                 <SymbolIcon Symbol="Pictures" Margin="0,0,4,0"/>
@@ -73,12 +68,10 @@
                            Style="{ThemeResource BodyTextBlockStyle}"/>
             </StackPanel>
         </DataTemplate>
-
         <local1:ExplorerItemTemplateSelectorT x:Key="ExplorerItemTemplateSelectorT"  DefaultTemplate="{StaticResource TreeViewItemDataTemplate}"  MusicItemTemplate="{StaticResource MusicItemDataTemplate}" MusicFolderTemplate="{StaticResource MusicFolderDataTemplate}"
             PictureItemTemplate="{StaticResource PictureItemDataTemplate}"
             PictureFolderTemplate="{StaticResource PictureFolderDataTemplate}"/>
         <local1:ThumbnailToImageConverter x:Key="cvt" />
-      
         <Style TargetType="TreeView">
             <Setter Property="IsTabStop" Value="False" />
             <Setter Property="Template">
@@ -111,9 +104,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Padding" Value="0" />
         </Style>
-
-
-
         <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="XamlAutoFontFamily"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -1644,7 +1634,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Middle" x:DataType="local1:ClassListStroce">
-            <Grid Margin="0" AllowDrop="True">
+            <Grid Margin="0" AllowDrop="True" Padding="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32"/>
                 </Grid.RowDefinitions>
@@ -1654,11 +1644,11 @@
                     <ColumnDefinition Width="76"/>
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="28" Width="28" x:Phase="1"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="28" Width="28" x:Phase="2"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
 
-                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
-                <TextBlock Text="{x:Bind FileAndFildeTip}"  Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
-                <TextBlock Text="{x:Bind FileAndFildeData}"    Grid.Column="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock   Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
+                <TextBlock   Text="{x:Bind FileAndFildeTip}" x:Phase="3"  Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
+                <TextBlock  Text="{x:Bind FileAndFildeData}" x:Phase="1"    Grid.Column="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
             </Grid>
         </DataTemplate>
@@ -1698,6 +1688,29 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="DriveMiddle" x:DataType="local1:ClassListStroce">
+            <Grid Margin="0,0,0,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="60" Width="60"  VerticalAlignment="Top" x:Phase="3" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+
+                <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
+                <ProgressBar Foreground="{x:Bind brush, Mode=OneWay}" Height="8" Width="130" Value="{x:Bind FreeSpace, Mode=OneWay}" Maximum="{x:Bind TotalSpace, Mode=OneWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
+
+                <TextBlock Text="{x:Bind SpaseSize,  Mode=OneWay}"   Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" />
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DriveMiddle1" x:DataType="local1:ClassListStroce">
             <Grid Margin="0" AllowDrop="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32"/>
@@ -1735,7 +1748,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-
             <Button Click="AppBarButton_Click" x:Name="butleft"  VerticalAlignment="Stretch" VerticalContentAlignment="Top">
                 <Button.Content>
                     <SymbolIcon Symbol="GlobalNavigationButton"/>
@@ -1746,7 +1758,6 @@
                     <SymbolIcon Symbol="GlobalNavigationButton"/>
                 </Button.Content>
             </Button>
-
             <TextBox Grid.Column="1" VerticalAlignment="Center" BorderThickness="1"  Text="{x:Bind fileAndFolderViewer.Path, Mode=TwoWay}" KeyDown="TextBox_KeyDown"></TextBox>
         </Grid>
         <SplitView Grid.Row="2" IsPaneOpen="True" KeyUp="Split_KeyUp"
@@ -1771,10 +1782,10 @@
 
             </SplitView.Pane>
             <Grid KeyUp="Grid_KeyUp">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -1785,14 +1796,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-
                     <AppBarButton  Style="{ThemeResource NavigationBackButtonNormalStyle}" Click="AppBarButton_Click_1" Margin="0,0,0,0" VerticalAlignment="Top" />
-
                     <AppBarButton  Icon="Home" Grid.Column="1" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_1"/>
                     <AppBarButton Icon="Contact" Grid.Column="2" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_3"/>
                     <AppBarButton Icon="Accept" Grid.Column="3" Height="40" Width="40" Margin="0" Tapped="AppBarButton_Tapped_5" Visibility="Collapsed" />
-
-                   <AppBarButton Icon="Filter" Grid.Column="5" Height="40" Width="60" Margin="0">
+                    <AppBarButton Icon="Filter" Grid.Column="5" Height="40" Width="60" Margin="0">
                         <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom" >
                                 <MenuFlyoutItem   x:Uid="sortingUpABC" Tag="UpABC" Click="MenuFlyoutItem_Click_3"  />
@@ -1804,8 +1812,8 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
                 </Grid>
-                <ListView  Grid.Row="1" AllowDrop="True" DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
-                           IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid"  Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}"  SelectionMode="Extended" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
+                <ListView   Grid.Row="1" AllowDrop="True" DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
+                        IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid"  Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}"  SelectionMode="Extended" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
                     <ListView.Resources>
                         <MenuFlyout x:Name="allContactsMenuFlyout">
                             <MenuFlyout.Items>
@@ -1823,13 +1831,15 @@
                                 <MenuFlyoutItem Text="Свойства" x:Uid="MenuTextInfo" x:Name="Inf"  Click="Inf_Click" />
                             </MenuFlyout.Items>
                         </MenuFlyout>
-                        
                     </ListView.Resources>
-
-     
-
                 </ListView>
-
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock x:Name="ElementsText" Margin="8"/>
+                    
+                    <TextBlock x:Name="FoldersText" Margin="8"/>
+                    <TextBlock x:Name="FilesText" Margin="8"/>
+                    <TextBlock x:Name="SelectText" Margin="8"/>
+                </StackPanel>
             </Grid>
 
         </SplitView>

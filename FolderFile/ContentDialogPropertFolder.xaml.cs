@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,7 +39,7 @@ namespace FolderFile
 
             // Get file's basic properties.
             Windows.Storage.FileProperties.BasicProperties basicProperties =
-                await cc.StorageFolder.GetBasicPropertiesAsync();
+                await (await StorageFolder.GetFolderFromPathAsync(cc.Path)).GetBasicPropertiesAsync();
 
 
             string fileSize = string.Format("{0:n0}", basicProperties.Size);
@@ -59,8 +60,8 @@ namespace FolderFile
              //   Debug.WriteLine("The item is temporary.");
 
 
-            textName.Text = resourceLoader.GetString("NameText") + ": " + cc.StorageFolder.Name;
-            var thumbnaildstorageFolder = await cc.StorageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 40, ThumbnailOptions.UseCurrentScale);
+            textName.Text = resourceLoader.GetString("NameText") + ": " + (await StorageFolder.GetFolderFromPathAsync(cc.Path)).Name;
+            var thumbnaildstorageFolder = await (await StorageFolder.GetFolderFromPathAsync(cc.Path)).GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 40, ThumbnailOptions.UseCurrentScale);
             // MessageDialog messageDialog = new MessageDialog(fileProperties.ToString(), resourceLoader.GetString("InfoText"));
             //await messageDialog.ShowAsync();
             this.Title = resourceLoader.GetString("InfoText");
@@ -73,13 +74,13 @@ namespace FolderFile
 
 
             textTip.Text = resourceLoader.GetString("TipText") + ": ";
-            textTip1.Text = cc.StorageFolder.DisplayType;
+            textTip1.Text = (await StorageFolder.GetFolderFromPathAsync(cc.Path)).DisplayType;
 
             textpath.Text = resourceLoader.GetString("PathText") + ": ";
-            textpath1.Text = cc.StorageFolder.Path;
+            textpath1.Text = (await StorageFolder.GetFolderFromPathAsync(cc.Path)).Path;
 
             textcreate.Text = resourceLoader.GetString("CreatText") + ": ";
-            textcreate1.Text = cc.StorageFolder.DateCreated.ToString();
+            textcreate1.Text = (await StorageFolder.GetFolderFromPathAsync(cc.Path)).DateCreated.ToString();
             textizm.Text = resourceLoader.GetString("IzmenText") + ": ";
             textizm1.Text = basicProperties.DateModified.ToLocalTime().ToString();
 

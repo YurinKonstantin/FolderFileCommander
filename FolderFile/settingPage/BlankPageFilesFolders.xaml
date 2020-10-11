@@ -48,36 +48,24 @@
                         FontSize="17"
                         Text="Управление расположениями на панели быстрого запуска " />
                     <Button Content="Добавть новое расположение"  x:Uid="tabItem2LabAddPlase1"  Click="AppBarButton_Click_2"/>
-                    <Button FrameworkElement.AllowFocusOnInteraction="True"  x:Uid="tabItem2LabDelete1"  IsEnabled="True" Content="Удаление расположения" VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="280"/>
-                                    </Grid.ColumnDefinitions>
-                                    <CommandBar>
-                                        <AppBarButton Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить"  Click="AppBarButton_Click_3"/>
-                                    </CommandBar>
-                                    <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
-                                    <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind fileAndFolderViewer.listDostyp, Mode=OneWay}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding }" FontSize="16"></TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
-                    </Button>
                 </StackPanel>
+                <TextBlock Grid.Row="1" x:Uid="tabItem2TextB"  Text="Выберите папку для удаления из списка ниже и нажмите Подтвердить" FontSize="20" TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="16,16,0,0"/>
+                <ListView Grid.Row="2" x:Name="listDop" ItemsSource="{x:Bind fileAndFolderViewer.listDostyp, Mode=OneWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding }" FontSize="16" VerticalAlignment="Center"></TextBlock>
+                                
+                                    <AppBarButton Grid.Column="1" Icon="Delete" x:Uid="tabItem2LabdeletePod" Label="Подтвердить" Background="White"  Click="AppBarButton_Click_3"/>
+                             
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <StackPanel Spacing="10" Visibility="Collapsed">
                     <TextBlock
                         x:Uid="SettingsFilesAndFoldersShowDriveLetters"

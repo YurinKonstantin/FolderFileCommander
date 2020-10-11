@@ -236,7 +236,6 @@
     <PRIResource Include="String\ru\Resources.resw" />
     <PRIResource Include="String\es\Resources.resw" />
     <PRIResource Include="String\de-DE\Resources.resw" />
-    <PRIResource Include="String\ru-RU\Resources.resw" />
     <PRIResource Include="String\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>

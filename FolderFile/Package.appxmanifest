@@ -32,6 +32,9 @@
   <Capabilities>
     <rescap:Capability Name="broadFileSystemAccess"/>
     <uap:Capability Name="removableStorage" />
+    <uap:Capability Name="videosLibrary"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <uap:Capability Name="musicLibrary"/>
 
   </Capabilities>
 </Package>

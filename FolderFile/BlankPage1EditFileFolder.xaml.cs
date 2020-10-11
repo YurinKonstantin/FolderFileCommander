@@ -57,13 +57,13 @@ namespace FolderFile
                         }
                         if (s.FlagFolde != true)
                         {
-                            textOperacia.Text = resourceLoader.GetString("TextCopi") + " " + s.storageFile.Name + "\n" + s.storageFile.Path;
+                            textOperacia.Text = resourceLoader.GetString("TextCopi") + " " + (await StorageFile.GetFileFromPathAsync(s.Path)).Name + "\n" + (await StorageFile.GetFileFromPathAsync(s.Path)).Path;
 
-                            DeleteFile(s.storageFile);
+                            DeleteFile((await StorageFile.GetFileFromPathAsync(s.Path)));
                         }
                         else
                         {
-                            DeleteFolder(s.StorageFolder);
+                            DeleteFolder((await StorageFolder.GetFolderFromPathAsync(s.Path)));
                         }
                     }
                 }

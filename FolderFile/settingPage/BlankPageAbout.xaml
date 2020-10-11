@@ -58,12 +58,8 @@
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         IsEnabled="True">
-                        <StackPanel
-                            Padding="0,4"
-                            Orientation="Horizontal"
-                            Spacing="14">
+                        <StackPanel Padding="0,4" Orientation="Horizontal" Spacing="14">
                             <FontIcon Glyph="&#xeD15;" />
-                  
                             <StackPanel VerticalAlignment="Center" Orientation="Vertical">
                                 <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Submit Feedback" />
                                 <TextBlock
@@ -76,25 +72,14 @@
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
-                <ListView
-                    HorizontalAlignment="Left"
-                    IsItemClickEnabled="True"
-                    ItemClick="ListView_ItemClick">
-                    <ListViewItem
-                      
-                        Padding="8,2"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        IsEnabled="True">
-                        <StackPanel
-                            Padding="0,4"
-                            Orientation="Horizontal"
-                            Spacing="14">
+                <ListView HorizontalAlignment="Left" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                    <ListViewItem Padding="8,2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" IsEnabled="True">
+                        <StackPanel Padding="0,4" Orientation="Horizontal" Spacing="14">
                             <FontIcon Glyph="&#xeBE8;" />
                             <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Report the problem to the developer" />
+                                <TextBlock x:Uid="SettingsAboutSubmitFeedback1" Text="Report the problem to the developer" />
                                 <TextBlock
-                                    x:Uid="SettingsAboutSubmitFeedbackDescription"
+                                    x:Uid="SettingsAboutSubmitFeedbackDescription1"
                                     FontSize="12"
                                     Foreground="Gray"
                                     Text="Send the developers an issue report with more information"
