@@ -11,6 +11,7 @@ using Windows.Storage.FileProperties;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -60,35 +61,8 @@ namespace FolderFile
         }
    
       
-        public BitmapImage bitmapImage1()
-        {
-
-
-            BitmapImage image = new BitmapImage();
-            image.UriSource = new Uri("ms-appx:///Assets/StoreLogo.png", UriKind.RelativeOrAbsolute);
-            try
-            {
-
-
-                StorageItemThumbnail thumbnail = ThumbnailMode;
-                if (thumbnail != null)
-                {
-
-
-                    image.SetSource(thumbnail);
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            return (image);
-        }
+    
         public bool FlagFolde { get; set; }
-
-        
         public string Path { get; set; }
         public string FileAndFildeName { get; set; }
         public string FileAndFildeTip { get; set; }
@@ -201,9 +175,24 @@ namespace FolderFile
 
             }
         }
+        public Convedrt convedrt
+        {
+            get
+            {
+                return new Convedrt() { path=Path, fold= FlagFolde, isciz=ick};
+            }
+        }
 
 
-
+        public bool ick { get; set; }
+    }
+    public class Convedrt
+    {
+        public string path { get; set; }
+        public bool fold { get; set; }
+        public bool isciz { get; set; }
+     
+        
 
     }
 }

@@ -14,14 +14,14 @@
         <DataTemplate x:Key="TreeViewItemDataTemplate1">
             <Grid Height="32">
                 <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{Binding Content.StorageFolder.DisplayName}">
-                    <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                    <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{Binding Content.convedrt, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
                     <TextBlock Text="{Binding Content.FileAndFildeName}" ToolTipService.ToolTip="{Binding Content.FileAndFildeName}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{ThemeResource BodyTextBlockStyle}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="TreeViewItemDataTemplate">
             <StackPanel Height="32" Orientation="Horizontal" UseLayoutRounding="True" ToolTipService.ToolTip="{Binding Content.StorageFolder.DisplayName}">
-                <Image Height="24"   VerticalAlignment="Center" Source="{Binding Content.ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="24"   VerticalAlignment="Center" Source="{Binding Content.convedrt, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
                 <TextBlock Text="{Binding Content.FileAndFildeName}" UseLayoutRounding="True"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
@@ -1625,7 +1625,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="60" Width="60" x:Phase="1"   VerticalAlignment="Top" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="60" Width="60" x:Phase="1"   VerticalAlignment="Top" Source="{x:Bind convedrt, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding FileAndFildeTip}" Grid.Row="1" Grid.Column="1"  Style="{ThemeResource BodyTextBlockStyle}"  VerticalAlignment="Center" />
@@ -1642,13 +1642,13 @@
                     <ColumnDefinition Width="36"/>
                     <ColumnDefinition  Width="200"/>
                     <ColumnDefinition Width="76"/>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="136"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="28" Width="28" x:Phase="2"  VerticalAlignment="Center" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="28" Width="28"  VerticalAlignment="Center" Source="{x:Bind convedrt, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock   Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
-                <TextBlock   Text="{x:Bind FileAndFildeTip}" x:Phase="3"  Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
-                <TextBlock  Text="{x:Bind FileAndFildeData}" x:Phase="1"    Grid.Column="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock   Text="{x:Bind FileAndFildeTip}"   Grid.Column="3"  VerticalAlignment="Center" Margin="24,0,0,0" />
+                <TextBlock  Text="{x:Bind FileAndFildeData}"      Grid.Column="2" VerticalAlignment="Center" Margin="0,0,10,0"/>
 
             </Grid>
         </DataTemplate>
@@ -1678,7 +1678,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="60" Width="60"  VerticalAlignment="Top" x:Phase="3" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="60" Width="60"  VerticalAlignment="Top" x:Phase="3" Source="{x:Bind convedrt, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
                 <ProgressBar Foreground="{x:Bind brush, Mode=OneWay}" Width="130" Value="{x:Bind FreeSpace, Mode=OneWay}" Maximum="{x:Bind TotalSpace, Mode=OneWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
@@ -1701,7 +1701,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="60" Width="60"  VerticalAlignment="Top" x:Phase="3" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="60" Width="60"  VerticalAlignment="Top" x:Phase="3" Source="{x:Bind convedrt, Converter={StaticResource cvt}}"  Grid.Row="0" Grid.RowSpan="3" Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}"  FontSize="15" Grid.Column="1" VerticalAlignment="Center" />
                 <ProgressBar Foreground="{x:Bind brush, Mode=OneWay}" Height="8" Width="130" Value="{x:Bind FreeSpace, Mode=OneWay}" Maximum="{x:Bind TotalSpace, Mode=OneWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"/>
@@ -1721,7 +1721,7 @@
                     <ColumnDefinition Width="196"/>
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
-                <Image Height="28" Width="28"  VerticalAlignment="Center" x:Phase="3" Source="{x:Bind ThumbnailMode, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
+                <Image Height="28" Width="28"  VerticalAlignment="Center" x:Phase="3" Source="{x:Bind convedrt, Converter={StaticResource cvt}}"  Grid.Row="0"  Stretch="Uniform"  Margin="0,0,4,0"/>
 
                 <TextBlock Text="{x:Bind FileAndFildeName,  Mode=OneWay}"  Grid.Column="1" VerticalAlignment="Center" Margin="0,0,16,0" />
                 <TextBlock Text="{x:Bind SpaseSize,  Mode=OneWay}"  Grid.Column="2" Grid.ColumnSpan="2"  VerticalAlignment="Center" Margin="0,0,0,0" />

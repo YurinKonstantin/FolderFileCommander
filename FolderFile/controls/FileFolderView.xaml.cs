@@ -163,8 +163,8 @@ namespace FolderFile.controls
                 {
                     var newNode = new TreeViewNode();
                     var ss = item as StorageFolder;
-                    var thumbnaild3 = await ss.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
-                    var it = new ClassListStroce((item as StorageFolder).Path, (item as StorageFolder).DisplayName, true, (item as StorageFolder).DisplayType, (item as StorageFolder).DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild3 }; // { FlagFolde = true, StorageFolder = item as StorageFolder, ThumbnailMode = thumbnaild3 };
+                    //var thumbnaild3 = await ss.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
+                    var it = new ClassListStroce((item as StorageFolder).Path, (item as StorageFolder).DisplayName, true, (item as StorageFolder).DisplayType, (item as StorageFolder).DateCreated.ToString(), FileAndFolderViewer.Type) { ick=true }; // { FlagFolde = true, StorageFolder = item as StorageFolder, ThumbnailMode = thumbnaild3 };
                     newNode.Content = it;
 
                     if (item is StorageFolder)
@@ -262,8 +262,8 @@ namespace FolderFile.controls
 
                     StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Desktop);
 
-                    var thumbnaildstorageFolder = await storageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNodestorageFolder.Content = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolder };// { StorageFolder = storageFolder, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolder };
+                    //var thumbnaildstorageFolder = await storageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                    pictureNodestorageFolder.Content = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = storageFolder, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolder };
                     pictureNodestorageFolder.IsExpanded = false;
                     pictureNodestorageFolder.HasUnrealizedChildren = true;
                     sampleTreeView.RootNodes.Add(pictureNodestorageFolder);
@@ -277,8 +277,8 @@ namespace FolderFile.controls
                 {
 
 
-                    StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Videos);
-                    TreeViewNode pictureNodestorageFolderDownloads = new TreeViewNode();
+                    //StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Videos);
+                    //TreeViewNode pictureNodestorageFolderDownloads = new TreeViewNode();
                     //var thumbnaildstorageFolderDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
                    // pictureNodestorageFolderDownloads.Content = new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolderDownloads };// { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
                     //pictureNodestorageFolderDownloads.IsExpanded = false;
@@ -299,8 +299,8 @@ namespace FolderFile.controls
 
                     StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Downloads);
                     TreeViewNode pictureNodestorageFolderDownloads = new TreeViewNode();
-                    var thumbnaildstorageFolderDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNodestorageFolderDownloads.Content = new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaildstorageFolderDownloads };// { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
+                   // var thumbnaildstorageFolderDownloads = await storageFolderDownloads.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                    pictureNodestorageFolderDownloads.Content = new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = storageFolderDownloads, FlagFolde = true, ThumbnailMode = thumbnaildstorageFolderDownloads };
                     pictureNodestorageFolderDownloads.IsExpanded = false;
 
                     pictureNodestorageFolderDownloads.HasUnrealizedChildren = true;
@@ -321,8 +321,8 @@ namespace FolderFile.controls
 
                     StorageFolder documentFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Documents);
                     TreeViewNode pictureNode1 = new TreeViewNode();
-                    var thumbnaild = await documentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNode1.Content = new ClassListStroce(documentFolder.Path, documentFolder.DisplayName, true, documentFolder.DisplayType, documentFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild };// { StorageFolder = documentFolder, FlagFolde = true, ThumbnailMode = thumbnaild };
+                    //var thumbnaild = await documentFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                    pictureNode1.Content = new ClassListStroce(documentFolder.Path, documentFolder.DisplayName, true, documentFolder.DisplayType, documentFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = documentFolder, FlagFolde = true, ThumbnailMode = thumbnaild };
                     pictureNode1.IsExpanded = false;
 
                     pictureNode1.HasUnrealizedChildren = true;
@@ -340,8 +340,8 @@ namespace FolderFile.controls
 
                     StorageFolder picturesFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Pictures);
                     TreeViewNode pictureNode = new TreeViewNode();
-                    var thumbnaild1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                    pictureNode.Content = new ClassListStroce(picturesFolder.Path, picturesFolder.DisplayName, true, picturesFolder.DisplayType, picturesFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild1 };// { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnaild1 };
+                    //var thumbnaild1 = await picturesFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                    pictureNode.Content = new ClassListStroce(picturesFolder.Path, picturesFolder.DisplayName, true, picturesFolder.DisplayType, picturesFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = picturesFolder, FlagFolde = true, ThumbnailMode = thumbnaild1 };
                     pictureNode.IsExpanded = false;
 
                     pictureNode.HasUnrealizedChildren = true;
@@ -359,8 +359,8 @@ namespace FolderFile.controls
                     // Get Music library.
                     StorageFolder musicFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Music);
                     TreeViewNode musicNode = new TreeViewNode();
-                    var thumbnaild2 = await musicFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                    musicNode.Content = new ClassListStroce(musicFolder.Path, musicFolder.DisplayName, true, musicFolder.DisplayType, musicFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild2 };// { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnaild2 };
+                    //var thumbnaild2 = await musicFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
+                    musicNode.Content = new ClassListStroce(musicFolder.Path, musicFolder.DisplayName, true, musicFolder.DisplayType, musicFolder.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = musicFolder, FlagFolde = true, ThumbnailMode = thumbnaild2 };
                     musicNode.IsExpanded = false;
                     musicNode.HasUnrealizedChildren = true;
                     sampleTreeView.RootNodes.Add(musicNode);
@@ -388,7 +388,7 @@ namespace FolderFile.controls
                             StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
                             TreeViewNode AssecNode = new TreeViewNode();
                             var thumbnaild3 = await ss.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                            AssecNode.Content = new ClassListStroce(ss.Path, ss.DisplayName, true, ss.DisplayType, ss.DateCreated.ToString(), FileAndFolderViewer.Type);// { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnaild3 };
+                            AssecNode.Content = new ClassListStroce(ss.Path, ss.DisplayName, true, ss.DisplayType, ss.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnaild3 };
                             AssecNode.IsExpanded = false;
                             AssecNode.HasUnrealizedChildren = true;
                             sampleTreeView.RootNodes.Add(AssecNode);
@@ -416,8 +416,8 @@ namespace FolderFile.controls
 
 
                             TreeViewNode pictureNode1 = new TreeViewNode();
-                            var thumbnaild = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
-                            pictureNode1.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild };// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild };
+                            //var thumbnaild = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.ResizeThumbnail);
+                            pictureNode1.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild };
                             pictureNode1.IsExpanded = false;
 
                             pictureNode1.HasUnrealizedChildren = true;
@@ -452,8 +452,8 @@ namespace FolderFile.controls
                             {
                                 TreeViewNode FolderNode = new TreeViewNode();
                                 StorageFolder storageFolderL = await StorageFolder.GetFolderFromPathAsync(drive.Name);
-                                var thumbnaild4 = await storageFolderL.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                                FolderNode.Content = new ClassListStroce(storageFolderL.Path, storageFolderL.DisplayName, true, storageFolderL.DisplayType, storageFolderL.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnaild4 };// { StorageFolder = storageFolderL, FlagFolde = true, ThumbnailMode = thumbnaild4 };
+                               // var thumbnaild4 = await storageFolderL.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
+                                FolderNode.Content = new ClassListStroce(storageFolderL.Path, storageFolderL.DisplayName, true, storageFolderL.DisplayType, storageFolderL.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = storageFolderL, FlagFolde = true, ThumbnailMode = thumbnaild4 };
                                 FolderNode.IsExpanded = false;
                                 FolderNode.HasUnrealizedChildren = true;
                                 sampleTreeView.RootNodes.Add(FolderNode);
@@ -482,8 +482,8 @@ namespace FolderFile.controls
                     {
 
                         TreeViewNode FolderNode = new TreeViewNode();
-                        var thumbnaild3 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
-                        FolderNode.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type);// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild3 };
+                       // var thumbnaild3 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 24, ThumbnailOptions.UseCurrentScale);
+                        FolderNode.Content = new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true };// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnaild3 };
                         FolderNode.IsExpanded = false;
                         FolderNode.HasUnrealizedChildren = true;
 

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -150,9 +151,9 @@ namespace FolderFile
 
                     StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Desktop);
 
-                    var thumbnailddes =await  storageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                    //var thumbnailddes =await  storageFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                    ListCol.Add(new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), Type){ ThumbnailMode = thumbnailddes});// { StorageFolder = storageFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailddes });
+                    ListCol.Add(new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), Type){ ick = true });// { StorageFolder = storageFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailddes });
                    // ListCol.Add(new ClassListStroce() { StorageFolder = storageFolder, FlagFolde = true, Type = Type});
 
 
@@ -165,9 +166,9 @@ namespace FolderFile
                 try
                 {
                     StorageFolder storageFolderDownloads = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Downloads);
-                    var thumbnailddesDownloads = await storageFolderDownloads.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                    //var thumbnailddesDownloads = await storageFolderDownloads.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                    ListCol.Add(new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), Type) { ThumbnailMode = thumbnailddesDownloads });// { StorageFolder = storageFolderDownloads, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailddesDownloads });
+                    ListCol.Add(new ClassListStroce(storageFolderDownloads.Path, storageFolderDownloads.DisplayName, true, storageFolderDownloads.DisplayType, storageFolderDownloads.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = storageFolderDownloads, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailddesDownloads });
                    
                 }
                 catch(Exception ex)
@@ -176,23 +177,23 @@ namespace FolderFile
                 }
                // StorageFolder DocumentFolder = KnownFolders.DocumentsLibrary;
                 StorageFolder DocumentFolder= await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Documents);
-                var thumbnaild = await DocumentFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.ResizeThumbnail);
-                Debug.WriteLine(KnownFolders.DocumentsLibrary.Path);
+               // var thumbnaild = await DocumentFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.ResizeThumbnail);
+                //Debug.WriteLine(KnownFolders.DocumentsLibrary.Path);
 
-                ListCol.Add(new ClassListStroce(DocumentFolder.Path, DocumentFolder.DisplayName, true, DocumentFolder.DisplayType, DocumentFolder.DateCreated.ToString(), Type) { ThumbnailMode = thumbnaild });// { StorageFolder = DocumentFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnaild });
+                ListCol.Add(new ClassListStroce(DocumentFolder.Path, DocumentFolder.DisplayName, true, DocumentFolder.DisplayType, DocumentFolder.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = DocumentFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnaild });
                
 
                 StorageFolder picturesFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Pictures);
-                var thumbnail = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                //var thumbnail = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                ListCol.Add(new ClassListStroce(picturesFolder.Path, picturesFolder.DisplayName, true, picturesFolder.DisplayType, picturesFolder.DateCreated.ToString(), Type) { ThumbnailMode = thumbnail });// { StorageFolder = picturesFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnail });
+                ListCol.Add(new ClassListStroce(picturesFolder.Path, picturesFolder.DisplayName, true, picturesFolder.DisplayType, picturesFolder.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = picturesFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnail });
                
 
                 // Get Music library.
                 StorageFolder musicFolder = await StorageFolder.GetFolderFromPathAsync(Windows.Storage.UserDataPaths.GetDefault().Music); ;
-                 var thumbnail1 = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                // var thumbnail1 = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                ListCol.Add(new ClassListStroce(musicFolder.Path, musicFolder.DisplayName, true, musicFolder.DisplayType, musicFolder.DateCreated.ToString(), Type) { ThumbnailMode = thumbnail1 });// { StorageFolder = musicFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnail1 });
+                ListCol.Add(new ClassListStroce(musicFolder.Path, musicFolder.DisplayName, true, musicFolder.DisplayType, musicFolder.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = musicFolder, FlagFolde = true, Type = Type, ThumbnailMode= thumbnail1 });
                
 
 
@@ -206,8 +207,8 @@ namespace FolderFile
                         Windows.Storage.IStorageItem item = await storageItemAccessList.GetItemAsync(mruToken);
                         listDostyp.Add(mruToken);
                         StorageFolder ss = await storageItemAccessList.GetFolderAsync(mruToken);
-                        var thumbnail11 = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                        ListCol.Add(new ClassListStroce(ss.Path, ss.DisplayName, true, ss.DisplayType, ss.DateCreated.ToString(), Type) { ThumbnailMode = thumbnail11 });// { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail11, Type = Type });
+                        //var thumbnail11 = await picturesFolder.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                        ListCol.Add(new ClassListStroce(ss.Path, ss.DisplayName, true, ss.DisplayType, ss.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = ss, FlagFolde = true, ThumbnailMode = thumbnail11, Type = Type });
 
                     }
 
@@ -223,10 +224,10 @@ namespace FolderFile
                     {
                         if(FlFolder1.DisplayName=="OneDrive")
                         {
-                            var thumbnailr = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                            //var thumbnailr = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
 
-                            ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ThumbnailMode = thumbnailr });// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailr });
+                            ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode= thumbnailr });
                            
 
 
@@ -251,10 +252,10 @@ namespace FolderFile
                         if (drive.DriveType == DriveType.Fixed && drive.DriveType != DriveType.Removable)
                         {
                             StorageFolder FolderL = await StorageFolder.GetFolderFromPathAsync(drive.Name);
-                           
+                            
                             var thumbnailL = await FolderL.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                            var clas = new ClassListStroce(FolderL.Path, FolderL.DisplayName, true, FolderL.DisplayType, FolderL.DateCreated.ToString(), Type) { ThumbnailMode = thumbnailL };// { StorageFolder = FolderL, FlagFolde = true, ThumbnailMode= thumbnailL };
+                            var clas = new ClassListStroce(FolderL.Path, FolderL.DisplayName, true, FolderL.DisplayType, FolderL.DateCreated.ToString(), Type) { ick = true, ThumbnailMode= thumbnailL };// { StorageFolder = FolderL, FlagFolde = true, ThumbnailMode= thumbnailL };
                             if (Type == "Maximum")
                             {
                                 clas.Type = "Drive";
@@ -336,13 +337,13 @@ namespace FolderFile
                         //var thumbnail1 = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
                         // ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode=thumbnail1 });
-                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type));// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type });
+                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true });// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type });
 
                     }
                             foreach (StorageFile FlFolder1 in fileList)
                             {
-                                var thumbnail1 = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
-                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ThumbnailMode = thumbnail1 });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail1 });
+                               // var thumbnail1 = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail1 });
                         
                             }
                         }
@@ -416,8 +417,9 @@ namespace FolderFile
                         if (classListStroce.FlagFolde)
                         {
 
-
-                            Path = classListStroce.Path;
+                        var watch = Stopwatch.StartNew();
+                        watch.Start();
+                        Path = classListStroce.Path;
                            
                             IReadOnlyList<StorageFolder> folderList = await (await StorageFolder.GetFolderFromPathAsync(classListStroce.Path)).GetFoldersAsync();
 
@@ -431,13 +433,12 @@ namespace FolderFile
                             {
                                 // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                                ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type));// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type });
+                                ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ick = true});// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type });
                                 //ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode = thumbnail });
 
 
                             }
-                            var watch = Stopwatch.StartNew();
-                            watch.Start();
+                           
                          
                             
                          
@@ -445,11 +446,10 @@ namespace FolderFile
                         
                             foreach (StorageFile FlFolder1 in fileList)
                             {
-                                  var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                            // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                                ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ThumbnailMode = thumbnail });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail });
+                            ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type){ick=true  });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail });
                        
-
 
                             }
                            
@@ -471,17 +471,24 @@ namespace FolderFile
                 {
                     simofor = false;
                 }
+                finally
+                {
+                    simofor = false;
+                }
             }
 
         }
+        
         public async void FavoritSpeed()
         {
+            
             if (simofor == false)
             {
                 try
                 {
                     var items = Windows.Storage.UserDataPaths.GetDefault();
                     Path = items.Profile;
+                  
                     StorageFolder storageFolder =await StorageFolder.GetFolderFromPathAsync(items.Profile);
                     var d = await storageFolder.GetFoldersAsync();
                     ListCol.Clear();
@@ -490,7 +497,7 @@ namespace FolderFile
                         // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
                         //ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode= thumbnail });
-                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type));// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type});
+                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ick = true });// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type});
 
 
 
@@ -499,9 +506,9 @@ namespace FolderFile
                     foreach (StorageFile FlFolder1 in d1)
                     {
 
-                        var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
+                        //var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
-                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ThumbnailMode = thumbnail });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail });
+                        ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ick = true });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail });
                       
 
 
@@ -599,6 +606,91 @@ namespace FolderFile
             }
 
 
+        }
+
+
+
+
+
+        public enum FINDEX_INFO_LEVELS
+        {
+            FindExInfoStandard = 0,
+            FindExInfoBasic = 1
+        }
+
+        public enum FINDEX_SEARCH_OPS
+        {
+            FindExSearchNameMatch = 0,
+            FindExSearchLimitToDirectories = 1,
+            FindExSearchLimitToDevices = 2
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct WIN32_FIND_DATA
+        {
+            public uint dwFileAttributes;
+            public System.Runtime.InteropServices.ComTypes.FILETIME ftCreationTime;
+            public System.Runtime.InteropServices.ComTypes.FILETIME ftLastAccessTime;
+            public System.Runtime.InteropServices.ComTypes.FILETIME ftLastWriteTime;
+            public uint nFileSizeHigh;
+            public uint nFileSizeLow;
+            public uint dwReserved0;
+            public uint dwReserved1;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string cFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
+            public string cAlternateFileName;
+        }
+
+        [DllImport("api-ms-win-core-file-fromapp-l1-1-0.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindFirstFileExFromApp(
+            string lpFileName,
+            FINDEX_INFO_LEVELS fInfoLevelId,
+            out WIN32_FIND_DATA lpFindFileData,
+            FINDEX_SEARCH_OPS fSearchOp,
+            IntPtr lpSearchFilter,
+            int dwAdditionalFlags);
+
+        public const int FIND_FIRST_EX_CASE_SENSITIVE = 1;
+        public const int FIND_FIRST_EX_LARGE_FETCH = 2;
+
+        [DllImport("api-ms-win-core-file-l1-1-0.dll", CharSet = CharSet.Unicode)]
+        static extern bool FindNextFile(IntPtr hFindFile, out WIN32_FIND_DATA lpFindFileData);
+
+        [DllImport("api-ms-win-core-file-l1-1-0.dll")]
+        static extern bool FindClose(IntPtr hFindFile);
+        private void NextFind()
+        {
+            var watch = Stopwatch.StartNew();
+            var path = @"C:\";
+            WIN32_FIND_DATA findData;
+            FINDEX_INFO_LEVELS findInfoLevel = FINDEX_INFO_LEVELS.FindExInfoStandard;
+            int additionalFlags = 0;
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                findInfoLevel = FINDEX_INFO_LEVELS.FindExInfoBasic;
+                additionalFlags = FIND_FIRST_EX_LARGE_FETCH;
+            }
+
+            IntPtr hFile = FindFirstFileExFromApp(path + "\\*.*", findInfoLevel, out findData, FINDEX_SEARCH_OPS.FindExSearchNameMatch, IntPtr.Zero,
+                                                  additionalFlags);
+            var count = 0;
+            if (hFile.ToInt64() != -1)
+            {
+                do
+                {
+                    if (((System.IO.FileAttributes)findData.dwFileAttributes & System.IO.FileAttributes.Directory) == System.IO.FileAttributes.System)
+                    {
+                        // do something with it
+                        var fn = findData.cFileName;
+                        Debug.WriteLine(fn);
+                        ++count;
+                    }
+                } while (FindNextFile(hFile, out findData));
+
+                FindClose(hFile);
+            }
+            Debug.WriteLine("count " + count + ", ellapsed=" + watch.ElapsedMilliseconds);
         }
     }
 }
