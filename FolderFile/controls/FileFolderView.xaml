@@ -1812,8 +1812,15 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
                 </Grid>
-                <ListView   Grid.Row="1" AllowDrop="True" DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
-                        IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid"  Margin="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}"  SelectionMode="Extended" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                
+                <ProgressBar Grid.Row="0" VerticalAlignment="Top" Visibility="{x:Bind fileAndFolderViewer.VicProgres, Mode=OneWay}" Maximum="{x:Bind fileAndFolderViewer.WinProgres, Mode=OneWay}" Value="{x:Bind fileAndFolderViewer.StepProgres, Mode=OneWay}"/>
+                <ListView  Margin="8,0" Grid.Row="1" AllowDrop="True" DragOver="UnorganizedListView_OnDragOver" Drop="UnorganizedListView_OnDrop"  CanDragItems="True"  DragItemsStarting="UnorganizedListView_OnDragItemsStarting"
+                        IsTapEnabled="True" RightTapped="_DataGrid_RightTapped" x:Name="_DataGrid"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="List1_SelectionChanged_1"  ItemsSource="{x:Bind fileAndFolderViewer.ListCol, Mode=TwoWay}"  SelectionMode="Extended" IsDoubleTapEnabled="True" DoubleTapped="List1_DoubleTapped" ItemTemplateSelector="{StaticResource selector}">
                     <ListView.Resources>
                         <MenuFlyout x:Name="allContactsMenuFlyout">
                             <MenuFlyout.Items>
@@ -1833,6 +1840,8 @@
                         </MenuFlyout>
                     </ListView.Resources>
                 </ListView>
+                </Grid>
+
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <TextBlock x:Name="ElementsText" Margin="8"/>
                     

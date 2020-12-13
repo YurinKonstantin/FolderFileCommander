@@ -231,7 +231,7 @@ namespace FolderFile.controls
         {
             try
             {
-                StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path)).GetParentAsync(); 
+                StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.Path)).GetParentAsync(); 
                 ClassListStroce classListStroce = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type);
                 fileAndFolderViewer.Next(classListStroce);
        
@@ -855,13 +855,13 @@ namespace FolderFile.controls
                         if (attr.HasFlag(Windows.Storage.FileAttributes.Directory))
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование папки" };
-                            contentDialogProcecc.CopyFolder((StorageFolder)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
+                            contentDialogProcecc.CopyFolder((StorageFolder)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                         }
                         else
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = "Копирование файла" };
-                            contentDialogProcecc.CopyFile((StorageFile)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
+                            contentDialogProcecc.CopyFile((StorageFile)dd, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                         }
                       
@@ -1122,7 +1122,7 @@ namespace FolderFile.controls
                         if (item.IsOfType(StorageItemTypes.Folder))
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TextCopi") };
-                            contentDialogProcecc.CopyFolder(item as StorageFolder, await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path));
+                            contentDialogProcecc.CopyFolder(item as StorageFolder,await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                             fileAndFolderViewer.Upgreid();
                             // tabInstance.instanceInteraction.CloneDirectoryAsync((item as StorageFolder).Path, tabInstance.instanceViewModel.Universal.path, (item as StorageFolder).DisplayName);
@@ -1130,7 +1130,7 @@ namespace FolderFile.controls
                         else
                         {
                             ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TextCopi") };
-                            contentDialogProcecc.CopyFile(item as StorageFile, await StorageFolder.GetFolderFromPathAsync( fileAndFolderViewer.storageFolderFirst.Path));
+                            contentDialogProcecc.CopyFile(item as StorageFile, await StorageFolder.GetFolderFromPathAsync( fileAndFolderViewer.Path));
                             var x = await contentDialogProcecc.ShowAsync();
                             fileAndFolderViewer.Upgreid();
                             // await (item as StorageFile).CopyAsync(await StorageFolder.GetFolderFromPathAsync(tabInstance.instanceViewModel.Universal.path));
@@ -1164,45 +1164,53 @@ namespace FolderFile.controls
         }
         private async void Grid_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-
-            if (IsCtrlKeyPressed())
+            try
             {
-                switch (e.Key)
+
+
+                if (IsCtrlKeyPressed())
                 {
-                    //case VirtualKey.P: DemoMovie.Play(); break;
-                    case VirtualKey.A: _DataGrid.SelectAll(); break;
-                        //case VirtualKey.S: DemoMovie.Stop(); break;
+                    switch (e.Key)
+                    {
+                        //case VirtualKey.P: DemoMovie.Play(); break;
+                        case VirtualKey.A: _DataGrid.SelectAll(); break;
+                            //case VirtualKey.S: DemoMovie.Stop(); break;
+                    }
+                }
+                else
+                {
+
+
+                    if (e.Key == VirtualKey.Back)
+                    {
+                        StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.Path)).GetParentAsync();
+                        ClassListStroce classListStroce = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type);
+
+                        fileAndFolderViewer.Next(classListStroce);
+                        ElementsText.Text = fileAndFolderViewer.CountElements;
+                    }
+                    if (e.Key == VirtualKey.Enter)
+                    {
+                        fileAndFolderViewer.Next(fileAndFolderViewer.classListStroceSelect.ElementAt(0));
+                        ElementsText.Text = fileAndFolderViewer.CountElements;
+                    }
+                    if (e.Key == VirtualKey.Delete)
+                    {
+                        var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+
+                        ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFile") };
+                        contentDialogProcecc.Delete(fileAndFolderViewer.classListStroceSelect);
+                        var x = await contentDialogProcecc.ShowAsync();
+
+                        fileAndFolderViewer.Upgreid();
+                        ElementsText.Text = fileAndFolderViewer.CountElements;
+                    }
+
                 }
             }
-            else
+            catch(Exception ex)
             {
-
-
-                if (e.Key == VirtualKey.Back)
-                {
-                    StorageFolder storageFolder = await (await StorageFolder.GetFolderFromPathAsync(fileAndFolderViewer.storageFolderFirst.Path)).GetParentAsync();
-                    ClassListStroce classListStroce = new ClassListStroce(storageFolder.Path, storageFolder.DisplayName, true, storageFolder.DisplayType, storageFolder.DateCreated.ToString(), FileAndFolderViewer.Type);
-
-                    fileAndFolderViewer.Next(classListStroce);
-                    ElementsText.Text = fileAndFolderViewer.CountElements;
-                }
-                if (e.Key == VirtualKey.Enter)
-                {
-                    fileAndFolderViewer.Next(fileAndFolderViewer.classListStroceSelect.ElementAt(0));
-                    ElementsText.Text = fileAndFolderViewer.CountElements;
-                }
-                if (e.Key == VirtualKey.Delete)
-                {
-                    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-
-                    ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { Title = resourceLoader.GetString("TileDeleteFile") };
-                    contentDialogProcecc.Delete(fileAndFolderViewer.classListStroceSelect);
-                    var x = await contentDialogProcecc.ShowAsync();
-
-                    fileAndFolderViewer.Upgreid();
-                    ElementsText.Text = fileAndFolderViewer.CountElements;
-                }
-
+                fileAndFolderViewer.InitializeDataGridView();
             }
 
         }
@@ -1288,6 +1296,7 @@ namespace FolderFile.controls
             WIN32_FIND_DATA findData;
             FINDEX_INFO_LEVELS findInfoLevel = FINDEX_INFO_LEVELS.FindExInfoStandard;
             int additionalFlags = 0;
+            Debug.WriteLine(Environment.MachineName+"\n"+ Environment.UserName+"\n"+ Environment.OSVersion.Version.Major.ToString()+"\n"+ Environment.ProcessorCount.ToString());
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 findInfoLevel = FINDEX_INFO_LEVELS.FindExInfoBasic;
@@ -1297,8 +1306,10 @@ namespace FolderFile.controls
             IntPtr hFile = FindFirstFileExFromApp(path + "\\*.*", findInfoLevel, out findData, FINDEX_SEARCH_OPS.FindExSearchNameMatch, IntPtr.Zero,
                                                   additionalFlags);
             var count = 0;
+            Debug.WriteLine(hFile.ToInt64().ToString());
             if (hFile.ToInt64() != -1)
             {
+                Debug.WriteLine(findData.cFileName);
                 do
                 {
                     if (((System.IO.FileAttributes)findData.dwFileAttributes & System.IO.FileAttributes.Directory) != System.IO.FileAttributes.Directory)
@@ -1306,6 +1317,7 @@ namespace FolderFile.controls
                         // do something with it
                         var fn = findData.cFileName;
                         ++count;
+                        
                     }
                 } while (FindNextFile(hFile, out findData));
 

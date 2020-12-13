@@ -126,7 +126,7 @@ namespace FolderFile
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
 
-            Debug.WriteLine("1");
+           
             var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
             bool tryOk = false;
             try
@@ -151,9 +151,6 @@ namespace FolderFile
             if (tryOk)
             {
                  ViewRight.iniz("R");
-               
-
-              
                 InitializeDataGridView();
                 
 
@@ -166,7 +163,7 @@ namespace FolderFile
                 ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
                 String localValue = localSettings.Values["ViewSet"] as string;
-                Debug.WriteLine("1"+localValue);
+               
                 if(localValue== "Max")
                 {
                     FileAndFolderViewer.Type = "Maximum";
@@ -566,7 +563,7 @@ namespace FolderFile
             {
               
                         ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() {  };
-                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewRight.fileAndFolderViewer.storageFolderFirst.Path));
+                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewRight.fileAndFolderViewer.Path));
                         var x = await contentDialogProcecc.ShowAsync();
                 ViewRight.fileAndFolderViewer.Upgreid();
 
@@ -578,7 +575,7 @@ namespace FolderFile
                             
 
                         ContentDialogProcecc contentDialogProcecc = new ContentDialogProcecc() { };
-                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewLeft.fileAndFolderViewer.storageFolderFirst.Path));
+                        contentDialogProcecc.Copy(viewFocusTag.fileAndFolderViewer.classListStroceSelect, await StorageFolder.GetFolderFromPathAsync(ViewLeft.fileAndFolderViewer.Path));
                         var x = await contentDialogProcecc.ShowAsync();
                 ViewLeft.fileAndFolderViewer.Upgreid();
 
@@ -632,7 +629,7 @@ namespace FolderFile
                 var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
 
 
-                await (await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.storageFolderFirst.Path)).CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
+                await (await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.Path)).CreateFolderAsync(resourceLoader.GetString("TextNewFolder"), CreationCollisionOption.GenerateUniqueName);
                     viewFocusTag.fileAndFolderViewer.Upgreid();
                 
               
@@ -652,7 +649,7 @@ namespace FolderFile
 
                 
                     ContentDialogNewFile contentDialogNewFile = new ContentDialogNewFile() { };
-                    contentDialogNewFile.storageFolder = await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.storageFolderFirst.Path);
+                    contentDialogNewFile.storageFolder =await StorageFolder.GetFolderFromPathAsync(viewFocusTag.fileAndFolderViewer.Path);
                     await contentDialogNewFile.ShowAsync();
                     viewFocusTag.fileAndFolderViewer.Upgreid();
                 
@@ -730,36 +727,8 @@ namespace FolderFile
                
 
                 StorageFolder Folder = KnownFolders.RemovableDevices;
+                
                 IReadOnlyList<StorageFolder> folderList = await Folder.GetFoldersAsync();
-                foreach (StorageFolder FlFolder1 in folderList)
-                {
-                    var f = (from d in ViewLeft.fileAndFolderViewer.ListUSB where d.DisplayName == FlFolder1.DisplayName select d).Count();
-                    if (f == 0)
-                    {
-
-                        await Dispatcher.RunAsync(CoreDispatcherPriority.High,
-                  async () =>
-                  {
-                      if (ViewLeft.fileAndFolderViewer.Path == String.Empty)
-                      {
-                          var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                          ViewLeft.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type));// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                      }
-                      if (ViewRight.fileAndFolderViewer.Path == String.Empty)
-                      {
-                          var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
-                          ViewRight.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type));// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
-                      }
-                      ViewLeft.fileAndFolderViewer.ListUSB.Add(FlFolder1);
-                      ViewRight.InitializeTreeView();
-                      ViewLeft.InitializeTreeView();
-
-
-                  });
-                        
-                    }
-
-                }
                 if (ViewLeft.fileAndFolderViewer.ListUSB.Count > 0)
                 {
 
@@ -802,6 +771,36 @@ namespace FolderFile
                         await new MessageDialog(ex.Message).ShowAsync();
                     }
                 }
+                foreach (StorageFolder FlFolder1 in folderList)
+                {
+                    var f = (from d in ViewLeft.fileAndFolderViewer.ListUSB where d.DisplayName == FlFolder1.DisplayName select d).Count();
+                    if (f == 0)
+                    {
+
+                        await Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                  async () =>
+                  {
+                      if (ViewLeft.fileAndFolderViewer.Path == String.Empty)
+                      {
+                         // var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                          ViewLeft.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true });// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                      }
+                      if (ViewRight.fileAndFolderViewer.Path == String.Empty)
+                      {
+                         // var thumbnail1 = await FlFolder1.GetThumbnailAsync(ThumbnailMode.SingleItem, 100);
+                          ViewRight.fileAndFolderViewer.ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick=true});// { StorageFolder = FlFolder1, FlagFolde = true, ThumbnailMode = thumbnail1, Type = FileAndFolderViewer.Type });
+                      }
+                      ViewLeft.fileAndFolderViewer.ListUSB.Add(FlFolder1);
+                      ViewRight.InitializeTreeView();
+                      ViewLeft.InitializeTreeView();
+
+
+                  });
+                        
+                    }
+
+                }
+             
             }
             catch(Exception ex)
             {

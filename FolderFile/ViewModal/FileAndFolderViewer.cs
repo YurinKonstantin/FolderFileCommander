@@ -27,7 +27,7 @@ namespace FolderFile
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         ObservableCollection<ClassListStroce> _ListCol = new ObservableCollection<ClassListStroce>();
-        public ClassListStroce storageFolderFirst { get; set; }
+      
         public ObservableCollection<ClassListStroce> ListCol
         { 
             get
@@ -144,7 +144,7 @@ namespace FolderFile
             {
 
                 ListCol.Clear();
-              storageFolderFirst = null;
+             
                 try
                 {
 
@@ -241,6 +241,11 @@ namespace FolderFile
                 {
 
                 }
+                var f = GetInternalDrives();
+                foreach (var d in f)
+                {
+                    Debug.WriteLine(d.DisplayName);
+                }
                 DriveInfo[] drives = DriveInfo.GetDrives();
 
                 foreach (DriveInfo drive in drives)
@@ -315,20 +320,58 @@ namespace FolderFile
                 await messageDialog.ShowAsync();
                 App.Current.Exit();
             }
+            catch(Exception ex)
+            {
+                MessageDialog messageDialog = new MessageDialog(ex.Message);
+                await messageDialog.ShowAsync();
+            }
            
 
+        }
+        public List<StorageFolder> GetInternalDrives()
+        {
+            string driveLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            int driveLettersLen = driveLetters.Length;
+            string removableDriveLetters = "";
+            string driveLetter;
+
+            List<StorageFolder> drives = new List<StorageFolder>();
+            StorageFolder removableDevices = KnownFolders.RemovableDevices;
+            IReadOnlyList<StorageFolder> folders = Task.Run<IReadOnlyList<StorageFolder>>(async () => await removableDevices.GetFoldersAsync()).Result;
+
+            foreach (StorageFolder removableDevice in folders)
+            {
+                if (string.IsNullOrEmpty(removableDevice.Path)) continue;
+                driveLetter = removableDevice.Path.Substring(0, 1).ToUpper();
+                if (driveLetters.IndexOf(driveLetter) > -1) removableDriveLetters += driveLetter;
+            }
+
+            for (int curDrive = 0; curDrive < driveLettersLen; curDrive++)
+            {
+                driveLetter = driveLetters.Substring(curDrive, 1);
+                if (removableDriveLetters.IndexOf(driveLetter) > -1) continue;
+
+                try
+                {
+                    StorageFolder drive = Task.Run<StorageFolder>(async () => await StorageFolder.GetFolderFromPathAsync(driveLetter + ":")).Result;
+                    drives.Add(drive);
+                }
+                catch (System.AggregateException) { }
+
+            }
+            return drives;
         }
         public async void Upgreid()
         {
                     try
                     {
-                       // StorageFolder storageFolder = storageFolderFirst;
-                        if (storageFolderFirst != null)
-                        {
+                       
+                     
+                        
 
 
-                    IReadOnlyList<StorageFolder> folderList =await (await StorageFolder.GetFolderFromPathAsync(storageFolderFirst.Path)).GetFoldersAsync();// storageFolder.GetFoldersAsync();
-                            IReadOnlyList<StorageFile> fileList = await (await StorageFolder.GetFolderFromPathAsync(storageFolderFirst.Path)).GetFilesAsync();
+                    IReadOnlyList<StorageFolder> folderList =await (await StorageFolder.GetFolderFromPathAsync(Path)).GetFoldersAsync();// storageFolder.GetFoldersAsync();
+                            IReadOnlyList<StorageFile> fileList = await (await StorageFolder.GetFolderFromPathAsync(Path)).GetFilesAsync();
                            
                             //storageFolderFirst = storageFolder;
                             ListCol.Clear();
@@ -346,18 +389,14 @@ namespace FolderFile
                         ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), FileAndFolderViewer.Type) { ick = true });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail1 });
                         
                             }
-                        }
-                        else
-                        {
-                           ListCol.Clear();
-                            InitializeDataGridView();
-                        }
+                        
+                      
                 
                     }
                     catch (Exception ex)
                     {
                      
-                     ListCol.Clear();
+                 
                         InitializeDataGridView();
                     }
         }
@@ -409,11 +448,10 @@ namespace FolderFile
             {
                 try
                 {
-
-
+                    VicProgres = Visibility.Visible;
+                    ListCol.Clear();
                     simofor = true;
-                   // if (classListStroceSelect != null)
-                   // {
+                   
                         if (classListStroce.FlagFolde)
                         {
 
@@ -422,38 +460,40 @@ namespace FolderFile
                         Path = classListStroce.Path;
                            
                             IReadOnlyList<StorageFolder> folderList = await (await StorageFolder.GetFolderFromPathAsync(classListStroce.Path)).GetFoldersAsync();
+                        winProgres = folderList.Count();
+                        
+                        // IReadOnlyList<StorageFile> fileList = await (await StorageFolder.GetFolderFromPathAsync(classListStroce.Path)).GetFilesAsync();
+                        //var fileList1 = await classListStroceSelect.ElementAt(0).StorageFolder.GetItemsAsync();
 
-                            IReadOnlyList<StorageFile> fileList = await (await StorageFolder.GetFolderFromPathAsync(classListStroce.Path)).GetFilesAsync();
-                            //var fileList1 = await classListStroceSelect.ElementAt(0).StorageFolder.GetItemsAsync();
-
-                            storageFolderFirst = classListStroce;
-                            ListCol.Clear();
+              
+                           
 
                             foreach (StorageFolder FlFolder1 in folderList)
                             {
                                 // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
                                 ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, true, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type) { ick = true});// { StorageFolder = FlFolder1, FlagFolde = true, Type = Type });
-                                //ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode = thumbnail });
-
+                                                                                                                                                                                           //ListCol.Add(new ClassListStroce() { StorageFolder = FlFolder1, FlagFolde = true, Type = Type, ThumbnailMode = thumbnail });
+                            
 
                             }
-                           
-                         
-                            
-                         
-                            
-                        
-                            foreach (StorageFile FlFolder1 in fileList)
+                        stepProgres = folderList.Count();
+
+
+                        IReadOnlyList<StorageFile> fileList = await (await StorageFolder.GetFolderFromPathAsync(classListStroce.Path)).GetFilesAsync();
+                        winProgres = winProgres+ fileList.Count();
+
+
+                        foreach (StorageFile FlFolder1 in fileList)
                             {
                             // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
 
                             ListCol.Add(new ClassListStroce(FlFolder1.Path, FlFolder1.DisplayName, false, FlFolder1.DisplayType, FlFolder1.DateCreated.ToString(), Type){ick=true  });// { storageFile = FlFolder1, FlagFolde = false, Type = Type, ThumbnailMode= thumbnail });
-                       
-
-                            }
                            
-                            watch.Stop();
+
+                        }
+                        stepProgres += fileList.Count();
+                        watch.Stop();
                             Debug.WriteLine(watch.ElapsedMilliseconds.ToString());
                             //_DataGrid.SelectedIndex = 0;
                             classListStroceSelect = null;
@@ -463,7 +503,7 @@ namespace FolderFile
                         {
                             await ActivateFile(await StorageFile.GetFileFromPathAsync(classListStroce.Path));
                         }
-                   // }
+                   
                     simofor = false;
                  
                 }
@@ -474,11 +514,51 @@ namespace FolderFile
                 finally
                 {
                     simofor = false;
+                    VicProgres = Visibility.Collapsed;
                 }
             }
 
         }
-        
+        int winProgres = 0;
+        public int WinProgres
+        {
+            get
+            {
+                return winProgres;
+            }
+            set
+            {
+                winProgres = value;
+                this.OnPropertyChanged();
+            }
+        }
+        int stepProgres = 0;
+        public int StepProgres
+        {
+            get
+            {
+                return stepProgres;
+            }
+            set
+            {
+                stepProgres = value;
+                this.OnPropertyChanged();
+            }
+        }
+        Visibility vicProgres=Visibility.Collapsed;
+        public Visibility VicProgres
+        {
+            get
+            {
+                return vicProgres;
+            }
+            set
+            {
+             
+                vicProgres = value;
+                this.OnPropertyChanged();
+            }
+        }
         public async void FavoritSpeed()
         {
             
@@ -486,12 +566,13 @@ namespace FolderFile
             {
                 try
                 {
+                    ListCol.Clear();
                     var items = Windows.Storage.UserDataPaths.GetDefault();
                     Path = items.Profile;
                   
                     StorageFolder storageFolder =await StorageFolder.GetFolderFromPathAsync(items.Profile);
                     var d = await storageFolder.GetFoldersAsync();
-                    ListCol.Clear();
+                    
                     foreach (StorageFolder FlFolder1 in d)
                     {
                         // var thumbnail = await FlFolder1.GetScaledImageAsThumbnailAsync(ThumbnailMode.SingleItem, 60, ThumbnailOptions.UseCurrentScale);
